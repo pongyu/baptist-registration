@@ -15,13 +15,13 @@ public class Church {
     @Column(name = "church_id", nullable = false, length = 20)
     private String churchId;
 
-    private String churchFullName;
+    private String churchName;
 
     @OneToOne
     private Address address;
 
     @Column(unique = true)
-    private EmailAddress churchEmailAddress;
+    private Email churchEmail;
 
     private String churchContactNumber;
 
@@ -56,6 +56,7 @@ public class Church {
     public Church(){
     }
 
+
     public String getChurchId() {
         return churchId;
     }
@@ -64,12 +65,12 @@ public class Church {
         this.churchId = churchId;
     }
 
-    public String getChurchFullName() {
-        return churchFullName;
+    public String getChurchName() {
+        return churchName;
     }
 
-    public void setChurchFullName(String churchFullName) {
-        this.churchFullName = churchFullName;
+    public void setChurchName(String churchName) {
+        this.churchName = churchName;
     }
 
     public Address getAddress() {
@@ -80,12 +81,12 @@ public class Church {
         this.address = address;
     }
 
-    public EmailAddress getChurchEmailAddress() {
-        return churchEmailAddress;
+    public Email getChurchEmail() {
+        return churchEmail;
     }
 
-    public void setChurchEmailAddress(EmailAddress churchEmailAddress) {
-        this.churchEmailAddress = churchEmailAddress;
+    public void setChurchEmail(Email churchEmail) {
+        this.churchEmail = churchEmail;
     }
 
     public String getChurchContactNumber() {

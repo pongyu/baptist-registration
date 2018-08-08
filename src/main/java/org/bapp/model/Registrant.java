@@ -3,7 +3,6 @@ package org.bapp.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "registrant")
@@ -20,7 +19,7 @@ public class Registrant extends AbstractEntity implements Serializable{
     private String gender;
 
     @Column(unique = true)
-    private EmailAddress emailAddress;
+    private Email email;
 
     @ManyToOne
     @JoinColumn(name = "church_id", nullable = false)
@@ -38,12 +37,12 @@ public class Registrant extends AbstractEntity implements Serializable{
         this.church = church;
     }
 
-    public EmailAddress getEmailAddress() {
-        return emailAddress;
+    public Email getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(EmailAddress emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(Email email) {
+        this.email = email;
     }
 
     public String getFirstName() {

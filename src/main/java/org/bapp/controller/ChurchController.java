@@ -2,6 +2,7 @@ package org.bapp.controller;
 
 import org.bapp.model.Church;
 import org.bapp.repository.ChurchRepository;
+import org.bapp.util.sequence.SequenceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,10 @@ import javax.validation.Valid;
 public class ChurchController {
 
     @Autowired
-    public ChurchRepository churchRepository;
+    private ChurchRepository churchRepository;
 
+    @Autowired
+    private SequenceServiceImpl service;
 
     @RequestMapping(value = "")
     public String index(Model model){
@@ -43,7 +46,12 @@ public class ChurchController {
             return "church/church-details";
         }
 
+        service.setEventId(1);
+        service.setEventName("BMPSYMP");
+
+        church.setChurchId(service.generateSequenceId());
         churchRepository.save(church);
+
         return "redirect:";
     }
 }

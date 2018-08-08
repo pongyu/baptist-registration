@@ -2,19 +2,18 @@ package org.bapp.util.sequence;
 
 import java.util.Calendar;
 
-interface SequenceService {
+public interface SequenceService {
 
 
-    Integer setEventId();
+    Integer eventId();
 
-    String setEventName();
+    String eventName();
 
     String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR)).substring(2);
 
     Integer getSequence();
 
-//    String zero = String.format("%03", getSequence());
-    String addZero();
+    String addSequence();
 
     String generateSequenceId();
 

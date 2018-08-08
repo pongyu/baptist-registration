@@ -9,7 +9,6 @@ public class Sequence{
     @Id
     private Integer id;
 
-    @Column(unique = true)
     private String event;
 
     private Integer year;

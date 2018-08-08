@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.regex.Pattern;
 
 @Embeddable
-public class EmailAddress implements Serializable{
+public class Email implements Serializable{
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
@@ -16,12 +16,12 @@ public class EmailAddress implements Serializable{
     @Column(name = "email")
     private String emailAddress;
 
-    public EmailAddress(String emailAddress){
+    public Email(String emailAddress){
         Assert.isTrue(isValid(emailAddress), "Invalid email address");
         this.emailAddress = emailAddress;
     }
 
-    protected EmailAddress(){}
+    protected Email(){}
 
     public boolean isValid(String candidate) {
         return PATTERN.matcher(candidate).matches();
