@@ -11,6 +11,7 @@ public class RegistrationApplicationTests {
 
 	@Test
 	public void contextLoads() {
+//		System.out.print("testing...");
 	}
 
 }

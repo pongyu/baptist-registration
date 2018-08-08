@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>registration app</title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="../assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="../assets/css/Highlight-Phone.css">
+    <link rel="stylesheet" href="../assets/css/modal-view.css">
+    <link rel="stylesheet" href="../assets/css/Registration-Form-with-Photo-1.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+
+<body>
+    <div class="modal fade" role="dialog" tabindex="-1" id="preview">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="font-size:18px;">
+                    <h2 class="text-center"><strong>Registration</strong>&nbsp;Form</h2><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <div class="modal-view">
+                        <div class="form-container">
+                            <form method="POST">
+                                <div class="col-lg-12 well">
+                                    <div class="row">
+                                        <div class="form-group col-sm-4"><label style="font-weight:bold;">Designation:</label><select class="form-control"><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-4"><label style="font-weight:bold;">First Name:</label><input class="form-control" type="text"></div>
+                                        <div class="form-group col-sm-4"><label style="font-weight:bold;">Middle Name:</label><input class="form-control" type="text"></div>
+                                        <div class="form-group col-sm-4"><label style="font-weight:bold;">Last Name:</label><input class="form-control" type="text"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-4"><label style="font-weight:bold;">Date of Birth:</label><input class="form-control" type="date"></div>
+                                        <div class="form-group col-sm-4"><label style="font-weight:bold;">Gender:</label><select class="form-control"><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                        <div
+                                            class="form-group col-sm-4"><label style="font-weight:bold;">Civil Status:</label><select class="form-control"><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                </div>
+                                <div class="form-group"><label style="font-weight:bold;">Mobile Number:</label><input class="form-control" type="text"></div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+        </div>
+    </div>
+    </div><button class="btn btn-primary" type="button" id="add">Button</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Designation</th>
+                            <th>Name</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+</body>
+
+</html>
