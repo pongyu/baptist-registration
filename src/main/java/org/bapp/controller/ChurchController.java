@@ -2,7 +2,7 @@ package org.bapp.controller;
 
 import org.bapp.model.Church;
 import org.bapp.repository.ChurchRepository;
-import org.bapp.util.sequence.SequenceServiceImpl;
+import org.bapp.services.sequence.SequenceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

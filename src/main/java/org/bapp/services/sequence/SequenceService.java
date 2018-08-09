@@ -1,4 +1,4 @@
-package org.bapp.util.sequence;
+package org.bapp.services.sequence;
 
 import java.util.Calendar;
 

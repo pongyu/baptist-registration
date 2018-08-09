@@ -1,4 +1,4 @@
-package org.bapp.util.sequence;
+package org.bapp.services.sequence;
 
 import org.bapp.model.Sequence;
 import org.bapp.repository.SequenceRepository;
