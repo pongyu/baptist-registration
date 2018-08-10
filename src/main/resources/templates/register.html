@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Registrar</title>
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+
+<div>
+    <form method="post">
+        <div class="form-group"><label style="font-weight:bold;">Church Details:</label>
+            <select class="form-control">
+                <option value="SBBC">Sucat Bible Baptist Church</option>
+                <option value="TBBC">Tayug Bible Baptist Church</option>
+            </select>
+        </div>
+        <div class="form-group"><label style="font-weight:bold;">Church Members:</label></div>
+
+    </form>
+    <div class="container">
+        <div class="card">
+            <div class="card-block">
+                <table class="table table-hover table-striped table-bordered" id="registrantTable">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Designation</th>
+                        <th>Name</th>
+                        <th>Birthday</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Church</th>
+                        <th>Edit</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <form method="post" id="registrantForm">
+        <div class="registrantForm">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrantModal">
+                Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="registrantModal" tabindex="-1" role="dialog" aria-labelledby="Registrant Details" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Registrant Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-lg-12 well">
+                                <div hidden class="form-group">
+                                    <label style="font-weight:bold;">Id</label>
+                                    <input class="form-control" type="text" id="id" name="id" value="">
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label style="font-weight:bold;">Designation:</label>
+                                        <select class="form-control" id="designation" name="designation" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label style="font-weight:bold;">First Name:</label>
+                                        <input class="form-control" type="text" id="firstname" name="firstname" value=""></div>
+                                    <div class="form-group col-sm-4">
+                                        <label style="font-weight:bold;">Middle Name:</label>
+                                        <input class="form-control" type="text" id="middlename" name="middlename" value=""></div>
+                                    <div class="form-group col-sm-4">
+                                        <label style="font-weight:bold;">Last Name:</label>
+                                        <input class="form-control" type="text" id="lastname" name="lastname" value=""></div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label style="font-weight:bold;">Date of Birth:</label>
+                                        <input class="form-control" type="date" id="birthday" name="birthday" value=""></div>
+                                    <div class="form-group col-sm-4">
+                                        <label style="font-weight:bold;">Gender:</label>
+                                        <select class="form-control" id="gender" name="gender" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                    <div class="form-group col-sm-4">
+                                        <label style="font-weight:bold;">Civil Status:</label>
+                                        <select class="form-control" id="civilstatus" name="civilstatus" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-weight:bold;">Mobile Number:</label>
+                                    <input class="form-control" type="text" id="mobilenumber" name="mobilenumber" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+</html>

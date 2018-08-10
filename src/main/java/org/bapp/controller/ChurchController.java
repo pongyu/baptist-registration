@@ -34,7 +34,7 @@ public class ChurchController {
     public String add(Model model){
         model.addAttribute("title","Add Church");
         model.addAttribute(new Church());
-        return "church/church-details";
+        return "church/church-form";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -43,7 +43,7 @@ public class ChurchController {
         // if there are errors then return to the add church page
         if(errors.hasErrors()){
             model.addAttribute("title","Add Church");
-            return "church/church-details";
+            return "church/church-form";
         }
 
         service.setEventId(1);
@@ -52,6 +52,6 @@ public class ChurchController {
         church.setChurchId(service.generateSequenceId());
         churchRepository.save(church);
 
-        return "redirect:";
+        return "church/add-member";
     }
 }

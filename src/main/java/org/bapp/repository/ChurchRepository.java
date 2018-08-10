@@ -8,5 +8,5 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface ChurchRepository extends JpaRepository<Church, Long> {
+public interface ChurchRepository extends JpaRepository<Church, String> {
 }

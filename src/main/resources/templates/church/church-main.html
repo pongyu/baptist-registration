@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
@@ -8,11 +8,12 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-    <ul th:each="types : ${churches}">
-        <li th:text="${types.churchName}"></li>
+    <ul th:each="church : ${churches}">
+        <li th:text="${church.churchName}"></li>
     </ul>
 
-    <p><a href="/church/add">Add Church</a></p>
+    <a>*Click register if your church is not listed above</a>
+    <p><a href="/church/add">Register</a></p>
 
 </body>
 </html>

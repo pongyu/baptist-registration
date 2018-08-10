@@ -8,6 +8,8 @@ import java.util.Date;
 @Table(name = "registrant")
 public class Registrant extends AbstractEntity implements Serializable{
 
+    private String designation;
+
     private String firstName;
 
     private String middleName;
@@ -18,6 +20,8 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     private String gender;
 
+    private String mobileNumber;
+
     @Column(unique = true)
     private Email email;
 
@@ -27,6 +31,22 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     public Registrant(){
 
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public Church getChurch() {
