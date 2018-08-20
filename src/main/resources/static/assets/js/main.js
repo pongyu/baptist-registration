@@ -1,7 +1,9 @@
 $(document).ready(function () {
     //initialise data tables
     var table = $('#registrantTable').DataTable({
-        "sAjaxSource": "/register/registrants",
+        "processing": true,
+        "bAutoWidth": true,
+        "sAjaxSource": "/register/delegates",
         "sAjaxDataProp": "",
         "order": [[ 0, "asc" ]],
         "aoColumns": [
@@ -14,15 +16,15 @@ $(document).ready(function () {
             { "mData": "birthDate" },
             { "mData": "gender" },
             { "mData": "email" },
-            { "mData": "church" },
             { "mData": null}
         ],
         "columnDefs": [ {
             "targets": -1,
             "data": null,
-            "defaultContent": "<button>Edit</button>"
+            "defaultContent": '<button type="button">Edit</button>'
         } ]
     });
+
 
     $('#registrantTable tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
@@ -36,8 +38,36 @@ $(document).ready(function () {
 
     });
 
-    $('#registrantForm').submit(function (event) {
-        event.preventDefault();
 
+    $('#newRegistrantBtn').on('click', function (e) {
+        e.preventDefault();
+        $('.registrantForm #id').val('');
+        $('.registrantForm #firstname').val('');
+        $('.registrantForm #middlename').val('');
+        $('.registrantForm #lastname').val('');
+        $('.registrantForm #designation').val('');
+        $('#registrantModal').modal();
     });
+
+    $('#registrantSaveBtn').on('click', function (e) {
+        $.ajax({
+            type: "POST",
+            url: "delegate/add",
+            data: '{"firstName":"Pongyu","lastName":"Quindoza"}',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+            },
+            success: function(result) { //we got the response
+                console.log('Delegate added!');
+            },
+            error: function(jqxhr, status, exception) {
+                console.log('Exception:', exception);
+            }
+        });
+        $('#registrantModal').modal('toggle');
+        table.ajax.reload();
+    });
+
 });
+

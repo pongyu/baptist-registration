@@ -37,21 +37,5 @@ public class ChurchController {
         return "church/church-form";
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String add(Model model, @ModelAttribute @Valid Church church, Errors errors){
 
-        // if there are errors then return to the add church page
-        if(errors.hasErrors()){
-            model.addAttribute("title","Add Church");
-            return "church/church-form";
-        }
-
-        service.setEventId(1);
-        service.setEventName("BMPSYMP");
-
-        church.setChurchId(service.generateSequenceId());
-        churchRepository.save(church);
-
-        return "church/add-member";
-    }
 }

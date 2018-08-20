@@ -3,152 +3,308 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Registrar</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/webjars/font-awesome/5.1.0/css/all.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/assets/css/form-wizard-blue.css}" type="text/css" rel="stylesheet"/>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
 <div>
-    <div class="form-container">
-        <form method="post">
-            <h2 class="text-center"><strong>Church</strong>&nbsp;details</h2>
-            <div class="col-lg-12 well">
-                <div class="form-group"><label style="font-weight:bold;">Church Name:</label>
-                    <select class="form-control">
-                        <option value="SBBC-sucat">Sucat Bible Baptist Church</option>
-                        <option value="TBBC">Tayug Bible Baptist Church</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label style="font-weight:bold;">Church Address:</label>
-                    <textarea class="form-control" placeholder="Enter address here.."></textarea>
-                </div>
-                <div class="row">
-                    <div class="form-group col-sm-4">
-                        <label style="font-weight:bold;">City:</label>
-                        <select class="form-control">
-                            <optgroup label="This is a group">
-                                <option value="12">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label style="font-weight:bold;">State:</label>
-                        <select class="form-control">
-                            <optgroup label="This is a group">
-                                <option value="12">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label style="font-weight:bold;">Country:</label>
-                        <select class="form-control">
-                            <optgroup label="This is a group">
-                                <option value="12">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Church Email"></div>
-                <div class="form-group"><input class="form-control" type="text" placeholder="Church Contact Number"></div>
-                <div class="row">
-                    <div class="form-group col-sm-6"><input class="form-control" type="text" placeholder="Contact Person"></div>
-                    <div class="form-group col-sm-6"><input class="form-control" type="text" placeholder="Contact Number"></div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="container">
-        <div class="card">
-            <div class="card-block">
-                <table class="table table-hover table-striped table-bordered" id="registrantTable">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Designation</th>
-                        <th>Name</th>
-                        <th>Birthday</th>
-                        <th>Gender</th>
-                        <th>Email</th>
-                        <th>Church</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
-    <form method="post" id="registrantForm">
-        <div class="registrantForm">
-            <!-- Modal -->
-            <div class="modal fade" id="registrantModal" tabindex="-1" role="dialog" aria-labelledby="Registrant Details" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Registrant Details</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+    <!-- main content -->
+    <section class="form-box">
+        <div class="container">
+            <div class="row">
+                <div class="form-wizard form-header-classic form-body-classic">
+
+                    <!-- Form Wizard -->
+                    <!--
+                    Just change the class name for make it with different style of design.
+
+                    Use anyone class "form-header-classic" or "form-header-modarn" or "form-header-stylist" for set your form header design.
+
+                    Use anyone class "form-body-classic" or "form-body-material" or "form-body-stylist" for set your form element design.
+                    -->
+
+                    <form role="form" action="#" method="post" th:object="${fde}">
+
+                        <h3>Sign Up</h3>
+                        <p>Fill all form field to go next step</p>
+
+                        <!-- Form progress -->
+                        <div class="form-wizard-steps form-wizard-tolal-steps-4">
+                            <div class="form-wizard-progress">
+                                <div class="form-wizard-progress-line" data-now-value="12.25" data-number-of-steps="4" style="width: 12.25%;"></div>
+                            </div>
+                            <!-- Step 1 -->
+                            <div class="form-wizard-step active">
+                                <div class="form-wizard-step-icon"><i class="fas fa-church" aria-hidden="true"></i></div>
+                                <p>Church</p>
+                            </div>
+                            <!-- Step 1 -->
+
+                            <!-- Step 2 -->
+                            <div class="form-wizard-step">
+                                <div class="form-wizard-step-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
+                                <p>Delegates</p>
+                            </div>
+                            <!-- Step 2 -->
+
+                            <!-- Step 3 -->
+                            <div class="form-wizard-step">
+                                <div class="form-wizard-step-icon"><i class="fa fa-camera" aria-hidden="true"></i></div>
+                                <p>Image</p>
+                            </div>
+                            <!-- Step 3 -->
+
+                            <!-- Step 4 -->
+                            <div class="form-wizard-step">
+                                <div class="form-wizard-step-icon"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                <p>Success</p>
+                            </div>
+                            <!-- Step 4 -->
                         </div>
-                        <div class="modal-body">
-                            <div class="col-lg-12 well">
-                                <div hidden class="form-group">
-                                    <label style="font-weight:bold;">Id</label>
-                                    <input class="form-control" type="text" id="id" name="id" value="">
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-4">
-                                        <label style="font-weight:bold;">Designation:</label>
-                                        <select class="form-control" id="designation" name="designation" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-4">
-                                        <label style="font-weight:bold;">First Name:</label>
-                                        <input class="form-control" type="text" id="firstname" name="firstname" value=""></div>
-                                    <div class="form-group col-sm-4">
-                                        <label style="font-weight:bold;">Middle Name:</label>
-                                        <input class="form-control" type="text" id="middlename" name="middlename" value=""></div>
-                                    <div class="form-group col-sm-4">
-                                        <label style="font-weight:bold;">Last Name:</label>
-                                        <input class="form-control" type="text" id="lastname" name="lastname" value=""></div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-4">
-                                        <label style="font-weight:bold;">Date of Birth:</label>
-                                        <input class="form-control" type="date" id="birthday" name="birthday" value=""></div>
-                                    <div class="form-group col-sm-4">
-                                        <label style="font-weight:bold;">Gender:</label>
-                                        <select class="form-control" id="gender" name="gender" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
-                                    <div class="form-group col-sm-4">
-                                        <label style="font-weight:bold;">Civil Status:</label>
-                                        <select class="form-control" id="civilstatus" name="civilstatus" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
-                                </div>
-                                <div class="form-group">
-                                    <label style="font-weight:bold;">Mobile Number:</label>
-                                    <input class="form-control" type="text" id="mobilenumber" name="mobilenumber" value="">
+                        <!-- Form progress -->
+
+
+                        <!-- Form Step 1 -->
+                        <fieldset>
+                            <!-- Progress Bar -->
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="save"/>
-                        </div>
-                    </div>
+                            <!-- Progress Bar -->
+                            <h4>Account Information: <span>Step 1 - 4</span></h4>
+
+                            <!--fields-->
+                            <div class="col-lg-12 well">
+                                <div class="form-group"><label>Church Name:</label>
+                                    <select class="form-control" th:field="*{churchDTO.churchName}">
+                                        <option value="SBBC-sucat">Sucat Bible Baptist Church</option>
+                                        <option value="TBBC">Tayug Bible Baptist Church</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Church Address:</label>
+                                    <textarea class="form-control" placeholder="Enter address here.."></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label>City:</label>
+                                        <select class="form-control">
+                                            <optgroup label="This is a group">
+                                                <option value="12">This is item 1</option>
+                                                <option value="13">This is item 2</option>
+                                                <option value="14">This is item 3</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label>State:</label>
+                                        <select class="form-control">
+                                            <optgroup label="This is a group">
+                                                <option value="12">This is item 1</option>
+                                                <option value="13">This is item 2</option>
+                                                <option value="14">This is item 3</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label>Country:</label>
+                                        <select class="form-control">
+                                            <optgroup label="This is a group">
+                                                <option value="12">This is item 1</option>
+                                                <option value="13">This is item 2</option>
+                                                <option value="14">This is item 3</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6"><input class="form-control" type="email" name="email" placeholder="Church Email"></div>
+                                    <div class="form-group col-sm-6"><input class="form-control" type="text" placeholder="Church Contact Number"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6"><input class="form-control" type="text" placeholder="Contact Person"></div>
+                                    <div class="form-group col-sm-6"><input class="form-control" type="text" placeholder="Contact Number"></div>
+                                </div>
+                            </div>
+                            <!--fields-->
+
+                            <div class="form-wizard-buttons">
+                                <button type="button" class="btn btn-next">Next</button>
+                            </div>
+                        </fieldset>
+                        <!-- Form Step 1 -->
+
+                        <!-- Form Step 2 -->
+                        <fieldset>
+                            <!-- Progress Bar -->
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                </div>
+                            </div>
+                            <!-- Progress Bar -->
+                            <h4>Delegate's Information : <span>Step 2 - 4</span></h4>
+                            <!--fields-->
+                            <!--table-->
+                            <button type="button" class="btn btn-primary" id="newRegistrantBtn" >
+                                Add Delegate
+                            </button>
+                            <div class="container">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <table class="table table-hover table-striped table-bordered" id="registrantTable">
+                                            <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Designation</th>
+                                                <th>Name</th>
+                                                <th>Birthday</th>
+                                                <th>Gender</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--fields-->
+                            <!--modal-->
+                            <div class="modal fade" id="registrantModal" tabindex="-1" role="dialog" aria-labelledby="Registrant Details" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Registrant Details</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-lg-12 well">
+                                                <div hidden class="form-group">
+                                                    <label>Id</label>
+                                                    <input class="form-control" type="text" id="id" name="id" value="">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-4">
+                                                        <label>Designation:</label>
+                                                        <select class="form-control" id="designation" name="designation" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-4">
+                                                        <label>First Name:</label>
+                                                        <input class="form-control" type="text" id="firstname" name="firstname" value=""></div>
+                                                    <div class="form-group col-sm-4">
+                                                        <label>Middle Name:</label>
+                                                        <input class="form-control" type="text" id="middlename" name="middlename" value=""></div>
+                                                    <div class="form-group col-sm-4">
+                                                        <label>Last Name:</label>
+                                                        <input class="form-control" type="text" id="lastname" name="lastname" value=""></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-4">
+                                                        <label>Date of Birth:</label>
+                                                        <input class="form-control" type="date" id="birthday" name="birthday" value=""></div>
+                                                    <div class="form-group col-sm-4">
+                                                        <label>Gender:</label>
+                                                        <select class="form-control" id="gender" name="gender" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                                    <div class="form-group col-sm-4">
+                                                        <label>Civil Status:</label>
+                                                        <select class="form-control" id="civilstatus" name="civilstatus" value=""><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Mobile Number:</label>
+                                                    <input class="form-control" type="text" id="mobilenumber" name="mobilenumber" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="button" class="btn btn-primary" value="save" id="registrantSaveBtn"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-wizard-buttons">
+                                <button type="button" class="btn btn-previous">Previous</button>
+                                <button type="button" class="btn btn-next">Next</button>
+                            </div>
+                        </fieldset>
+                        <!-- Form Step 2 -->
+
+                        <!-- Form Step 3 -->
+                        <fieldset>
+                            <!-- Progress Bar -->
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                </div>
+                            </div>
+                            <!-- Progress Bar -->
+                            <h4>Profile Image: <span>Step 3 - 4</span></h4>
+                            <div style="clear:both;"></div>
+                            <div class="form-group image-upload">
+                                <div class="setting image_picker">
+                                    <br/><h3 class="text-center">Upload Profile Image</h3>
+                                    <div class="settings_wrap">
+                                        <label class="drop_target">
+                                            <div class="image_preview"></div>
+                                            <input id="inputFile" type="file"/>
+                                        </label>
+                                        <div class="settings_actions vertical"><a class="disabled" data-action="remove_current_image"><i class="fa fa-trash" aria-hidden="true"></i> Remove Image</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Yes, show this image on my profile.
+                                </label>
+                            </div>
+                            <div class="form-wizard-buttons">
+                                <button type="button" class="btn btn-previous">Previous</button>
+                                <button type="button" class="btn btn-next">Next</button>
+                            </div>
+                        </fieldset>
+                        <!-- Form Step 3 -->
+
+                        <!-- Form Step 4 -->
+                        <fieldset>
+                            <!-- Progress Bar -->
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                </div>
+                            </div>
+                            <!-- Progress Bar -->
+                            <h4>Success Account: <span>Step 4 - 4</span></h4>
+                            <div style="clear:both;"></div>
+                            <div class="success">
+                                <h3>Sing Up Success</h3>
+                                <div class="success-icon"><i class="fa fa-check" aria-hidden="true"></i></div>
+                            </div>
+                            <div class="form-wizard-buttons">
+                                <button type="button" class="btn btn-previous">Previous</button>
+                                <button type="submit" class="btn btn-submit">Done</button>
+                            </div>
+                        </fieldset>
+                        <!-- Form Step 4 -->
+
+                    </form>
+
                 </div>
+                <!-- Form Wizard -->
             </div>
         </div>
-    </form>
+    </section>
 
 </div>
 <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/pnotify/3.2.1/dist/pnotify.js}"></script>
 <!--<script type="text/javascript" th:src="@{/webjars/datatables-plugins.1.10.19/dataRender/datetime.js}"></script>-->
-<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/form-wizard.js}"></script>
 </body>
 </html>
