@@ -1,11 +1,8 @@
 package org.bapp.controller;
 
 import org.bapp.dto.ChurchDTO;
-import org.bapp.dto.FullRegistrantDTO;
 import org.bapp.dto.RegistrantDTO;
-import org.bapp.mapper.ChurchMapper;
 import org.bapp.mapper.RegistrantMapper;
-import org.bapp.model.Address;
 import org.bapp.model.Church;
 import org.bapp.model.Email;
 import org.bapp.model.Registrant;
@@ -18,12 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 @Controller
@@ -40,34 +33,6 @@ public class RegistrantController {
 
     @Autowired
     private SequenceServiceImpl service;
-
-//    @RequestMapping(path = "add", method = RequestMethod.GET)
-//    public String register(Model model){
-//        model.addAttribute("fde",new FullRegistrantDTO());
-//        return "register";
-//    }
-
-//    @RequestMapping(value = "add", method = RequestMethod.POST)
-//    public String add(@ModelAttribute("fde") @Valid FullRegistrantDTO fde, Errors errors){
-//
-//        if(errors.hasErrors()){
-//            return "redirect:";
-//        }
-//
-//        service.setEventId(1);
-//        service.setEventName("BMPSYMP");
-//
-//        // this should use mapper but for now manually map
-//        Church church = new Church();
-//
-//        church.setChurchId(service.generateSequenceId());
-//        church.setChurchName(fde.getChurchDTO().getChurchName());
-//
-//
-//        churchRepository.save(church);
-//
-//        return "index";
-//    }
 
     @GetMapping("church")
     public String getChurch(Model model){
@@ -131,10 +96,11 @@ public class RegistrantController {
 
     @PostMapping("delegate/add")
     @ResponseBody
-    public void addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
+    public RegistrantDTO addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
         Church church = churchRepository.findByChurchId(registrantDTO.getChurchId());
         Registrant r = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(registrantDTO);
         r.setChurch(church);
         registrantRepository.save(r);
+        return RegistrantMapper.INSTANCE.RegistrantToRegistrantDto(r);
     }
 }

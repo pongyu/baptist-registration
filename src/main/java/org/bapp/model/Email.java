@@ -14,11 +14,11 @@ public class Email implements Serializable{
     private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
 
     @Column(name = "email")
-    private String emailAddress;
+    private String email;
 
     public Email(String emailAddress){
 //        Assert.isTrue(isValid(emailAddress), "Invalid email address");
-        this.emailAddress = emailAddress;
+        this.email = emailAddress;
     }
 
     protected Email(){}
@@ -27,4 +27,8 @@ public class Email implements Serializable{
         return PATTERN.matcher(candidate).matches();
     }
 
+    @Override
+    public String toString() {
+        return this.email;
+    }
 }

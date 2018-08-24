@@ -135,34 +135,35 @@ var churchId;
         });
 
 
-        //initialise data tables
-        // var table = $('#registrantTable').DataTable({
-        //     "processing": true,
-        //     "bAutoWidth": true,
-        //     "sAjaxSource": "/register/delegates",
-        //     "sAjaxDataProp": "",
-        //     "order": [[ 0, "asc" ]],
-        //     "aoColumns": [
-        //         { "mData": "id"},
-        //         { "mData": "designation" },
-        //         { "mData": null, render: function ( data, type, row ) {
-        //             // Combine the first and last names into a single table field
-        //             return data.firstName+' '+data.lastName;
-        //         } },
-        //         { "mData": "birthDate" },
-        //         { "mData": "gender" },
-        //         { "mData": "email" },
-        //         { "mData": null}
-        //     ],
-        //     "columnDefs": [ {
-        //         "targets": -1,
-        //         "data": null,
-        //         "defaultContent": '<button type="button">Edit</button>'
-        //     } ]
-        // });
+        // initialise data tables
+        var table = $('#registrantTable').DataTable({
+            "processing": true,
+            "bAutoWidth": true,
+            "sAjaxSource": "/register/delegates?churchId="+churchId,
+            "sAjaxDataProp": "",
+            "order": [[ 0, "asc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "designation" },
+                { "mData": null, render: function ( data, type, row ) {
+                    // Combine the first and last names into a single table field
+                    return data.firstName+' '+data.lastName;
+                } },
+                { "mData": "birthDate" },
+                { "mData": "gender" },
+                { "mData": "email" },
+                { "mData": null}
+            ],
+            "columnDefs": [ {
+                "targets": -1,
+                "data": null,
+                "defaultContent": '<button type="button">Edit</button>'
+            } ]
+        });
 
 
         $('#registrantTable tbody').on( 'click', 'button', function () {
+            console.log("testing btn edit")
             var data = table.row( $(this).parents('tr') ).data();
             $('.registrantForm #id').val(data.id);
             $('.registrantForm #firstname').val(data.firstName);
@@ -170,7 +171,7 @@ var churchId;
             $('.registrantForm #lastname').val(data.lastName);
             $('.registrantForm #designation').val(data.designation);
 
-            $('.registrantForm #registrantModal').modal();
+            $('#registrantModal').modal('toggle');
 
         });
 
@@ -183,6 +184,11 @@ var churchId;
             $('.registrantForm #middlename').val('');
             $('.registrantForm #lastname').val('');
             $('.registrantForm #designation').val('');
+            $('.registrantForm #birthday').val('');
+            $('.registrantForm #mobilenumber').val('');
+            $('.registrantForm #gender').val('');
+            $('.registrantForm #civilstatus').val('');
+            $('.registrantForm #email').val('');
             $('#registrantModal').modal();
         });
 
@@ -190,9 +196,14 @@ var churchId;
             var data = {}
             data['churchId'] = churchId;
             data['firstName'] = $('#firstname').val();
-            data['email'] = 'jdquindoza@gmail.com';
-
-            $("#registrantSaveBtn").prop("disabled", true);
+            data['middleName'] = $('#middlename').val();
+            data['lastName'] = $('#lastname').val();
+            data['designation'] = $('#designation').val();
+            data['birthDate'] = $('#birthday').val();
+            data['mobileNumber'] = $('#mobilenumber').val();
+            data['gender'] = $('#gender').val();
+            data['civilStatus'] = $('#civilstatus').val();
+            data['email'] = $('#email').val();
 
             $.ajax({
                 type: "POST",
@@ -200,18 +211,27 @@ var churchId;
                 url: "/register/delegate/add",
                 data: JSON.stringify(data),
                 dataType: 'json',
-                success: function () {
-                    $("#registrantSaveBtn").prop("disabled", false);
-                    //...
-                    table.ajax.reload();
+                success: function (r) {
+                    table.row.add({
+                        "id": r.id,
+                        "designation": r.designation,
+                        "firstName": r.firstName,
+                        "middleName": r.middleName,
+                        "lastName": r.lastName,
+                        "birthDate": r.birthDate,
+                        "gender": r.gender,
+                        "civilStatus": r.civilStatus,
+                        "mobileNumber": r.mobileNumber,
+                        "email": r.email,
+                        "churchId": r.churchId
+                    }).draw();
                 },
                 error: function (e) {
-
+                    //...
                 }
-
             });
+
             $('#registrantModal').modal('toggle');
-            table.ajax.reload();
         });
 
 

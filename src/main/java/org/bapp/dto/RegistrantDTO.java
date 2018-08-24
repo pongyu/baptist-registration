@@ -27,6 +27,15 @@ public class RegistrantDTO {
 
     private String churchId;
 
+    private String civilStatus;
+
+    public String getCivilStatus() {
+        return civilStatus;
+    }
+
+    public void setCivilStatus(String civilStatus) {
+        this.civilStatus = civilStatus;
+    }
 
     public Long getId() {
         return id;

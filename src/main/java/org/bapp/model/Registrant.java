@@ -22,6 +22,8 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     private String mobileNumber;
 
+    private String civilStatus;
+
     @Column(unique = true)
     private Email email;
 
@@ -31,6 +33,14 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     public Registrant(){
 
+    }
+
+    public String getCivilStatus() {
+        return civilStatus;
+    }
+
+    public void setCivilStatus(String civilStatus) {
+        this.civilStatus = civilStatus;
     }
 
     public String getMobileNumber() {
