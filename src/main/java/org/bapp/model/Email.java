@@ -17,7 +17,7 @@ public class Email implements Serializable{
     private String emailAddress;
 
     public Email(String emailAddress){
-        Assert.isTrue(isValid(emailAddress), "Invalid email address");
+//        Assert.isTrue(isValid(emailAddress), "Invalid email address");
         this.emailAddress = emailAddress;
     }
 

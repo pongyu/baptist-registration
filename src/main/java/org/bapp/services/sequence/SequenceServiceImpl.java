@@ -47,7 +47,7 @@ public class SequenceServiceImpl implements SequenceService {
                 Integer s = eSequence.getSequence();
                 eSequence.setSequence(s+1);
                 sequenceRepository.save(eSequence);
-                logger.info("sequence updated to ", eSequence.getSequence());
+                logger.info("sequence updated to ", eSequence.getSequence().toString());
                 return s;
             }
         } catch (Exception e){
@@ -59,7 +59,7 @@ public class SequenceServiceImpl implements SequenceService {
 
     @Override
     public String addSequence() {
-        return String.format("%03d", getSequence());
+        return String.format("%07d", getSequence());
     }
 
     @Override

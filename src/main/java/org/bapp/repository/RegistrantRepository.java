@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface RegistrantRepository extends JpaRepository <Registrant, Long>{
 
+    List<Registrant> findAllByChurch(Church church);
 
 }

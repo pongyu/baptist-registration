@@ -3,6 +3,8 @@ package org.bapp.controller;
 import org.bapp.dto.ChurchDTO;
 import org.bapp.dto.FullRegistrantDTO;
 import org.bapp.dto.RegistrantDTO;
+import org.bapp.mapper.ChurchMapper;
+import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.Address;
 import org.bapp.model.Church;
 import org.bapp.model.Email;
@@ -26,13 +28,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
 @RequestMapping("register")
-@SessionAttributes("fde")
 public class RegistrantController {
 
 
 
     @Autowired
-    RegistrantRepository registrantRepository;
+    private RegistrantRepository registrantRepository;
 
     @Autowired
     private ChurchRepository churchRepository;
@@ -40,46 +41,56 @@ public class RegistrantController {
     @Autowired
     private SequenceServiceImpl service;
 
-    @RequestMapping(path = "add", method = RequestMethod.GET)
-    public String register(Model model){
-        model.addAttribute("fde",new FullRegistrantDTO());
+//    @RequestMapping(path = "add", method = RequestMethod.GET)
+//    public String register(Model model){
+//        model.addAttribute("fde",new FullRegistrantDTO());
+//        return "register";
+//    }
+
+//    @RequestMapping(value = "add", method = RequestMethod.POST)
+//    public String add(@ModelAttribute("fde") @Valid FullRegistrantDTO fde, Errors errors){
+//
+//        if(errors.hasErrors()){
+//            return "redirect:";
+//        }
+//
+//        service.setEventId(1);
+//        service.setEventName("BMPSYMP");
+//
+//        // this should use mapper but for now manually map
+//        Church church = new Church();
+//
+//        church.setChurchId(service.generateSequenceId());
+//        church.setChurchName(fde.getChurchDTO().getChurchName());
+//
+//
+//        churchRepository.save(church);
+//
+//        return "index";
+//    }
+
+    @GetMapping("church")
+    public String getChurch(Model model){
+        model.addAttribute("church", new ChurchDTO());
+        model.addAttribute("churchId");
         return "register";
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String add(Model model, @ModelAttribute("fde") @Valid FullRegistrantDTO fde, Errors errors){
-
-        if(errors.hasErrors()){
-            return "redirect:";
-        }
-
-        service.setEventId(1);
-        service.setEventName("BMPSYMP");
-
-        // this should use mapper but for now manually map
-        Church church = new Church();
-
-        church.setChurchId(service.generateSequenceId());
-        church.setChurchName(fde.getChurchDTO().getChurchName());
-
-
-        churchRepository.save(church);
-
-        return "index";
-    }
-
-    @PostMapping("church/save")
+    @PostMapping("church")
     @ResponseBody
-    public String saveChurch( @ModelAttribute("church") @Valid ChurchDTO churchDTO, Errors errors){
+    public String saveChurch(@RequestBody ChurchDTO churchDTO, Errors errors, Model model){
 
         if(errors.hasErrors()){
             return "redirect:";
         }
+
+
         String id = churchDTO.getChurchId();
         Church  church = churchRepository.findByChurchId(id);
         try {
 
             if(church != null){
+                church.setChurchName(churchDTO.getChurchName());
                 church.setAddress(churchDTO.getAddress());
                 church.setChurchContactNumber(churchDTO.getChurchContactNumber());
                 church.setChurchEmail(new Email(churchDTO.getChurchEmail()));
@@ -87,20 +98,43 @@ public class RegistrantController {
                 church.setContactPersonMobileNumber(churchDTO.getContactPersonMobileNumber());
                 church.setDateUpdated(LocalDateTime.now());
                 churchRepository.save(church);
+
+                model.addAttribute("churchId",church.getChurchId());
                 return church.getChurchId();
             }else{
-                church.setChurchId(service.generateSequenceId());
+                Church c = new Church();
+                service.setEventId(1);
+                service.setEventName("BMPSYMP");
+                c.setChurchId(service.generateSequenceId());
+                c.setChurchName(churchDTO.getChurchName());
+                churchRepository.save(c);
+
+                model.addAttribute("churchId",c.getChurchId());
+                return c.getChurchId();
             }
-
-
-
-
-
 
         } catch (Exception e){
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    @GetMapping("delegates")
+    @ResponseBody
+    public List<RegistrantDTO> getRegistrant(@RequestParam(name = "churchId") String churchId){
+        Church church = churchRepository.findByChurchId(churchId);
+        List<RegistrantDTO> list = RegistrantMapper.INSTANCE.registrantToRegistrantDtoList(
+                registrantRepository.findAllByChurch(church));
+        return list;
+    }
+
+    @PostMapping("delegate/add")
+    @ResponseBody
+    public void addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
+        Church church = churchRepository.findByChurchId(registrantDTO.getChurchId());
+        Registrant r = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(registrantDTO);
+        r.setChurch(church);
+        registrantRepository.save(r);
     }
 }

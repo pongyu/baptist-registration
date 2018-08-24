@@ -1,4 +1,5 @@
 "use strict";
+var churchId;
 (function( $ ) {
 	
 	function scroll_to_class(element_class, removed_height) {
@@ -64,7 +65,6 @@
 					scroll_to_class( $('.form-wizard'), 20 );
 				});
 			}
-			
 		});
 		
 		// previous step
@@ -101,10 +101,123 @@
 			// fields validation
 
 		});
-		
-		
-	});
-	
+
+
+
+
+		// test church save
+        // save function for church;
+		$('.form-wizard .btn-save-church').on('click', function () {
+
+			var data = {}
+			data['churchId'] = churchId;
+            data['churchName'] = $('#churchname').val();
+
+            $('.btn-save-church').prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/register/church",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (data) {
+                    $(".btn-save-church").prop("disabled", false);
+                    //...
+                    churchId = data;
+                    console.log(data);
+                },
+                error: function (e) {
+
+                }
+
+            });
+        });
+
+
+        //initialise data tables
+        // var table = $('#registrantTable').DataTable({
+        //     "processing": true,
+        //     "bAutoWidth": true,
+        //     "sAjaxSource": "/register/delegates",
+        //     "sAjaxDataProp": "",
+        //     "order": [[ 0, "asc" ]],
+        //     "aoColumns": [
+        //         { "mData": "id"},
+        //         { "mData": "designation" },
+        //         { "mData": null, render: function ( data, type, row ) {
+        //             // Combine the first and last names into a single table field
+        //             return data.firstName+' '+data.lastName;
+        //         } },
+        //         { "mData": "birthDate" },
+        //         { "mData": "gender" },
+        //         { "mData": "email" },
+        //         { "mData": null}
+        //     ],
+        //     "columnDefs": [ {
+        //         "targets": -1,
+        //         "data": null,
+        //         "defaultContent": '<button type="button">Edit</button>'
+        //     } ]
+        // });
+
+
+        $('#registrantTable tbody').on( 'click', 'button', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            $('.registrantForm #id').val(data.id);
+            $('.registrantForm #firstname').val(data.firstName);
+            $('.registrantForm #middlename').val(data.middleName);
+            $('.registrantForm #lastname').val(data.lastName);
+            $('.registrantForm #designation').val(data.designation);
+
+            $('.registrantForm #registrantModal').modal();
+
+        });
+
+        // registrant saving
+
+        $('#newRegistrantBtn').on('click', function (e) {
+            e.preventDefault();
+            $('.registrantForm #id').val('');
+            $('.registrantForm #firstname').val('');
+            $('.registrantForm #middlename').val('');
+            $('.registrantForm #lastname').val('');
+            $('.registrantForm #designation').val('');
+            $('#registrantModal').modal();
+        });
+
+        $('#registrantSaveBtn').on('click', function (e) {
+            var data = {}
+            data['churchId'] = churchId;
+            data['firstName'] = $('#firstname').val();
+            data['email'] = 'jdquindoza@gmail.com';
+
+            $("#registrantSaveBtn").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/register/delegate/add",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function () {
+                    $("#registrantSaveBtn").prop("disabled", false);
+                    //...
+                    table.ajax.reload();
+                },
+                error: function (e) {
+
+                }
+
+            });
+            $('#registrantModal').modal('toggle');
+            table.ajax.reload();
+        });
+
+
+
+    });
+
 
 
 	// image uploader scripts 
