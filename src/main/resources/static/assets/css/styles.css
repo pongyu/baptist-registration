@@ -1,0 +1,5 @@
+.progress-striped.active .progress-bar {
+    -webkit-animation: progress-bar-stripes 2s linear infinite !important;
+    -o-animation: progress-bar-stripes 2s linear infinite !important;
+    animation: progress-bar-stripes 2s linear infinite !important;
+}

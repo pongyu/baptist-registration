@@ -43,7 +43,7 @@ var churchId;
 			
 			// fields validation
 			parent_fieldset.find('.required').each(function() {
-				if( $(this).val() == "" ) {
+				if( $(this).val() === "" ||  $(this).val() === null || $(this).val() === undefined) {
 					$(this).addClass('input-error');
 					next_step = false;
 				}
@@ -102,16 +102,22 @@ var churchId;
 
 		});
 
-
-
-
-		// test church save
         // save function for church;
 		$('.form-wizard .btn-save-church').on('click', function () {
 
 			var data = {}
 			data['churchId'] = churchId;
             data['churchName'] = $('#churchname').val();
+            data['address'] = {
+                'street' : $('#church_address').val(),
+                'city' : $('#city').val(),
+                'state' : $('#state').val(),
+                'country' : $('#country').val()
+            };
+            data['churchEmail'] = $('#church_email').val();
+            data['churchContactNumber'] = $('#church_contact_number').val();
+            data['contactPerson'] = $('#church_contact_person').val();
+            data['contactPersonMobileNumber'] = $('#church_contact_person_number').val();
 
             $('.btn-save-church').prop("disabled", true);
 
@@ -136,30 +142,39 @@ var churchId;
 
 
         // initialise data tables
-        var table = $('#registrantTable').DataTable({
+        var table = $('#registrantTable').addClass('nowrap').DataTable({
             "processing": true,
             "bAutoWidth": true,
             "searching": false,
+            // "responsive": true,
             "sAjaxSource": "/register/delegates?churchId="+churchId,
             "sAjaxDataProp": "",
             "order": [[ 0, "asc" ]],
             "aoColumns": [
-                { "mData": "id"},
-                { "mData": "designation" },
+                // { "mData": "id"},
                 { "mData": null, render: function ( data, type, row ) {
                     // Combine the first and last names into a single table field
                     return data.firstName+' '+data.lastName;
                 } },
+                { "mData": "designation" },
                 { "mData": "birthDate" },
                 { "mData": "gender" },
                 { "mData": "email" },
                 { "mData": null}
             ],
-            "columnDefs": [ {
-                "targets": -1,
-                "data": null,
-                "defaultContent": '<button type="button">Edit</button>'
-            } ]
+            "columnDefs": [
+                {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": '<button type="button"><i class="fa fa-edit"></i></button>'
+                },
+                {
+                    targets:2, render:function(data){
+                    return moment(data).format('MMMM Do YYYY');
+                    }
+                },
+                // { "targets" : [-1, -4], "className": 'dt-body-right' }
+            ]
         });
 
         // for adding or updating registrant
@@ -167,16 +182,19 @@ var churchId;
 
 
         $('#registrantTable tbody').on( 'click', 'button', function () {
+
             editReg = true;
-            if(editReg){
-                console.log("editing")
-            }
             var data = table.row( $(this).parents('tr') ).data();
             $('.registrantForm #id').val(data.id);
             $('.registrantForm #firstname').val(data.firstName);
             $('.registrantForm #middlename').val(data.middleName);
             $('.registrantForm #lastname').val(data.lastName);
             $('.registrantForm #designation').val(data.designation);
+            $('.registrantForm #birthday').val(data.birthDate);
+            $('.registrantForm #mobilenumber').val(data.mobileNumber);
+            $('.registrantForm #gender').val(data.gender);
+            $('.registrantForm #civilstatus').val(data.civilStatus);
+            $('.registrantForm #email').val(data.email);
 
             $('#registrantModal').modal('toggle');
 
@@ -203,7 +221,6 @@ var churchId;
             var data = {}
             if(editReg){
                 data['id'] = $('#id').val();
-                console.log("editing "+ $('#id').val());
             }
             data['churchId'] = churchId;
             data['firstName'] = $('#firstname').val();

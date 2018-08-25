@@ -3,9 +3,11 @@ package org.bapp.controller;
 import org.bapp.dto.ChurchDTO;
 import org.bapp.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
+import org.bapp.model.Address;
 import org.bapp.model.Church;
 import org.bapp.model.Email;
 import org.bapp.model.Registrant;
+import org.bapp.repository.AddressRepository;
 import org.bapp.repository.ChurchRepository;
 import org.bapp.repository.RegistrantRepository;
 import org.bapp.services.sequence.SequenceServiceImpl;
@@ -34,6 +36,9 @@ public class RegistrantController {
     @Autowired
     private SequenceServiceImpl service;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     @GetMapping("church")
     public String getChurch(Model model){
         model.addAttribute("church", new ChurchDTO());
@@ -55,7 +60,11 @@ public class RegistrantController {
         try {
 
             if(church != null){
+
                 church.setChurchName(churchDTO.getChurchName());
+
+                //address
+                churchDTO.getAddress().setId(church.getAddress().getId());
                 church.setAddress(churchDTO.getAddress());
                 church.setChurchContactNumber(churchDTO.getChurchContactNumber());
                 church.setChurchEmail(new Email(churchDTO.getChurchEmail()));
@@ -72,6 +81,13 @@ public class RegistrantController {
                 service.setEventName("BMPSYMP");
                 c.setChurchId(service.generateSequenceId());
                 c.setChurchName(churchDTO.getChurchName());
+
+                c.setAddress(churchDTO.getAddress());
+                c.setChurchContactNumber(churchDTO.getChurchContactNumber());
+                c.setChurchEmail(new Email(churchDTO.getChurchEmail()));
+                c.setContactPerson(churchDTO.getContactPerson());
+                c.setContactPersonMobileNumber(churchDTO.getContactPersonMobileNumber());
+                c.setDateUpdated(LocalDateTime.now());
                 churchRepository.save(c);
 
                 model.addAttribute("churchId",c.getChurchId());

@@ -39,6 +39,8 @@ dependencies {
 	compile('org.webjars:datatables:1.10.19')
     compile('org.webjars:datatables-plugins:1.10.19')
 //	compile('org.webjars.bower:pnotify:3.2.1')
+	compile('org.webjars:momentjs:2.22.2')
+    compile('org.webjars.bower:datatables.net-responsive:2.2.0')
 	compile('org.mapstruct:mapstruct-jdk8:1.2.0.Final')
     compile('org.mapstruct:mapstruct-processor:1.2.0.Final')
 	runtime('mysql:mysql-connector-java')

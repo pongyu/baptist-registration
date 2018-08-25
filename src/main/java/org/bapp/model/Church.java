@@ -17,7 +17,9 @@ public class Church {
 
     private String churchName;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL)
+    @JoinColumn(name="church_address_id")
     private Address address;
 
     @Column(unique = true)
