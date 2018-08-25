@@ -23,7 +23,15 @@ var churchId;
 	}
 
 	jQuery(document).ready(function() {
-		
+        $('#churchname').val('');
+        $('#church_address').val('');
+        $('#city').val('');
+        $('#state').val('');
+        $('#country').val('');
+        $('#church_email').val('');
+        $('#church_contact_number').val('');
+        $('#church_contact_person').val('');
+        $('#church_contact_person_number').val('');
 		/*
 			Form
 		*/
