@@ -94,13 +94,26 @@ public class RegistrantController {
         return list;
     }
 
-    @PostMapping("delegate/add")
+    @PostMapping("delegate/save")
     @ResponseBody
-    public RegistrantDTO addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
+    public List<RegistrantDTO> addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
         Church church = churchRepository.findByChurchId(registrantDTO.getChurchId());
         Registrant r = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(registrantDTO);
         r.setChurch(church);
         registrantRepository.save(r);
-        return RegistrantMapper.INSTANCE.RegistrantToRegistrantDto(r);
+        return listRegistrant(registrantDTO.getChurchId());
+    }
+
+    @PostMapping("delegate/delete")
+    @ResponseBody
+    public void editRegistrant(@RequestParam(name = "id") Long id){
+        registrantRepository.deleteById(id);
+    }
+
+    private List<RegistrantDTO> listRegistrant(String churchId){
+        Church church = churchRepository.findByChurchId(churchId);
+        List<RegistrantDTO> list = RegistrantMapper.INSTANCE.registrantToRegistrantDtoList(
+                registrantRepository.findAllByChurch(church));
+        return list;
     }
 }

@@ -139,6 +139,7 @@ var churchId;
         var table = $('#registrantTable').DataTable({
             "processing": true,
             "bAutoWidth": true,
+            "searching": false,
             "sAjaxSource": "/register/delegates?churchId="+churchId,
             "sAjaxDataProp": "",
             "order": [[ 0, "asc" ]],
@@ -161,9 +162,15 @@ var churchId;
             } ]
         });
 
+        // for adding or updating registrant
+        var editReg = false;
+
 
         $('#registrantTable tbody').on( 'click', 'button', function () {
-            console.log("testing btn edit")
+            editReg = true;
+            if(editReg){
+                console.log("editing")
+            }
             var data = table.row( $(this).parents('tr') ).data();
             $('.registrantForm #id').val(data.id);
             $('.registrantForm #firstname').val(data.firstName);
@@ -194,6 +201,10 @@ var churchId;
 
         $('#registrantSaveBtn').on('click', function (e) {
             var data = {}
+            if(editReg){
+                data['id'] = $('#id').val();
+                console.log("editing "+ $('#id').val());
+            }
             data['churchId'] = churchId;
             data['firstName'] = $('#firstname').val();
             data['middleName'] = $('#middlename').val();
@@ -208,29 +219,18 @@ var churchId;
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/register/delegate/add",
+                url: "/register/delegate/save",
                 data: JSON.stringify(data),
                 dataType: 'json',
                 success: function (r) {
-                    table.row.add({
-                        "id": r.id,
-                        "designation": r.designation,
-                        "firstName": r.firstName,
-                        "middleName": r.middleName,
-                        "lastName": r.lastName,
-                        "birthDate": r.birthDate,
-                        "gender": r.gender,
-                        "civilStatus": r.civilStatus,
-                        "mobileNumber": r.mobileNumber,
-                        "email": r.email,
-                        "churchId": r.churchId
-                    }).draw();
+                    table.clear();
+                    table.rows.add(r).draw();
                 },
                 error: function (e) {
                     //...
                 }
             });
-
+            editReg = false;
             $('#registrantModal').modal('toggle');
         });
 
