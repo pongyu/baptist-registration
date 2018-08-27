@@ -3,7 +3,6 @@ package org.bapp.controller;
 import org.bapp.dto.ChurchDTO;
 import org.bapp.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
-import org.bapp.model.Address;
 import org.bapp.model.Church;
 import org.bapp.model.Email;
 import org.bapp.model.Registrant;
@@ -11,6 +10,7 @@ import org.bapp.repository.AddressRepository;
 import org.bapp.repository.ChurchRepository;
 import org.bapp.repository.RegistrantRepository;
 import org.bapp.services.sequence.SequenceServiceImpl;
+import org.bapp.util.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -113,10 +114,15 @@ public class RegistrantController {
     @PostMapping("delegate/save")
     @ResponseBody
     public List<RegistrantDTO> addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
-        Church church = churchRepository.findByChurchId(registrantDTO.getChurchId());
-        Registrant r = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(registrantDTO);
-        r.setChurch(church);
-        registrantRepository.save(r);
+        try {
+            Church church = churchRepository.findByChurchId(registrantDTO.getChurchId());
+            Registrant r = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(registrantDTO);
+            r.setChurch(church);
+            registrantRepository.save(r);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return listRegistrant(registrantDTO.getChurchId());
     }
 

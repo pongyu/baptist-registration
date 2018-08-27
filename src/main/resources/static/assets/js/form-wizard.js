@@ -127,7 +127,7 @@ var churchId;
             data['contactPerson'] = $('#church_contact_person').val();
             data['contactPersonMobileNumber'] = $('#church_contact_person_number').val();
 
-            $('.btn-save-church').prop("disabled", true);
+            // $('.btn-save-church').prop("disabled", true);
 
             $.ajax({
                 type: "POST",
@@ -136,7 +136,7 @@ var churchId;
                 data: JSON.stringify(data),
                 dataType: 'json',
                 success: function (data) {
-                    $(".btn-save-church").prop("disabled", false);
+                    // $(".btn-save-church").prop("disabled", false);
                     //...
                     churchId = data;
                     console.log(data);
@@ -146,6 +146,7 @@ var churchId;
                 }
 
             });
+
         });
 
 
@@ -167,7 +168,10 @@ var churchId;
                 { "mData": "designation" },
                 { "mData": "birthDate" },
                 { "mData": "gender" },
+                { "mData": "civilStatus" },
+                { "mData": "mobileNumber" },
                 { "mData": "email" },
+                { "mData": null},
                 { "mData": null}
             ],
             "columnDefs": [
@@ -177,11 +181,16 @@ var churchId;
                     "defaultContent": '<button type="button"><i class="fa fa-edit"></i></button>'
                 },
                 {
+                    "targets": -2,
+                    "data": null,
+                    "defaultContent": '<button type="button"><i class="fa fa-trash"></i></button>'
+                },
+                {
                     targets:2, render:function(data){
                     return moment(data).format('MMMM Do YYYY');
                     }
                 },
-                // { "targets" : [-1, -4], "className": 'dt-body-right' }
+                // { "targets" : [-3, -4, -5, -6], "className": 'dt-body-right' }
             ]
         });
 
@@ -240,6 +249,8 @@ var churchId;
             data['gender'] = $('#gender').val();
             data['civilStatus'] = $('#civilstatus').val();
             data['email'] = $('#email').val();
+
+            console.log("civil status"+ $('#civilstatus').val())
 
             $.ajax({
                 type: "POST",

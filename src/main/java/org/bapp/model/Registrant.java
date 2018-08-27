@@ -24,6 +24,8 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     private String civilStatus;
 
+    private Integer yearsOfTeaching;
+
     @Column(unique = true)
     private Email email;
 
@@ -35,44 +37,12 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     }
 
-    public String getCivilStatus() {
-        return civilStatus;
-    }
-
-    public void setCivilStatus(String civilStatus) {
-        this.civilStatus = civilStatus;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
     public String getDesignation() {
         return designation;
     }
 
     public void setDesignation(String designation) {
         this.designation = designation;
-    }
-
-    public Church getChurch() {
-        return church;
-    }
-
-    public void setChurch(Church church) {
-        this.church = church;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public void setEmail(Email email) {
-        this.email = email;
     }
 
     public String getFirstName() {
@@ -113,5 +83,45 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getCivilStatus() {
+        return civilStatus;
+    }
+
+    public void setCivilStatus(String civilStatus) {
+        this.civilStatus = civilStatus;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public Church getChurch() {
+        return church;
+    }
+
+    public void setChurch(Church church) {
+        this.church = church;
+    }
+
+    public Integer getYearsOfTeaching() {
+        return yearsOfTeaching;
+    }
+
+    public void setYearsOfTeaching(Integer yearsOfTeaching) {
+        this.yearsOfTeaching = yearsOfTeaching;
     }
 }
