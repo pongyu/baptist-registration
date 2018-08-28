@@ -110,9 +110,11 @@ var churchId;
 
 		});
 
+		// populate church
+        $.get
+
         // save function for church;
 		$('.form-wizard .btn-save-church').on('click', function () {
-
 			var data = {}
 			data['churchId'] = churchId;
             data['churchName'] = $('#churchname').val();
@@ -132,7 +134,7 @@ var churchId;
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/register/church",
+                url: "/register",
                 data: JSON.stringify(data),
                 dataType: 'json',
                 success: function (data) {
@@ -142,7 +144,7 @@ var churchId;
                     console.log(data);
                 },
                 error: function (e) {
-
+                    console.log(e);
                 }
 
             });
@@ -226,6 +228,9 @@ var churchId;
                 content: 'name: '+name,
                 theme: 'modern',
                 type: 'red',
+                animation: 'top',
+                closeAnimation: 'top',
+                animateFromElement: false,
                 buttons: {
                     tryAgain: {
                         text: 'Delete',

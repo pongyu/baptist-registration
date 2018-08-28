@@ -4,13 +4,13 @@ import org.bapp.dto.ChurchDTO;
 import org.bapp.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.Church;
+import org.bapp.model.Codetable;
 import org.bapp.model.Email;
 import org.bapp.model.Registrant;
-import org.bapp.repository.AddressRepository;
-import org.bapp.repository.ChurchRepository;
-import org.bapp.repository.RegistrantRepository;
+import org.bapp.services.church.ChurchService;
+import org.bapp.services.codetable.CodetableService;
+import org.bapp.services.registrant.RegistrantService;
 import org.bapp.services.sequence.SequenceServiceImpl;
-import org.bapp.util.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 
 @Controller
@@ -30,25 +28,29 @@ public class RegistrantController {
 
 
     @Autowired
-    private RegistrantRepository registrantRepository;
+    private RegistrantService registrantService;
 
     @Autowired
-    private ChurchRepository churchRepository;
+    private ChurchService churchService;
 
     @Autowired
     private SequenceServiceImpl service;
 
     @Autowired
-    private AddressRepository addressRepository;
+    private CodetableService codetableService;
 
-    @GetMapping("church")
+    @ModelAttribute("churches")
+    public List<Codetable> populateChurch() {
+        return codetableService.findAllById("church");
+    }
+
+    @GetMapping("")
     public String getChurch(Model model){
         model.addAttribute("church", new ChurchDTO());
-        model.addAttribute("churchId");
         return "register";
     }
 
-    @PostMapping("church")
+    @PostMapping("")
     @ResponseBody
     public String saveChurch(@RequestBody ChurchDTO churchDTO, Errors errors, Model model){
 
@@ -58,7 +60,7 @@ public class RegistrantController {
 
 
         String id = churchDTO.getChurchId();
-        Church  church = churchRepository.findByChurchId(id);
+        Church  church = churchService.findByChurchId(id);
         try {
 
             if(church != null){
@@ -73,9 +75,8 @@ public class RegistrantController {
                 church.setContactPerson(churchDTO.getContactPerson());
                 church.setContactPersonMobileNumber(churchDTO.getContactPersonMobileNumber());
                 church.setDateUpdated(LocalDateTime.now());
-                churchRepository.save(church);
+                churchService.save(church);
 
-                model.addAttribute("churchId",church.getChurchId());
                 return church.getChurchId();
             }else{
                 Church c = new Church();
@@ -90,9 +91,8 @@ public class RegistrantController {
                 c.setContactPerson(churchDTO.getContactPerson());
                 c.setContactPersonMobileNumber(churchDTO.getContactPersonMobileNumber());
                 c.setDateUpdated(LocalDateTime.now());
-                churchRepository.save(c);
+                churchService.save(c);
 
-                model.addAttribute("churchId",c.getChurchId());
                 return c.getChurchId();
             }
 
@@ -106,9 +106,9 @@ public class RegistrantController {
     @GetMapping("delegates")
     @ResponseBody
     public List<RegistrantDTO> getRegistrant(@RequestParam(name = "churchId") String churchId){
-        Church church = churchRepository.findByChurchId(churchId);
+        Church church = churchService.findByChurchId(churchId);
         List<RegistrantDTO> list = RegistrantMapper.INSTANCE.registrantToRegistrantDtoList(
-                registrantRepository.findAllByChurch(church));
+                registrantService.findAllByChurch(church));
         return list;
     }
 
@@ -116,29 +116,24 @@ public class RegistrantController {
     @ResponseBody
     public List<RegistrantDTO> addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
         try {
-            Church church = churchRepository.findByChurchId(registrantDTO.getChurchId());
+            Church church = churchService.findByChurchId(registrantDTO.getChurchId());
             Registrant r = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(registrantDTO);
             r.setChurch(church);
-            registrantRepository.save(r);
+            registrantService.save(r);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return listRegistrant(registrantDTO.getChurchId());
+        return registrantService.listRegistrant(registrantDTO.getChurchId());
     }
 
     @PostMapping("delegate/delete")
     @ResponseBody
     public List<RegistrantDTO> deleteRegistrant(@RequestParam(name = "id") Long id,
                                                 @RequestParam(name = "churchId") String churchId){
-        registrantRepository.deleteById(id);
-        return listRegistrant(churchId);
+        registrantService.deleteById(id);
+        return registrantService.listRegistrant(churchId);
     }
 
-    private List<RegistrantDTO> listRegistrant(String churchId){
-        Church church = churchRepository.findByChurchId(churchId);
-        List<RegistrantDTO> list = RegistrantMapper.INSTANCE.registrantToRegistrantDtoList(
-                registrantRepository.findAllByChurch(church));
-        return list;
-    }
+
 }
