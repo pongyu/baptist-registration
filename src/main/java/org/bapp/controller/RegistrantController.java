@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Controller
@@ -128,8 +129,10 @@ public class RegistrantController {
 
     @PostMapping("delegate/delete")
     @ResponseBody
-    public void editRegistrant(@RequestParam(name = "id") Long id){
+    public List<RegistrantDTO> deleteRegistrant(@RequestParam(name = "id") Long id,
+                                                @RequestParam(name = "churchId") String churchId){
         registrantRepository.deleteById(id);
+        return listRegistrant(churchId);
     }
 
     private List<RegistrantDTO> listRegistrant(String churchId){

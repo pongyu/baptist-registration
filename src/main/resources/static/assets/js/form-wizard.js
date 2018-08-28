@@ -178,30 +178,29 @@ var churchId;
                 {
                     "targets": -1,
                     "data": null,
-                    "defaultContent": '<button type="button"><i class="fa fa-edit"></i></button>'
+                    "defaultContent": '<button type="button" id="editBtn"><i class="fa fa-edit"></i></button>'
                 },
                 {
                     "targets": -2,
                     "data": null,
-                    "defaultContent": '<button type="button"><i class="fa fa-trash"></i></button>'
+                    "defaultContent": '<button type="button" id="deleteBtn"><i class="fa fa-trash"></i></button>'
                 },
                 {
                     targets:2, render:function(data){
                     return moment(data).format('MMMM Do YYYY');
                     }
-                },
-                // { "targets" : [-3, -4, -5, -6], "className": 'dt-body-right' }
+                }
             ]
         });
 
         // for adding or updating registrant
         var editReg = false;
 
-
-        $('#registrantTable tbody').on( 'click', 'button', function () {
+        $('#registrantTable tbody').on( 'click', 'button#editBtn', function () {
 
             editReg = true;
             var data = table.row( $(this).parents('tr') ).data();
+
             $('.registrantForm #id').val(data.id);
             $('.registrantForm #firstname').val(data.firstName);
             $('.registrantForm #middlename').val(data.middleName);
@@ -214,6 +213,43 @@ var churchId;
             $('.registrantForm #email').val(data.email);
 
             $('#registrantModal').modal('toggle');
+
+        });
+
+        // registrant delete
+
+        $('#registrantTable tbody').on( 'click', 'button#deleteBtn', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            var name = data.firstName + data.lastName;
+            $.confirm({
+                title: 'Delete delegate?',
+                content: 'name: '+name,
+                theme: 'modern',
+                type: 'red',
+                buttons: {
+                    tryAgain: {
+                        text: 'Delete',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            $.ajax({
+                                type: "POST",
+                                contentType: "application/json",
+                                url: "/register/delegate/delete?id="+data.id+"&churchId="+churchId,
+                                success: function (r) {
+                                    table.clear();
+                                    table.rows.add(r).draw();
+                                },
+                                error: function (e) {
+                                    //...
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+
+                    }
+                }
+            });
 
         });
 
@@ -249,8 +285,6 @@ var churchId;
             data['gender'] = $('#gender').val();
             data['civilStatus'] = $('#civilstatus').val();
             data['email'] = $('#email').val();
-
-            console.log("civil status"+ $('#civilstatus').val())
 
             $.ajax({
                 type: "POST",

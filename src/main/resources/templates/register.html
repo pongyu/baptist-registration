@@ -8,7 +8,8 @@
     <link th:href="@{/webjars/font-awesome/5.1.0/css/all.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link th:href="@{/assets/css/form-wizard-blue.css}" type="text/css" rel="stylesheet"/>
-    <!--<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css">-->
+    <link th:href="@{/assets/css/jquery-confirm.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/5.1.0/css/all.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body oncontextmenu="return false;">
 
@@ -162,6 +163,7 @@
                             </table>
                             <!--fields-->
                             <!--modal-->
+                            <!--registrant modal-->
                             <div class="modal fade registrantForm" id="registrantModal" tabindex="-1" role="dialog" aria-labelledby="Registrant Details" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                     <div class="modal-content">
@@ -296,11 +298,9 @@
 <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
 <!--<script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>-->
-<!--<script type="text/javascript" th:src="@{/webjars/datatables/net-responsive/2.2.0/js/dataTables.responsive.min.js}"></script>-->
 <script type="text/javascript" th:src="@{/webjars/momentjs/2.22.2/moment.js}"></script>
-<!--<script type="text/javascript" th:src="@{/webjars/pnotify/3.2.1/dist/pnotify.js}"></script>-->
-<!--<script type="text/javascript" th:src="@{/webjars/datatables-plugins/1.10.19/dataRender/datetime.js}"></script>-->
 <script type="text/javascript" th:src="@{/assets/js/main.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/form-wizard.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery-confirm.js}"></script>
 </body>
 </html>
