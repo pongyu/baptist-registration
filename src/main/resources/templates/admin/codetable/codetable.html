@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-block">
+                <button type="button" class="btn btn-success addBtn">New</button>
+                <table class="table table-hover" id="codeTable">
+                    <!--<div class="form-group">-->
+                        <!--<label>Church Name:</label>-->
+                        <!--<select class="form-control codename" id="codename">-->
+                            <!--<option th:each="c : ${codenames}"-->
+                                    <!--th:text="${c}">WireFrame</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <thead>
+                        <tr>
+                            <th>Code Name</th>
+                            <th>Code Value</th>
+                            <th>Description 1</th>
+                            <th>Description 2</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="codetable : ${codetables.content}">
+                            <td th:text="${codetable.id.codeName}"></td>
+                            <td th:text="${codetable.id.codeValue}"></td>
+                            <td th:text="${codetable.desc1}"></td>
+                            <td th:text="${codetable.desc2}"></td>
+                            <td th:text="${codetable.remarks}"></td>
+                            <!--<td><button type="button" id="editBtn" class="btn btn-primary">Edit</button></td>-->
+                            <td><a th:href="@{codetable/findOne/(codename=${codetable.id.codeName},codevalue=${codetable.id.codeValue})}" class="btn btn-primary eBtn">Edit</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <ul th:if="${codename}==null" class="nav nav-pills">
+                    <li class="nav-item"
+                        th:each="i : ${#numbers.sequence(0,codetables.totalPages-1)}">
+                        <a th:href="@{/admin/system/codetable/(page=${i})}" th:text="${i}" class="nav-link"
+                        th:classappend="${currentPage}==${i}? 'active' : ''"></a>
+                    </li>
+                </ul>
+                <ul th:if="${codename}!=null" class="nav nav-pills">
+                    <li class="nav-item"
+                        th:each="i : ${#numbers.sequence(0,codetables.totalPages-1)}">
+                        <a th:href="@{/admin/system/codetable/codename(codename=${codename},page=${i})}" th:text="${i}" class="nav-link"
+                           th:classappend="${currentPage}==${i}? 'active' : ''"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="codetableForm">
+        <form th:action="@{codetable/save}" method="post">
+            <div class="modal fade" id="codetableModal" tabindex="-1" role="dialog" aria-labelledby="codetableModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="codetableModalLabel">Codetable</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="codename" class="col-form-label">Code Name:</label>
+                                <input type="text" class="form-control" id="codename" value="" th:field="*{codetable.id.codeName}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="codevalue" class="col-form-label">Code Value:</label>
+                                <input type="text" class="form-control" id="codevalue" value="" th:field="*{codetable.id.codeValue}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="desc1" class="col-form-label">Description 1:</label>
+                                <input type="text" class="form-control" id="desc1" value="" th:field="*{codetable.desc1}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="desc2" class="col-form-label">Description 2:</label>
+                                <input type="text" class="form-control" id="desc2" value="" th:field="*{codetable.desc2}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="remarks" class="col-form-label">Remarks:</label>
+                                <input class="form-control" id="remarks" value="" th:field="*{codetable.remarks}"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/codetable/codetable.js}"></script>
+</body>
+</html>

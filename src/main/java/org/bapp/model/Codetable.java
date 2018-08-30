@@ -18,6 +18,9 @@ public class Codetable {
     @Column(length = 1000)
     private String remarks;
 
+    public Codetable() {
+    }
+
     public CodetableId getId() {
         return id;
     }

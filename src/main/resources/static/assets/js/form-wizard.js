@@ -32,6 +32,8 @@ var churchId;
         $('#church_contact_number').val('');
         $('#church_contact_person').val('');
         $('#church_contact_person_number').val('');
+
+        $('.churchName').select2();
 		/*
 			Form
 		*/
@@ -109,9 +111,6 @@ var churchId;
 			// fields validation
 
 		});
-
-		// populate church
-        $.get
 
         // save function for church;
 		$('.form-wizard .btn-save-church').on('click', function () {

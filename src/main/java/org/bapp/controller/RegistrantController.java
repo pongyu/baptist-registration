@@ -52,11 +52,11 @@ public class RegistrantController {
 
     @PostMapping("")
     @ResponseBody
-    public String saveChurch(@RequestBody ChurchDTO churchDTO, Errors errors, Model model){
-
+    public String saveChurch(@RequestBody ChurchDTO churchDTO, Errors errors){
         if(errors.hasErrors()){
             return "redirect:";
         }
+
 
 
         String id = churchDTO.getChurchId();
@@ -127,7 +127,7 @@ public class RegistrantController {
         return registrantService.listRegistrant(registrantDTO.getChurchId());
     }
 
-    @PostMapping("delegate/delete")
+    @GetMapping("delegate/delete")
     @ResponseBody
     public List<RegistrantDTO> deleteRegistrant(@RequestParam(name = "id") Long id,
                                                 @RequestParam(name = "churchId") String churchId){
