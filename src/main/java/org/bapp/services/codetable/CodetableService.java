@@ -27,8 +27,18 @@ public class CodetableService {
         return repository.findAllById_CodeName(codename, PageRequest.of(firstResult, maxResult));
     }
 
+    //list all with paging
     public Page<Codetable> findAll(int firstResult, int maxResult){
         return repository.findAll(PageRequest.of(firstResult, maxResult));
+    }
+
+    //list common
+    public List<Codetable> findAll(){
+        return repository.findAll();
+    }
+
+    public List<Codetable> findAllByCodeName(String codename){
+        return repository.findAllById_CodeName(codename);
     }
 
     public List<String> listCodenames(){

@@ -21,6 +21,19 @@ var churchId;
 		}
 		progress_line_object.attr('style', 'width: ' + new_value + '%;').data('now-value', new_value);
 	}
+	
+	function toastSuccess(message) {
+        new PNotify({
+            title: 'Success!',
+            text: message,
+            type: 'success',
+            addclass: "stack-bottomright",
+            nonblock: {
+                nonblock: true
+            },
+            delay: 3000
+        });
+    }
 
 	jQuery(document).ready(function() {
         $('#churchname').val('');
@@ -236,12 +249,13 @@ var churchId;
                         btnClass: 'btn-red',
                         action: function(){
                             $.ajax({
-                                type: "POST",
+                                type: "GET",
                                 contentType: "application/json",
                                 url: "/register/delegate/delete?id="+data.id+"&churchId="+churchId,
                                 success: function (r) {
                                     table.clear();
                                     table.rows.add(r).draw();
+                                    toastSuccess(name+" deleted!");
                                 },
                                 error: function (e) {
                                     //...
@@ -299,6 +313,7 @@ var churchId;
                 success: function (r) {
                     table.clear();
                     table.rows.add(r).draw();
+                    toastSuccess("saved!");
                 },
                 error: function (e) {
                     //...

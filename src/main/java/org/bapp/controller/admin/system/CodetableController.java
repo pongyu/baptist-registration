@@ -15,18 +15,20 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("admin/system/codetable")
+@RequestMapping("admin/system/cdtbl")
 public class CodetableController {
 
     @Autowired
     private CodetableService service;
 
-    @RequestMapping(value = "")
-    public String index(Model model, @RequestParam(defaultValue = "0") int page){
-        model.addAttribute("codetables", service.findAll(page, 10));
-        model.addAttribute("codetable", new Codetable());
+    @GetMapping(value = "")
+    public String index(Model model /* @RequestParam(defaultValue = "0") int page*/){
+        //use this if you want pageable
+//        model.addAttribute("codetables", service.findAll(page, 10));
+        model.addAttribute("codetables", service.findAll());
+        model.addAttribute("codetable",new Codetable());
         model.addAttribute("codename", null);
-        model.addAttribute("currentPage", page);
+//        model.addAttribute("currentPage", page);
         return "admin/codetable/codetable";
     }
 
@@ -36,37 +38,29 @@ public class CodetableController {
     }
 
     @GetMapping("codename")
-    public String getCodetableByCodename(Model model, @RequestParam(value = "codename") String codename, @RequestParam(defaultValue = "0") int page){
-        model.addAttribute("codetables", service.findAllByCodeName(codename, page, 10));
+    public String getCodetableByCodename(Model model, @RequestParam(value = "codename") String codename /* @RequestParam(defaultValue = "0") int page*/){
+//        model.addAttribute("codetables", service.findAllByCodeName(codename, page, 10));
+        model.addAttribute("codetables", service.findAllByCodeName(codename));
         model.addAttribute("codename", codename);
         return "admin/codetable/codetable";
     }
 
-    @PostMapping(value = "/save")
-    public String saveCodetable(Model model, @ModelAttribute @Valid Codetable codetable, Errors errors){
-
-        if(errors.hasErrors()){
-            return "redirect:/";
-        }
-
+    @PostMapping(value = "save")
+    public String saveCodetable(Model model, @RequestBody Codetable codetable){
         service.save(codetable);
-
-        return "redirect:/admin/system/codetable";
+        model.addAttribute("codetables", service.findAllByCodeName(codetable.getId().getCodeName()));
+        return "admin/codetable/codetable";
     }
 
-    @GetMapping(value = "/delete")
+    @GetMapping(value = "delete")
     public String deleteCodetable(Model model, CodetableId id, Errors errors){
-
-        if(errors.hasErrors()){
-            return "redirect:/";
-        }
 
         service.delete(id);
 
         return "redirect:";
     }
 
-    @GetMapping(value = "/findOne")
+    @GetMapping(value = "findOne")
     @ResponseBody
     public Codetable findOne(Model model,@RequestParam(name = "codename") String codename,
                              @RequestParam(name = "codevalue") String codevalue){
