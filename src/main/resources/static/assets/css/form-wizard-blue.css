@@ -4,12 +4,12 @@
 }
 
 .form-wizard {
-	padding: 25px; 
+	/*padding: 25px; */
 	background: #fff;
 	-moz-border-radius: 4px; 
 	-webkit-border-radius: 4px; 
 	border-radius: 4px; 
-	box-shadow: 0px 0px 6px 3px #e1e1e1;
+	/*box-shadow: 0px 0px 6px 3px #e1e1e1;*/
 	font-family: 'Roboto', sans-serif;
     font-size: 16px;
     font-weight: 300;

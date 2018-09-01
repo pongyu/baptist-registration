@@ -169,7 +169,7 @@ var churchId;
             "processing": true,
             "bAutoWidth": true,
             "searching": false,
-            // "responsive": true,
+            "responsive": true,
             "sAjaxSource": "/register/delegates?churchId="+churchId,
             "sAjaxDataProp": "",
             "order": [[ 0, "asc" ]],
@@ -234,7 +234,7 @@ var churchId;
 
         $('#registrantTable tbody').on( 'click', 'button#deleteBtn', function () {
             var data = table.row( $(this).parents('tr') ).data();
-            var name = data.firstName + data.lastName;
+            var name = data.firstName +" "+data.lastName;
             $.confirm({
                 title: 'Delete delegate?',
                 content: 'name: '+name,

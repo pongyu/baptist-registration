@@ -53,18 +53,16 @@ public class CodetableController {
     }
 
     @GetMapping(value = "delete")
-    public String deleteCodetable(Model model, CodetableId id, Errors errors){
-
-        service.delete(id);
-
+    public String deleteCodetable(@RequestParam(name = "codename") String codename,
+                                  @RequestParam(name = "codevalue") String codevalue){
+        service.delete( new CodetableId(codename, codevalue));
         return "redirect:";
     }
 
     @GetMapping(value = "findOne")
     @ResponseBody
-    public Codetable findOne(Model model,@RequestParam(name = "codename") String codename,
+    public Codetable findOne(@RequestParam(name = "codename") String codename,
                              @RequestParam(name = "codevalue") String codevalue){
-        CodetableId id = new CodetableId(codename, codevalue);
-        return service.findOne(id);
+        return service.findOne( new CodetableId(codename, codevalue));
     }
 }

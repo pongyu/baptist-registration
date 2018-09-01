@@ -32,25 +32,16 @@ $( document ).ready(function() {
     $('.table .edit-btn').on('click', function (e) {
         e.preventDefault();
         var href = $(this).attr('href');
-        var t = $(this).text();
-        if(t=="Edit"){
-            $.get(href, function (codetable, status) {
+        $.get(href, function (codetable, status) {
                 $('.codetableForm #codename').val(codetable.id.codeName);
                 $('.codetableForm #codevalue').val(codetable.id.codeValue);
                 $('.codetableForm #desc1').val(codetable.desc1);
                 $('.codetableForm #desc2').val(codetable.desc2);
                 $('.codetableForm #remarks').val(codetable.remarks);
-            });
-        }else {
-            // $.get(href, function (codetable, status) {
-            //     $('.codetableForm #codename').val('');
-            //     $('.codetableForm #codevalue').val('');
-            //     $('.codetableForm #desc1').val('');
-            //     $('.codetableForm #desc2').val('');
-            //     $('.codetableForm #remarks').val('');
-            // });
-        }
-
+        });
+        $('#codename').prop('disabled', true);
+        $('#codevalue').prop('disabled', true);
+        $('#modal-delete-btn').show();
         $('.codetableForm #codetableModal').modal();
     });
 
@@ -63,6 +54,10 @@ $( document ).ready(function() {
         $('.codetableForm #desc1').val('');
         $('.codetableForm #desc2').val('');
         $('.codetableForm #remarks').val('');
+
+        $('#codename').prop('disabled', false);
+        $('#codevalue').prop('disabled', false);
+        $('#modal-delete-btn').hide();
 
         $('.codetableForm #codetableModal').modal();
 
@@ -86,58 +81,28 @@ $( document ).ready(function() {
             data: JSON.stringify(data),
             dataType: 'json',
             success: function () {
-                console.log("test")
-                toastSuccess("Codetable saved!")
+                console.log("happens");
             },
             error: function (e) {
                 //...
             }
         });
         $('#codetableModal').modal('toggle');
-        table.on( 'draw', function () {
-            console.log( 'Redraw occurred at: '+new Date().getTime() );
-        } );
-    });
-    // $('.eBtn').on('click', function () {
-    //     var ids = $.map(table.rows('.selected').data(), function (item) {
-    //         return item[0]
-    //     });
-    //     console.log(ids)
-    //     alert(table.rows('.selected').data().length + ' row(s) selected');
-    // });
-    //
-    // $('#registrantSaveBtn').on('click', function (e) {
-    //     var data = {}
-    //     if(editReg){
-    //         data['id'] = $('#id').val();
-    //     }
-    //     data['churchId'] = churchId;
-    //     data['firstName'] = $('#firstname').val();
-    //     data['middleName'] = $('#middlename').val();
-    //     data['lastName'] = $('#lastname').val();
-    //     data['designation'] = $('#designation').val();
-    //     data['birthDate'] = $('#birthday').val();
-    //     data['mobileNumber'] = $('#mobilenumber').val();
-    //     data['gender'] = $('#gender').val();
-    //     data['civilStatus'] = $('#civilstatus').val();
-    //     data['email'] = $('#email').val();
-    //
-    //     $.ajax({
-    //         type: "POST",
-    //         contentType: "application/json",
-    //         url: "/register/delegate/save",
-    //         data: JSON.stringify(data),
-    //         dataType: 'json',
-    //         success: function (r) {
-    //             table.clear();
-    //             table.rows.add(r).draw();
-    //         },
-    //         error: function (e) {
-    //             //...
-    //         }
-    //     });
-    //     editReg = false;
-    //     $('#registrantModal').modal('toggle');
-    // });
 
+    });
+
+    //delete
+    $('#modal-delete-btn').on('click', function () {
+        $.ajax({
+            type: "GET",
+            url: "/admin/system/cdtbl/delete?codename="+$('#codename').val()+"&codevalue="+$('#codevalue').val(),
+            success: function () {
+
+            },
+            error: function (e) {
+                //...
+            }
+        });
+        $('#codetableModal').modal('toggle');
+    });
 });
