@@ -21,26 +21,32 @@ public class CodetableController {
     @Autowired
     private CodetableService service;
 
-    @GetMapping(value = "")
-    public String index(Model model /* @RequestParam(defaultValue = "0") int page*/){
-        //use this if you want pageable
-//        model.addAttribute("codetables", service.findAll(page, 10));
-        model.addAttribute("codetables", service.findAll());
-        model.addAttribute("codetable",new Codetable());
-        model.addAttribute("codename", null);
-//        model.addAttribute("currentPage", page);
-        return "admin/codetable/codetable";
-    }
+//    @GetMapping(value = "")
+//    public String index(Model model /* @RequestParam(defaultValue = "0") int page*/){
+//        //use this if you want pageable
+////        model.addAttribute("codetables", service.findAll(page, 10));
+//        model.addAttribute("codetables", service.findAll());
+//        model.addAttribute("codetable",new Codetable());
+//        model.addAttribute("codename", null);
+////        model.addAttribute("currentPage", page);
+//        return "admin/codetable/codetable";
+//    }
 
     @ModelAttribute("codenames")
     public List<String> getCodenames(){
        return service.listCodenames();
     }
 
-    @GetMapping("codename")
-    public String getCodetableByCodename(Model model, @RequestParam(value = "codename") String codename /* @RequestParam(defaultValue = "0") int page*/){
+    @GetMapping("")
+    public String getCodetableByCodename(Model model, @RequestParam(name = "codename", defaultValue = "") String codename /* @RequestParam(defaultValue = "0") int page*/){
 //        model.addAttribute("codetables", service.findAllByCodeName(codename, page, 10));
-        model.addAttribute("codetables", service.findAllByCodeName(codename));
+
+        if(codename.equals("")){
+            model.addAttribute("codetables", service.findAll());
+        }else{
+            model.addAttribute("codetables", service.findAllByCodeName(codename));
+        }
+        model.addAttribute("codetable",new Codetable());
         model.addAttribute("codename", codename);
         return "admin/codetable/codetable";
     }

@@ -92,13 +92,12 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-sm-4">
-                                            <label>City:</label>
-                                            <select class="form-control" id="city">
-                                                <optgroup label="This is a group">
-                                                    <option value="12">This is item 1</option>
-                                                    <option value="13">This is item 2</option>
-                                                    <option value="14">This is item 3</option>
-                                                </optgroup>
+                                            <label>Country:</label>
+                                            <select class="form-control" id="country" th:field="*{church.address.country}">
+                                                <option th:each="c : ${countries}"
+                                                        th:value="${c}"
+                                                        th:selected="c == 'Philippines'"
+                                                        th:text="${c}">WireFrame</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-4">
@@ -110,8 +109,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-4">
-                                            <label>Country:</label>
-                                            <select class="form-control" id="country">
+                                            <label>City:</label>
+                                            <select class="form-control" id="city">
                                                 <optgroup label="This is a group">
                                                     <option value="12">This is item 1</option>
                                                     <option value="13">This is item 2</option>

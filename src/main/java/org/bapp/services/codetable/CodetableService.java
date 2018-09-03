@@ -59,7 +59,7 @@ public class CodetableService {
     }
 
     public Codetable findOne(CodetableId id){
-        System.out.println("codename: "+id.getCodeName()+" codevalue: "+id.getCodeValue());
+//        System.out.println("codename: "+id.getCodeName()+" codevalue: "+id.getCodeValue());
         Optional<Codetable> c = repository.findById(id);
         if(c.isPresent()){
             return c.get();

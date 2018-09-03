@@ -3,12 +3,10 @@ package org.bapp.controller;
 import org.bapp.dto.ChurchDTO;
 import org.bapp.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
-import org.bapp.model.Church;
-import org.bapp.model.Codetable;
-import org.bapp.model.Email;
-import org.bapp.model.Registrant;
+import org.bapp.model.*;
 import org.bapp.services.church.ChurchService;
 import org.bapp.services.codetable.CodetableService;
+import org.bapp.services.common.CountryService;
 import org.bapp.services.registrant.RegistrantService;
 import org.bapp.services.sequence.SequenceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,14 @@ public class RegistrantController {
 
     @Autowired
     private CodetableService codetableService;
+
+    @Autowired
+    private CountryService countryService;
+
+    @ModelAttribute("countries")
+    public List<String> countries(){
+        return countryService.getCountries();
+    }
 
     @ModelAttribute("churches")
     public List<Codetable> populateChurch() {
