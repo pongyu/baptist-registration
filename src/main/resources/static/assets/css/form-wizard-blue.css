@@ -511,9 +511,9 @@ background: #bbb;
 }
 
 .form-wizard fieldset { 
-	display: none; 
-	text-align: left; 
-	border:0px !important
+	display: none;
+	text-align: left;
+	border:0px !important;
 }
 
 .form-wizard-buttons { text-align: right; }

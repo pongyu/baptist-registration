@@ -1,5 +1,6 @@
 package org.bapp.controller.common;
 
+import org.bapp.dto.CountryDTO;
 import org.bapp.model.Country;
 import org.bapp.services.common.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +19,18 @@ public class CountryRestController {
     private CountryService service;
 
     @GetMapping("countries")
-    public List<String> getCountries(){
+    public List<CountryDTO> getCountries(){
         return service.getCountries();
     }
 
     @GetMapping("states")
-    public List<String> getStates(@RequestParam(name = "countrycode")String countrycode){
-        return service.getStates(countrycode);
+    public List<String> getStates(@RequestParam(name = "code")String code){
+        return service.getStates(code);
     }
 
     @GetMapping("cities")
-    public List<String> getCities(@RequestParam(name = "countrycode")String countrycode,
+    public List<String> getCities(@RequestParam(name = "code")String code,
                                   @RequestParam(name = "state")String state){
-        return service.getCities(countrycode, state);
+        return service.getCities(code, state);
     }
 }

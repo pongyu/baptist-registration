@@ -34,17 +34,48 @@ var churchId;
             delay: 3000
         });
     }
+    function descFormat(codename, codevalue) {
+        $.ajax({
+            type: "GET",
+            url: "/admin/system/cdtbl/findOne?codename="+codename+"&codevalue="+codevalue,
+            success: function (d) {
+            },
+            error: function (e) {
+                //...
+            }
+        });
+
+    }
 
 	jQuery(document).ready(function() {
         $('#churchname').val('');
         $('#church_address').val('');
         $('#city').val('');
         $('#state').val('');
-        $('#country').val('');
+        $('#country').val('PH');
         $('#church_email').val('');
         $('#church_contact_number').val('');
         $('#church_contact_person').val('');
         $('#church_contact_person_number').val('');
+
+        //populate city by default philippines
+        var options = [];
+        $.ajax({
+            type: "GET",
+            url: "/common/util/country/states?code=PH",
+            success: function (result) {
+                options.push('<option></option>');
+                for (var i = 0; i < result.length; i++) {
+                    options.push('<option value="',
+                        result[i], '">',
+                        result[i], '</option>');
+                }
+                $("#state").html(options.join(''));
+            },
+            error: function (e) {
+                //...
+            }
+        });
 
         $('.churchName').select2();
 		/*
@@ -158,14 +189,58 @@ var churchId;
                 error: function (e) {
                     console.log(e);
                 }
-
             });
-
         });
 
+		// country option on change
+        $('#country').on('change', function () {
+            var valueSelected = this.value;
+            $('#state').empty();
+            $('#city').empty();
+            var options = [];
+            $.ajax({
+                type: "GET",
+                url: "/common/util/country/states?code="+valueSelected,
+                success: function (result) {
+                    options.push('<option></option>');
+                    for (var i = 0; i < result.length; i++) {
+                        options.push('<option value="',
+                            result[i], '">',
+                            result[i], '</option>');
+                    }
+                    $("#state").html(options.join(''));
+                },
+                error: function (e) {
+                    //...
+                }
+            });
+        });
+
+        // state option on change
+        $('#state').on('change', function () {
+            var valueSelected = this.value;
+            $('#city').empty();
+            var options = [];
+            $.ajax({
+                type: "GET",
+                url: "/common/util/country/cities?code="+$('#country').val()+"&state="+valueSelected,
+                success: function (result) {
+                    options.push('<option></option>');
+                    for (var i = 0; i < result.length; i++) {
+                        options.push('<option value="',
+                            result[i], '">',
+                            result[i], '</option>');
+                    }
+                    $("#city").html(options.join(''));
+                },
+                error: function (e) {
+                    //...
+                }
+            });
+        });
 
         // initialise data tables
-        var table = $('#registrantTable').addClass('nowrap').DataTable({
+        var table = $('#registrantTable').DataTable({
             "processing": true,
             "bAutoWidth": true,
             "searching": false,
@@ -185,25 +260,26 @@ var churchId;
                 { "mData": "civilStatus" },
                 { "mData": "mobileNumber" },
                 { "mData": "email" },
-                { "mData": null},
                 { "mData": null}
             ],
             "columnDefs": [
                 {
+                    "responsivePriority":1,
                     "targets": -1,
                     "data": null,
                     "defaultContent": '<button type="button" id="editBtn"><i class="fa fa-edit"></i></button>'
                 },
                 {
-                    "targets": -2,
-                    "data": null,
-                    "defaultContent": '<button type="button" id="deleteBtn"><i class="fa fa-trash"></i></button>'
-                },
-                {
                     targets:2, render:function(data){
-                    return moment(data).format('MMMM Do YYYY');
+                    return moment(data).format('MM DD YYYY');
                     }
                 }
+                // {
+                //     targets:1, render:function (data) {
+                //         console.log(descFormat("designation", data));
+                //     return "";
+                // }
+                // }
             ]
         });
 
@@ -211,30 +287,48 @@ var churchId;
         var editReg = false;
 
         $('#registrantTable tbody').on( 'click', 'button#editBtn', function () {
-
+            $('#registrantDeleteBtn').show();
             editReg = true;
             var data = table.row( $(this).parents('tr') ).data();
 
-            $('.registrantForm #id').val(data.id);
-            $('.registrantForm #firstname').val(data.firstName);
-            $('.registrantForm #middlename').val(data.middleName);
-            $('.registrantForm #lastname').val(data.lastName);
-            $('.registrantForm #designation').val(data.designation);
-            $('.registrantForm #birthday').val(data.birthDate);
-            $('.registrantForm #mobilenumber').val(data.mobileNumber);
-            $('.registrantForm #gender').val(data.gender);
-            $('.registrantForm #civilstatus').val(data.civilStatus);
-            $('.registrantForm #email').val(data.email);
+            // $('.registrantForm #id').val(data.id);
+            // $('.registrantForm #firstname').val(data.firstName);
+            // $('.registrantForm #middlename').val(data.middleName);
+            // $('.registrantForm #lastname').val(data.lastName);
+            // $('.registrantForm #designation').val(data.designation);
+            // $('.registrantForm #birthday').val(data.birthDate);
+            // $('.registrantForm #mobilenumber').val(data.mobileNumber);
+            // $('.registrantForm #gender').val(data.gender);
+            // $('.registrantForm #civilstatus').val(data.civilStatus);
+            // $('.registrantForm #email').val(data.email);
+            //
+            // $('#registrantModal').modal('toggle');
 
-            $('#registrantModal').modal('toggle');
+            $.get("/register/delegate/findOne?id="+data.id, function (r, status) {
+                $('.registrantForm #id').val(r.id);
+                $('.registrantForm #firstname').val(r.firstName);
+                $('.registrantForm #middlename').val(r.middleName);
+                $('.registrantForm #lastname').val(r.lastName);
+                $('.registrantForm #designation').val(r.designation);
+                // $('.registrantForm #birthday').val(r.birthDate);
+                document.getElementById("birthday").valueAsDate = new Date(r.birthDate);
+                $('.registrantForm #mobilenumber').val(r.mobileNumber);
+                $('.registrantForm #gender').val(r.gender);
+                $('.registrantForm #civilstatus').val(r.civilStatus);
+                $('.registrantForm #email').val(r.email);
+
+                $('#registrantModal').modal('toggle');
+            });
+
+
 
         });
 
         // registrant delete
 
-        $('#registrantTable tbody').on( 'click', 'button#deleteBtn', function () {
-            var data = table.row( $(this).parents('tr') ).data();
-            var name = data.firstName +" "+data.lastName;
+        $('#registrantDeleteBtn').on( 'click',function () {
+            var id = $('.registrantForm #id').val();
+            var name = $('.registrantForm #firstname').val() +" "+$('.registrantForm #lastname').val();
             $.confirm({
                 title: 'Delete delegate?',
                 content: 'name: '+name,
@@ -251,14 +345,16 @@ var churchId;
                             $.ajax({
                                 type: "GET",
                                 contentType: "application/json",
-                                url: "/register/delegate/delete?id="+data.id+"&churchId="+churchId,
+                                url: "/register/delegate/delete?id="+id+"&churchId="+churchId,
                                 success: function (r) {
                                     table.clear();
                                     table.rows.add(r).draw();
+                                    $('#registrantModal').modal('toggle');
                                     toastSuccess(name+" deleted!");
                                 },
                                 error: function (e) {
                                     //...
+                                    $('#registrantModal').modal('toggle');
                                 }
                             });
                         }
@@ -285,6 +381,9 @@ var churchId;
             $('.registrantForm #gender').val('');
             $('.registrantForm #civilstatus').val('');
             $('.registrantForm #email').val('');
+
+            $('#registrantDeleteBtn').hide();
+
             $('#registrantModal').modal();
         });
 

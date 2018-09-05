@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RegistrantService {
@@ -37,6 +38,15 @@ public class RegistrantService {
         List<RegistrantDTO> list = RegistrantMapper.INSTANCE.registrantToRegistrantDtoList(
                 registrantRepository.findAllByChurch(church));
         return list;
+    }
+
+    public RegistrantDTO findOne(Long id){
+        Optional<Registrant> c = registrantRepository.findById(id);
+        if(c.isPresent()){
+            RegistrantDTO r = RegistrantMapper.INSTANCE.registrantToRegistrantDto(c.get());
+            return r;
+        }
+        return null;
     }
 
 }

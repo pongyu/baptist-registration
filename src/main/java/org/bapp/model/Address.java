@@ -8,6 +8,21 @@ public class Address extends AbstractEntity{
 
     public Address(){}
 
+    public Address(String lotNumber, String street, String barangay, String city, String state, String country) {
+        this.lotNumber = lotNumber;
+        this.street = street;
+        this.barangay = barangay;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
+
+    public Address(String street, String city, String state, String country) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
 
     public String getState() {
         return state;
@@ -55,5 +70,21 @@ public class Address extends AbstractEntity{
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "lotNumber='" + lotNumber + '\'' +
+                ", street='" + street + '\'' +
+                ", barangay='" + barangay + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
+
+    public String shortAddress() {
+        return this.street+" "+this.city+" "+this.state+" "+this.country;
     }
 }

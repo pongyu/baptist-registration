@@ -1,5 +1,6 @@
 package org.bapp.services.common;
 
+import org.bapp.dto.CountryDTO;
 import org.bapp.model.Country;
 import org.bapp.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +14,27 @@ public class CountryService {
     @Autowired
     private CountryRepository repository;
 
-    public List<String> getCountries(){
-        List<Country> c = repository.findAll();
-        Set<String> s = new HashSet<>();
+    public List<CountryDTO> getCountries(){
+        List<Country> c = repository.listCountries();
+        List<CountryDTO> s = new ArrayList<>();
         for (Country cn : c){
-            s.add(cn.getCountry());
+            s.add(new CountryDTO(cn.getCode(), cn.getCountry()));
         }
 
-        List<String> ac = new ArrayList<>(s);
-        Collections.sort(ac);
-
-        return ac;
+        return s;
     }
 
-    public List<String> getStates(String countrycode){
-        List<Country> c = repository.findAllByCountrycode(countrycode);
+    public List<String> getStates(String code){
+        List<Country> c = repository.findAllByCode(code);
         List<String> s = new ArrayList<>();
         for (Country cn : c){
             s.add(cn.getStateprovince());
         }
-        return new ArrayList<>(new HashSet<>(s));
+        return s;
     }
 
-    public List<String> getCities(String countrycode, String state){
-        List<Country> c = repository.findAllByCountrycodeAndStateprovince(countrycode, state);
+    public List<String> getCities(String code, String state){
+        List<Country> c = repository.findAllByCodeAndStateprovince(code, state);
         List<String> s = new ArrayList<>();
         for (Country cn : c){
             s.add(cn.getCity());

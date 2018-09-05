@@ -95,27 +95,20 @@
                                             <label>Country:</label>
                                             <select class="form-control" id="country" th:field="*{church.address.country}">
                                                 <option th:each="c : ${countries}"
-                                                        th:value="${c}"
-                                                        th:selected="c == 'Philippines'"
-                                                        th:text="${c}">WireFrame</option>
+                                                        th:value="${c.code}"
+                                                        th:text="${c.country}">WireFrame</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label>State:</label>
                                             <select class="form-control" id="state">
-                                                <option value="12">This is item 1</option>
-                                                <option value="13">This is item 2</option>
-                                                <option value="14">This is item 3</option>
+                                                <option></option>
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label>City:</label>
                                             <select class="form-control" id="city">
-                                                <optgroup label="This is a group">
-                                                    <option value="12">This is item 1</option>
-                                                    <option value="13">This is item 2</option>
-                                                    <option value="14">This is item 3</option>
-                                                </optgroup>
+                                                <option></option>
                                             </select>
                                         </div>
                                     </div>
@@ -153,18 +146,31 @@
                                 <table class="table display responsive nowrap" style="width:100%" id="registrantTable">
                                     <thead>
                                     <tr>
-                                        <th hidden>Id</th>
-                                        <th data-priority="3">Name</th>
-                                        <th>Designation</th>
-                                        <th>Birthday</th>
-                                        <th>Gender</th>
-                                        <th>Civil Status</th>
-                                        <th>Contact Number</th>
-                                        <th>Email</th>
+                                        <th data-priority="2">Name</th>
+                                        <th data-priority="3">Designation</th>
+                                        <th data-priority="4">Birthday</th>
+                                        <th data-priority="5">Gender</th>
+                                        <th data-priority="6">Civil Status</th>
+                                        <th data-priority="7">Contact Number</th>
+                                        <th data-priority="8">Email</th>
                                         <th data-priority="1"></th>
-                                        <th data-priority="2"></th>
+                                        <th data-priority="9" hidden>Id</th>
+                                        <!--<th data-priority="1"></th>-->
                                     </tr>
                                     </thead>
+                                    <!--<tbody>-->
+                                    <!--<tr th:each="r : ${delegates}">-->
+                                        <!--<td th:text="${r.id}"></td>-->
+                                        <!--<td th:text="${r.firstName + ' ' + r.lastName}"></td>-->
+                                        <!--<td th:text="${r.designation}"></td>-->
+                                        <!--<td th:text="${r.birthDate}"></td>-->
+                                        <!--<td th:text="${r.gender}"></td>-->
+                                        <!--<td th:text="${r.civilStatus}"></td>-->
+                                        <!--<td th:text="${r.mobileNumber}"></td>-->
+                                        <!--<td th:text="${r.email}"></td>-->
+                                        <!--<td><a th:href="@{register/delegate/findOne(id=${r.id})}" class="btn btn-primary edit-btn">Edit</a></td>-->
+                                    <!--</tr>-->
+                                    <!--</tbody>-->
                                 </table>
                                 <!--fields-->
                                 <!--modal-->
@@ -186,9 +192,9 @@
                                                 <div class="form-group">
                                                     <label>Designation:</label>
                                                     <select class="form-control" id="designation" name="designation" value="">
-                                                        <option>
-
-                                                        </option>
+                                                        <option th:each="c : ${designation}"
+                                                                th:value="${c.id.codeValue}"
+                                                                th:text="${c.desc2}+ ' ' + ${c.desc1}">WireFrame</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -207,17 +213,17 @@
                                                     <div class="form-group col-sm-6">
                                                         <label>Gender:</label>
                                                         <select class="form-control" id="gender" name="gender" value="">
-                                                            <option>
-
-                                                            </option>
+                                                            <option th:each="c : ${gender}"
+                                                                    th:value="${c.id.codeValue}"
+                                                                    th:text="${c.desc1}">WireFrame</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group col-sm-6">
                                                         <label>Civil Status:</label>
                                                         <select class="form-control" id="civilstatus" name="civilstatus" value="">
-                                                            <option>
-
-                                                            </option>
+                                                            <option th:each="c : ${civilstatus}"
+                                                                    th:value="${c.id.codeValue}"
+                                                                    th:text="${c.desc1}">WireFrame</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -232,6 +238,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input type="submit" class="btn btn-danger" value="delete" id="registrantDeleteBtn"/>
                                                 <input type="button" class="btn btn-primary" value="save" id="registrantSaveBtn"/>
                                             </div>
                                         </div>

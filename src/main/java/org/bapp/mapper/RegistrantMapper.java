@@ -14,7 +14,7 @@ public interface RegistrantMapper {
     RegistrantMapper INSTANCE = Mappers.getMapper(RegistrantMapper.class);
 
     @Mapping(source = "church", target = "churchId")
-    RegistrantDTO RegistrantToRegistrantDto(Registrant registrant);
+    RegistrantDTO registrantToRegistrantDto(Registrant registrant);
 
     @Mapping(source = "churchId", target = "church")
     Registrant registrantDtoToRegistrant(RegistrantDTO registrantDTO);

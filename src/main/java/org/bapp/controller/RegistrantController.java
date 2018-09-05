@@ -1,6 +1,7 @@
 package org.bapp.controller;
 
 import org.bapp.dto.ChurchDTO;
+import org.bapp.dto.CountryDTO;
 import org.bapp.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.*;
@@ -16,6 +17,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -41,18 +44,34 @@ public class RegistrantController {
     private CountryService countryService;
 
     @ModelAttribute("countries")
-    public List<String> countries(){
+    public List<CountryDTO> countries(){
         return countryService.getCountries();
     }
 
     @ModelAttribute("churches")
-    public List<Codetable> populateChurch() {
+    public List<Codetable> church() {
         return codetableService.findAllById("church");
+    }
+
+    @ModelAttribute("designation")
+    public List<Codetable> designation() {
+        return codetableService.findAllById("designation");
+    }
+
+    @ModelAttribute("gender")
+    public List<Codetable> gender() {
+        return codetableService.findAllById("gender");
+    }
+
+    @ModelAttribute("civilstatus")
+    public List<Codetable> civilStatus() {
+        return codetableService.findAllById("civilstatus");
     }
 
     @GetMapping("")
     public String getChurch(Model model){
         model.addAttribute("church", new ChurchDTO());
+        model.addAttribute("delegates", new ArrayList<RegistrantDTO>());
         return "register";
     }
 
@@ -120,17 +139,28 @@ public class RegistrantController {
 
     @PostMapping("delegate/save")
     @ResponseBody
-    public List<RegistrantDTO> addRegistrant(@RequestBody  RegistrantDTO registrantDTO){
+    public List<RegistrantDTO> addRegistrant(Model model, @RequestBody  RegistrantDTO registrantDTO){
+        List<RegistrantDTO> list = new ArrayList<>();
         try {
             Church church = churchService.findByChurchId(registrantDTO.getChurchId());
             Registrant r = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(registrantDTO);
             r.setChurch(church);
             registrantService.save(r);
+            list =  registrantService.listRegistrant(registrantDTO.getChurchId());
+            for(RegistrantDTO rg : list){
+                rg.setDesignation(
+                        codetableService.findOne(new CodetableId("designation", rg.getDesignation())).getDesc2()+" "+
+                                codetableService.findOne(new CodetableId("designation", rg.getDesignation())).getDesc1());
+
+                rg.setGender(codetableService.findOne(new CodetableId("gender", rg.getGender())).getDesc1());
+                rg.setCivilStatus(codetableService.findOne(new CodetableId("civilstatus", rg.getCivilStatus())).getDesc1());
+            }
+            model.addAttribute("delegates", list);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return registrantService.listRegistrant(registrantDTO.getChurchId());
+        return list;
     }
 
     @GetMapping("delegate/delete")
@@ -141,5 +171,10 @@ public class RegistrantController {
         return registrantService.listRegistrant(churchId);
     }
 
+    @GetMapping("delegate/findOne")
+    @ResponseBody
+    public RegistrantDTO findOne(@RequestParam(name = "id") Long id){
+        return registrantService.findOne(id);
+    }
 
 }
