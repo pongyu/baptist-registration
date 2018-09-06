@@ -4,12 +4,12 @@
 }
 
 .form-wizard {
-	/*padding: 25px; */
+	padding: 25px;
 	background: #fff;
 	-moz-border-radius: 4px; 
 	-webkit-border-radius: 4px; 
-	border-radius: 4px; 
-	/*box-shadow: 0px 0px 6px 3px #e1e1e1;*/
+	border-radius: 4px;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 	font-family: 'Roboto', sans-serif;
     font-size: 16px;
     font-weight: 300;
@@ -166,29 +166,29 @@
 
 .form-header-classic .form-wizard-step-icon {
 	display: inline-block;
-	width: 40px; 
-	height: 40px; 
-	margin-top: 4px; 
+	width: 40px;
+	height: 40px;
+	margin-top: 4px;
 	background: #ddd;
-	font-size: 16px; 
-	color: #fff; 
+	font-size: 16px;
+	color: #fff;
 	line-height: 40px;
-	-moz-border-radius: 50%; 
-	-webkit-border-radius: 50%; 
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
 	border-radius: 50%;
 }
 .form-header-classic .form-wizard-step.activated .form-wizard-step-icon {
-	background: #fff; 
+	background: #fff;
 	border: 1px solid #51A149;
 	color: #51A149;
 	line-height: 38px;
 }
 .form-header-classic .form-wizard-step.active .form-wizard-step-icon {
-	width: 48px; 
-	height: 48px; 
-	margin-top: 0; 
+	width: 48px;
+	height: 48px;
+	margin-top: 0;
 	background: #51A149;
-	font-size: 22px; 
+	font-size: 22px;
 	line-height: 48px;
 }
 
@@ -213,32 +213,32 @@
 .form-header-modarn .form-wizard-step.activated{
 	background:#51A149;
 }
-.form-header-modarn .form-wizard-progress { 
-	height: 0px; 
+.form-header-modarn .form-wizard-progress {
+	height: 0px;
 	display:none;
 }
 .form-header-modarn .form-wizard-step-icon {
 	display: inline-block;
-	width: 40px; 
-	height: 40px; 
-	margin-top: 4px; 
+	width: 40px;
+	height: 40px;
+	margin-top: 4px;
 	background: #ddd;
-	font-size: 16px; 
-	color: #777; 
+	font-size: 16px;
+	color: #777;
 	line-height: 40px;
-	-moz-border-radius: 50%; 
-	-webkit-border-radius: 50%; 
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
 	border-radius: 50%;
 }
 .form-header-modarn .form-wizard-step.activated .form-wizard-step-icon {
 	background: #51A149;
-	border: 1px solid #fff; 
-	color: #fff; 
+	border: 1px solid #fff;
+	color: #fff;
 	line-height: 38px;
 }
 .form-header-modarn .form-wizard-step.active .form-wizard-step-icon {
-	background: #fff; 
-	border: 1px solid #fff; 
+	background: #fff;
+	border: 1px solid #fff;
 	color: #51A149;
 	line-height: 38px;
 }
@@ -347,7 +347,7 @@
 .form-wizard strong { font-weight: 500; }
 
 .form-wizard a, .form-wizard a:hover, .form-wizard a:focus {
-	color: #51A149;
+	/*color: #51A149;*/
 	text-decoration: none;
 }
 
@@ -364,9 +364,9 @@
     font-weight: 300;
     color: #51A149;
     line-height: 30px;
-	margin-top: 0; 
-	margin-bottom: 5px; 
-	text-transform: uppercase; 
+	margin-top: 0;
+	margin-bottom: 5px;
+	text-transform: uppercase;
 }
 
 .form-wizard h4 {
@@ -406,49 +406,49 @@
 .form-control:-ms-input-placeholder { color: #888; }
 .form-control::-webkit-input-placeholder { color: #888; }
 
-.form-wizard label { font-weight: 300; }
-.form-wizard label span { color:#51A149; }
+/*.form-wizard label { font-weight: 300; }*/
+/*.form-wizard label span { color:#51A149; }*/
 
-.form-wizard .btn:hover {
-	background:#f34727; 
-	color: #fff; 
-	}
-.form-wizard .btn:active { 
-	outline: 0; 
-	background:#f34727; 
-	color: #fff; 
-	-moz-box-shadow: none; 
-	-webkit-box-shadow: none; 
-	box-shadow: none; 
-	}
-.form-wizard .btn:focus,
-.form-wizard .btn:active:focus,
-.form-wizard .btn.active:focus { 
-	outline: 0; 
-	background:#f34727; 
-	color: #fff; 
-}
+/*.form-wizard .btn:hover {*/
+	/*background:#f34727;*/
+	/*color: #fff;*/
+	/*}*/
+/*.form-wizard .btn:active {*/
+	/*outline: 0;*/
+	/*background:#f34727;*/
+	/*color: #fff;*/
+	/*-moz-box-shadow: none;*/
+	/*-webkit-box-shadow: none;*/
+	/*box-shadow: none;*/
+	/*}*/
+/*.form-wizard .btn:focus,*/
+/*.form-wizard .btn:active:focus,*/
+/*.form-wizard .btn.active:focus {*/
+	/*outline: 0;*/
+	/*background:#f34727;*/
+	/*color: #fff;*/
+/*}*/
 
-.form-wizard .btn.btn-next,
-.form-wizard .btn.btn-next:focus,
-.form-wizard .btn.btn-next:active:focus, 
-.form-wizard .btn.btn-next.active:focus { 
-background: #51A149;
-}
+/*.form-wizard .btn.btn-next,*/
+/*.form-wizard .btn.btn-next:focus,*/
+/*.form-wizard .btn.btn-next:active:focus,*/
+/*.form-wizard .btn.btn-next.active:focus {*/
+/*background: #51A149;*/
+/*}*/
 
-.form-wizard .btn.btn-submit,
-.form-wizard .btn.btn-submit:focus,
-.form-wizard .btn.btn-submit:active:focus, 
-.form-wizard .btn.btn-submit.active:focus { 
-background: #51A149;
-}
+/*.form-wizard .btn.btn-submit,*/
+/*.form-wizard .btn.btn-submit:focus,*/
+/*.form-wizard .btn.btn-submit:active:focus,*/
+/*.form-wizard .btn.btn-submit.active:focus {*/
+/*background: #51A149;*/
+/*}*/
 
-.form-wizard .btn.btn-previous,
-.form-wizard .btn.btn-previous:focus,
-.form-wizard .btn.btn-previous:active:focus, 
-.form-wizard .btn.btn-previous.active:focus { 
-background: #bbb;
-}
+/*.form-wizard .btn.btn-previous,*/
+/*.form-wizard .btn.btn-previous:focus,*/
+/*.form-wizard .btn.btn-previous:active:focus,*/
+/*.form-wizard .btn.btn-previous.active:focus {*/
+/*background: #bbb;*/
+/*}*/
 
 .form-wizard .success h3{
 	color: #51A149;
@@ -480,30 +480,30 @@ background: #bbb;
 	top: 24px; 
 	left: 0; 
 	width: 100%; 
-	height: 1px; 
+	height: 2px;
 	background: #ddd;
 }
 .form-wizard-progress-line { 
 	position: absolute; 
 	top: 0; 
 	left: 0; 
-	height: 1px; 
+	height: 2px;
 	background: #51A149;
 }
 
-.form-wizard-tolal-steps-3 .form-wizard-step { 
+.form-wizard-tolal-steps-3 .form-wizard-step {
 	position: relative;
 	float: left; 
 	width: 33.33%; 
 	padding: 0 5px; 
 }
-.form-wizard-tolal-steps-4 .form-wizard-step { 
+.form-wizard-tolal-steps-4 .form-wizard-step {
 	position: relative; 
 	float: left; 
 	width: 25%; 
 	padding: 0 5px; 
 }
-.form-wizard-tolal-steps-5 .form-wizard-step { 
+.form-wizard-tolal-steps-5 .form-wizard-step {
 	position: relative;
 	float: left;
 	width: 20%;
@@ -607,4 +607,22 @@ background: #bbb;
   background-size: contain;
   position: relative;
   z-index: 2;
+}
+
+.image-container {
+	min-height: 100vh;
+	background-position: center center;
+	background-size: cover;
+	position: relative;
+}
+.image-container:before {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: #000000;
+	opacity: .3;
 }

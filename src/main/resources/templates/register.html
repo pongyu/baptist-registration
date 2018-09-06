@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registrar</title>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/assets/css/material-kit.min.css}" type="text/css" rel="stylesheet"/>
+    <!--<link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen,projection"/>-->
     <link th:href="@{/webjars/font-awesome/5.1.0/css/all.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link th:href="@{/assets/css/form-wizard-blue.css}" type="text/css" rel="stylesheet"/>
@@ -18,13 +19,13 @@
 </head>
 <body oncontextmenu="return false;">
 
-<div>
+<div class="image-container" style="background-image: url('assets/img/wizard-profile.jpg')">
     <!-- main content -->
     <section class="form-box">
         <div class="container">
             <div class="row">
-                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-                    <div class="form-wizard form-header-classic form-body-classic">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 mx-auto">
+                    <div class="form-wizard form-header-classic">
                         <div>
                             <h3>Sign Up</h3>
                             <p>Fill all form field to go next step</p>
@@ -69,63 +70,60 @@
                             <fieldset>
                                 <!-- Progress Bar -->
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
                                     </div>
                                 </div>
                                 <!-- Progress Bar -->
                                 <h4>Account Information: <span>Step 1 - 4</span></h4>
 
                                 <!--fields-->
-
-                                <div class="col-sm-12 well">
-                                    <div class="form-group">
-                                        <label>Church Name:</label>
-                                        <select class="form-control churchName" id="churchname" th:field="*{church.churchName}">
-                                            <option th:each="church : ${churches}"
-                                                    th:value="${church.id.codeValue}"
-                                                    th:text="${church.desc1}">WireFrame</option>
+                                <div class="form-group">
+                                    <label>Church Name:</label>
+                                    <select class="form-control churchName" id="churchname" th:field="*{church.churchName}">
+                                        <option value=""></option>
+                                        <option th:each="church : ${churches}"
+                                                th:value="${church.id.codeValue}"
+                                                th:text="${church.desc1}">WireFrame</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Church Address:</label>
+                                    <input id="church_address" class="form-control"/>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label>Country:</label>
+                                        <select class="form-control" id="country" th:field="*{church.address.country}">
+                                            <option th:each="c : ${countries}"
+                                                    th:value="${c.code}"
+                                                    th:text="${c.country}">WireFrame</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Church Address:</label>
-                                        <input id="church_address" class="form-control" placeholder="Enter address here.."/>
+                                    <div class="form-group col-sm-4">
+                                        <label>State:</label>
+                                        <select class="form-control" id="state">
+                                            <option></option>
+                                        </select>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-sm-4">
-                                            <label>Country:</label>
-                                            <select class="form-control" id="country" th:field="*{church.address.country}">
-                                                <option th:each="c : ${countries}"
-                                                        th:value="${c.code}"
-                                                        th:text="${c.country}">WireFrame</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label>State:</label>
-                                            <select class="form-control" id="state">
-                                                <option></option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label>City:</label>
-                                            <select class="form-control" id="city">
-                                                <option></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-sm-6"><label>Church Email:</label><input class="form-control" type="email" name="email" placeholder="Church Email" id="church_email"></div>
-                                        <div class="form-group col-sm-6"><label>Church Contact:</label><input class="form-control" type="text" placeholder="Church Contact Number" id="church_contact_number"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-sm-6"><label>Contact Person:</label><input class="form-control" type="text" placeholder="Contact Person" id="church_contact_person"></div>
-                                        <div class="form-group col-sm-6"><label>Contact Number:</label><input class="form-control" type="text" placeholder="Contact Number" id="church_contact_person_number"></div>
-                                    </div>
-                                    <div class="form-wizard-buttons">
-                                        <button type="button" class="btn btn-next btn-save-church">Next</button>
+                                    <div class="form-group col-sm-4">
+                                        <label>City:</label>
+                                        <select class="form-control" id="city">
+                                            <option></option>
+                                        </select>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6"><label>Church Email:</label><input class="form-control" type="email" name="email" id="church_email"></div>
+                                    <div class="form-group col-sm-6"><label>Church Contact:</label><input class="form-control" type="text" id="church_contact_number"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6"><label>Contact Person:</label><input class="form-control" type="text" id="church_contact_person"></div>
+                                    <div class="form-group col-sm-6"><label>Contact Number:</label><input class="form-control" type="text" id="church_contact_person_number"></div>
+                                </div>
                                 <!--fields-->
-
+                                <div class="form-wizard-buttons">
+                                    <button type="button" class="btn btn-next btn-save-church btn-success">Next</button>
+                                </div>
                             </fieldset>
                             <!-- Form Step 1 -->
 
@@ -133,7 +131,7 @@
                             <fieldset>
                                 <!-- Progress Bar -->
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
                                     </div>
                                 </div>
                                 <!-- Progress Bar -->
@@ -246,7 +244,7 @@
                                 </div>
                                 <div class="form-wizard-buttons">
                                     <button type="button" class="btn btn-previous">Previous</button>
-                                    <button type="button" class="btn btn-next">Next</button>
+                                    <button type="button" class="btn btn-next btn-success">Next</button>
                                 </div>
                             </fieldset>
                             <!-- Form Step 2 -->
@@ -255,7 +253,7 @@
                             <fieldset>
                                 <!-- Progress Bar -->
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
                                     </div>
                                 </div>
                                 <!-- Progress Bar -->
@@ -289,7 +287,7 @@
                             <fieldset>
                                 <!-- Progress Bar -->
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                     </div>
                                 </div>
                                 <!-- Progress Bar -->
@@ -318,7 +316,10 @@
 
 </div>
 <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/popper.min.js}"></script>
+<!--<script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>-->
+<script type="text/javascript" th:src="@{/assets/js/bootstrap-material-design.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap-selectpicker.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/momentjs/2.22.2/moment.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/select2/4.0.5/js/select2.full.js}"></script>

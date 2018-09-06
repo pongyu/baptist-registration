@@ -77,7 +77,7 @@ var churchId;
             }
         });
 
-        $('.churchName').select2();
+        // $('.churchName').select2();
 		/*
 			Form
 		*/
@@ -190,6 +190,8 @@ var churchId;
                     console.log(e);
                 }
             });
+
+            table.draw();
         });
 
 		// country option on change
