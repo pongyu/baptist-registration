@@ -11,6 +11,7 @@ import org.bapp.services.common.CountryService;
 import org.bapp.services.registrant.RegistrantService;
 import org.bapp.services.sequence.SequenceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -26,6 +27,11 @@ import java.util.List;
 @RequestMapping("register")
 public class RegistrantController {
 
+    @Value("${bapp.eventid}")
+    private Integer eventId;
+
+    @Value("${bapp.eventname}")
+    private String eventName;
 
 
     @Autowired
@@ -105,8 +111,8 @@ public class RegistrantController {
                 return church.getChurchId();
             }else{
                 Church c = new Church();
-                service.setEventId(1);
-                service.setEventName("BMPSYMP");
+                service.setEventId(eventId);
+                service.setEventName(eventName);
                 c.setChurchId(service.generateSequenceId());
                 c.setChurchName(churchDTO.getChurchName());
 

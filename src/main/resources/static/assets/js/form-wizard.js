@@ -1,7 +1,7 @@
 "use strict";
 var churchId;
 (function( $ ) {
-	
+
 	function scroll_to_class(element_class, removed_height) {
 		var scroll_to = $(element_class).offset().top - removed_height;
 		if($(window).scrollTop() != scroll_to) {
@@ -34,21 +34,28 @@ var churchId;
             delay: 3000
         });
     }
-    function descFormat(codename, codevalue) {
+
+	jQuery(document).ready(function() {
+
+	    var churches = [];
         $.ajax({
             type: "GET",
-            url: "/admin/system/cdtbl/findOne?codename="+codename+"&codevalue="+codevalue,
-            success: function (d) {
+            url: "/church/list",
+            success: function (result) {
+                for (var i = 0; i < result.length; i++) {
+                    churches.push(result[i]);
+                }
             },
             error: function (e) {
                 //...
             }
         });
+	    
+        $('#church').autocomplete({
+            lookup: churches
+        });
 
-    }
-
-	jQuery(document).ready(function() {
-        $('#churchname').val('');
+        $('#church').val('');
         $('#church_address').val('');
         $('#city').val('');
         $('#state').val('');
@@ -58,33 +65,34 @@ var churchId;
         $('#church_contact_person').val('');
         $('#church_contact_person_number').val('');
 
+        $('#edit-church-btn').hide();
+
         //populate city by default philippines
-        var options = [];
+        var cities = [];
         $.ajax({
             type: "GET",
             url: "/common/util/country/states?code=PH",
             success: function (result) {
-                options.push('<option></option>');
+                cities.push('<option></option>');
                 for (var i = 0; i < result.length; i++) {
-                    options.push('<option value="',
+                    cities.push('<option value="',
                         result[i], '">',
                         result[i], '</option>');
                 }
-                $("#state").html(options.join(''));
+                $("#state").html(cities.join(''));
             },
             error: function (e) {
                 //...
             }
         });
 
-        // $('.churchName').select2();
 		/*
 			Form
 		*/
 		$('.form-wizard fieldset:first').fadeIn('slow');
 		
 		$('.form-wizard .required').on('focus', function() {
-			$(this).removeClass('input-error');
+			$(this).removeClass('has-danger');
 		});
 		
 		// next step
@@ -98,11 +106,11 @@ var churchId;
 			// fields validation
 			parent_fieldset.find('.required').each(function() {
 				if( $(this).val() === "" ||  $(this).val() === null || $(this).val() === undefined) {
-					$(this).addClass('input-error');
+					$(this).addClass('has-danger');
 					next_step = false;
 				}
 				else {
-					$(this).removeClass('input-error');
+					$(this).removeClass('has-danger');
 				}
 			});
 			// fields validation
@@ -156,11 +164,45 @@ var churchId;
 
 		});
 
+		// church name onchange
+        $('#church').on('change', function () {
+            var data = {}
+            data['churchId'] = churchId;
+            data['church'] = $(this).val();
+            data['address'] = {
+                'street' : $('#church_address').val(),
+                'city' : $('#city').val(),
+                'state' : $('#state').val(),
+                'country' : $('#country').val()
+            };
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/register",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (data) {
+                    //...
+                    // churchId = data;
+                    // console.log("onchange "+data);
+                    $('#churchModal').modal('toggle');
+                    $('#edit-church-btn').show();
+                },
+                error: function (e) {
+                    // console.log(e);
+                }
+            });
+        });
+
+        $('#edit-church-btn').on('click', function () {
+            $('#churchModal').modal('toggle');
+        });
+
         // save function for church;
-		$('.form-wizard .btn-save-church').on('click', function () {
+		$('#church-save-btn').on('click', function () {
 			var data = {}
 			data['churchId'] = churchId;
-            data['churchName'] = $('#churchname').val();
+            data['churchName'] = $('#church').val();
             data['address'] = {
                 'street' : $('#church_address').val(),
                 'city' : $('#city').val(),
@@ -191,7 +233,7 @@ var churchId;
                 }
             });
 
-            table.draw();
+            $('#churchModal').modal('toggle');
         });
 
 		// country option on change
@@ -243,7 +285,11 @@ var churchId;
 
         // initialise data tables
         var table = $('#registrantTable').DataTable({
+            "info":     false,
+            "paging":   false,
             "processing": true,
+            "bLengthChange": false,
+            "ordering": false,
             "bAutoWidth": true,
             "searching": false,
             "responsive": true,
@@ -373,20 +419,33 @@ var churchId;
 
         $('#newRegistrantBtn').on('click', function (e) {
             e.preventDefault();
-            $('.registrantForm #id').val('');
-            $('.registrantForm #firstname').val('');
-            $('.registrantForm #middlename').val('');
-            $('.registrantForm #lastname').val('');
-            $('.registrantForm #designation').val('');
-            $('.registrantForm #birthday').val('');
-            $('.registrantForm #mobilenumber').val('');
-            $('.registrantForm #gender').val('');
-            $('.registrantForm #civilstatus').val('');
-            $('.registrantForm #email').val('');
+            if(churchId==null || churchId == ""){
+                $.confirm({
+                    title: 'No church selected!',
+                    content: 'Please select church to add delegates.',
+                    type: 'red',
+                    typeAnimated: false,
+                    buttons: {
+                        close: function () {
+                        }
+                    }
+                });
+            }else {
+                $('.registrantForm #id').val('');
+                $('.registrantForm #firstname').val('');
+                $('.registrantForm #middlename').val('');
+                $('.registrantForm #lastname').val('');
+                $('.registrantForm #designation').val('');
+                $('.registrantForm #birthday').val('');
+                $('.registrantForm #mobilenumber').val('');
+                $('.registrantForm #gender').val('');
+                $('.registrantForm #civilstatus').val('');
+                $('.registrantForm #email').val('');
 
-            $('#registrantDeleteBtn').hide();
+                $('#registrantDeleteBtn').hide();
 
-            $('#registrantModal').modal();
+                $('#registrantModal').modal();
+            }
         });
 
         $('#registrantSaveBtn').on('click', function (e) {
@@ -414,7 +473,7 @@ var churchId;
                 success: function (r) {
                     table.clear();
                     table.rows.add(r).draw();
-                    toastSuccess("saved!");
+                    // toastSuccess("saved!");
                 },
                 error: function (e) {
                     //...

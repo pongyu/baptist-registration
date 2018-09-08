@@ -31,21 +31,10 @@
 
 fieldset { min-width: 100%; }
 
-.form-control, .is-focused .form-control {
-    background-image: linear-gradient(0deg,#4caf50 2px,rgba(156,39,176,0) 0),linear-gradient(0deg,#d2d2d2 1px,hsla(0,0%,82%,0) 0);
-}
-
 .dropdown-menu .dropdown-item:focus, .dropdown-menu .dropdown-item:hover, .dropdown-menu a:active, .dropdown-menu a:focus, .dropdown-menu a:hover {
     box-shadow: 0 4px 20px 0 rgba(0,0,0,.14);
     background-color: #4caf50;
     color: #fff;
-}
-
-.bootstrap-select>.dropdown-toggle {
-    width: 100%;
-    padding-right: 25px;
-    padding-left: 0px;
-    z-index: 1;
 }
 
 .btn.active.focus, .btn.active:focus, .btn.active:hover, .btn.btn-default.active.focus, .btn.btn-default.active:focus, .btn.btn-default.active:hover, .btn.btn-default:active.focus, .btn.btn-default:active:focus, .btn.btn-default:active:hover, .btn:active.focus, .btn:active:focus, .btn:active:hover, .open>.btn.btn-default.dropdown-toggle.focus, .open>.btn.btn-default.dropdown-toggle:focus, .open>.btn.btn-default.dropdown-toggle:hover, .open>.btn.dropdown-toggle.focus, .open>.btn.dropdown-toggle:focus, .open>.btn.dropdown-toggle:hover, .show>.btn.btn-default.dropdown-toggle.focus, .show>.btn.btn-default.dropdown-toggle:focus, .show>.btn.btn-default.dropdown-toggle:hover, .show>.btn.dropdown-toggle.focus, .show>.btn.dropdown-toggle:focus, .show>.btn.dropdown-toggle:hover {
@@ -66,7 +55,9 @@ fieldset { min-width: 100%; }
     box-shadow: none;
 }
 
-
-select.form-control:focus {
-    background-image: linear-gradient(0deg,#4caf50 1px,hsla(0,0%,82%,0) 0),linear-gradient(0deg,#4caf50 1px,hsla(0,0%,82%,0) 0);
-}
+.autocomplete-suggestions { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-no-suggestion { padding: 2px 5px;}
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: bold; color: #000; }
+.autocomplete-group { padding: 2px 5px; font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }

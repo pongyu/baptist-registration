@@ -12,10 +12,8 @@
     <link th:href="@{/assets/css/form-wizard-blue.css}" type="text/css" rel="stylesheet"/>
     <link th:href="@{/assets/css/jquery-confirm.css}" type="text/css" rel="stylesheet"/>
     <link th:href="@{/webjars/font-awesome/5.1.0/css/all.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link th:href="@{/webjars/select2/4.0.5/css/select2.min.css}" type="text/css" rel="stylesheet"/>
-    <link th:href="@{/assets/css/styles.css}" type="text/css" rel="stylesheet"/>
-    <link th:href="@{/assets/css/pnotify.custom.min.css}" type="text/css" rel="stylesheet"/>
     <link th:href="@{/assets/css/responsive.dataTables.min.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/assets/css/styles.css}" type="text/css" rel="stylesheet"/>
 </head>
 <body oncontextmenu="return false;">
 
@@ -31,9 +29,9 @@
                             <p>Fill all form field to go next step</p>
 
                             <!-- Form progress -->
-                            <div class="form-wizard-steps form-wizard-tolal-steps-4">
+                            <div class="form-wizard-steps form-wizard-tolal-steps-3">
                                 <div class="form-wizard-progress">
-                                    <div class="form-wizard-progress-line" data-now-value="12.25" data-number-of-steps="4" style="width: 12.25%;"></div>
+                                    <!--<div class="form-wizard-progress-line" data-now-value="50" data-number-of-steps="2" style="width: 50%;"></div>-->
                                 </div>
                                 <!-- Step 1 -->
                                 <div class="form-wizard-step active">
@@ -41,13 +39,6 @@
                                     <p>Church</p>
                                 </div>
                                 <!-- Step 1 -->
-
-                                <!-- Step 2 -->
-                                <div class="form-wizard-step">
-                                    <div class="form-wizard-step-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
-                                    <p>Delegates</p>
-                                </div>
-                                <!-- Step 2 -->
 
                                 <!-- Step 3 -->
                                 <div class="form-wizard-step">
@@ -70,77 +61,92 @@
                             <fieldset>
                                 <!-- Progress Bar -->
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
                                     </div>
                                 </div>
                                 <!-- Progress Bar -->
-                                <h4>Account Information: <span>Step 1 - 4</span></h4>
+                                <!--fields-->
+                                <!---->
+                                <!---->
+                                <!--this is select option for church commented because i use auto complete for input-->
+                                <!---->
+                                <!---->
+                                <!--<div style="display: flex;">-->
+                                    <!--<select class="form-control churchName required" id="churchname" th:field="*{church.churchName}">-->
+                                        <!--<option disabled="disabled" value="">Select church</option>-->
+                                        <!--<option th:each="church : ${churches}"-->
+                                                <!--th:value="${church.id.codeValue}"-->
+                                                <!--th:text="${church.desc1}">WireFrame</option>-->
+                                    <!--</select>-->
+                                    <!--<button type="button" id="edit-church-btn" class="btn btn-default btn-round btn-sm"><i class="fas fa-pencil-alt" aria-hidden="true"></i></button>-->
+                                <!--</div>-->
 
-                                <!--fields-->
-                                <div class="form-group">
-                                    <label>Church Name:</label>
-                                    <select class="form-control churchName" id="churchname" th:field="*{church.churchName}">
-                                        <option value=""></option>
-                                        <option th:each="church : ${churches}"
-                                                th:value="${church.id.codeValue}"
-                                                th:text="${church.desc1}">WireFrame</option>
-                                    </select>
+                                <div class="form-group required" style="display: flex;">
+                                    <label for="church" class="bmd-label-floating">Church Name</label>
+                                    <input type="text" class="form-control required" id="church">
+                                    <button type="button" id="edit-church-btn" class="btn btn-default btn-round btn-sm"><i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp&nbsp&nbsp Church info</button>
                                 </div>
                                 <div class="form-group">
-                                    <label>Church Address:</label>
-                                    <input id="church_address" class="form-control"/>
+                                    <button type="button" class="btn btn-default" id="newRegistrantBtn" >
+                                        Add Delegate
+                                    </button>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-4">
-                                        <label>Country:</label>
-                                        <select class="form-control" id="country" th:field="*{church.address.country}">
-                                            <option th:each="c : ${countries}"
-                                                    th:value="${c.code}"
-                                                    th:text="${c.country}">WireFrame</option>
-                                        </select>
+                                <!--Church modal-->
+                                <div class="modal fade" id="churchModal" tabindex="-1" role="dialog" aria-labelledby="churchModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="churchModalLabel">Church Information</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label>Church Address:</label>
+                                                    <input id="church_address" class="form-control"/>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-4">
+                                                        <label>Country:</label>
+                                                        <select class="form-control" id="country" th:field="*{church.address.country}">
+                                                            <option th:each="c : ${countries}"
+                                                                    th:value="${c.code}"
+                                                                    th:text="${c.country}">WireFrame</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-4">
+                                                        <label>State:</label>
+                                                        <select class="form-control" id="state">
+                                                            <option></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-4">
+                                                        <label>City:</label>
+                                                        <select class="form-control" id="city">
+                                                            <option></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6"><label>Church Email:</label><input class="form-control" type="email" name="email" id="church_email"></div>
+                                                    <div class="form-group col-sm-6"><label>Church Contact:</label><input class="form-control" type="text" id="church_contact_number"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6"><label>Contact Person:</label><input class="form-control" type="text" id="church_contact_person"></div>
+                                                    <div class="form-group col-sm-6"><label>Contact Number:</label><input class="form-control" type="text" id="church_contact_person_number"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input type="submit" class="btn btn-primary" value="save" id="church-save-btn"/>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-sm-4">
-                                        <label>State:</label>
-                                        <select class="form-control" id="state">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-4">
-                                        <label>City:</label>
-                                        <select class="form-control" id="city">
-                                            <option></option>
-                                        </select>
-                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-6"><label>Church Email:</label><input class="form-control" type="email" name="email" id="church_email"></div>
-                                    <div class="form-group col-sm-6"><label>Church Contact:</label><input class="form-control" type="text" id="church_contact_number"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-6"><label>Contact Person:</label><input class="form-control" type="text" id="church_contact_person"></div>
-                                    <div class="form-group col-sm-6"><label>Contact Number:</label><input class="form-control" type="text" id="church_contact_person_number"></div>
-                                </div>
-                                <!--fields-->
-                                <div class="form-wizard-buttons">
-                                    <button type="button" class="btn btn-next btn-save-church btn-success">Next</button>
-                                </div>
-                            </fieldset>
-                            <!-- Form Step 1 -->
+                                <!--Church modal-->
 
-                            <!-- Form Step 2 -->
-                            <fieldset>
-                                <!-- Progress Bar -->
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
-                                    </div>
-                                </div>
-                                <!-- Progress Bar -->
-                                <h4>Delegate's Information : <span>Step 2 - 4</span></h4>
-                                <!--fields-->
-                                <!--table-->
-                                <button type="button" class="btn btn-primary" id="newRegistrantBtn" >
-                                    Add Delegate
-                                </button>
+                                <!--Registrant details-->
                                 <table class="table display responsive nowrap" style="width:100%" id="registrantTable">
                                     <thead>
                                     <tr>
@@ -156,19 +162,6 @@
                                         <!--<th data-priority="1"></th>-->
                                     </tr>
                                     </thead>
-                                    <!--<tbody>-->
-                                    <!--<tr th:each="r : ${delegates}">-->
-                                        <!--<td th:text="${r.id}"></td>-->
-                                        <!--<td th:text="${r.firstName + ' ' + r.lastName}"></td>-->
-                                        <!--<td th:text="${r.designation}"></td>-->
-                                        <!--<td th:text="${r.birthDate}"></td>-->
-                                        <!--<td th:text="${r.gender}"></td>-->
-                                        <!--<td th:text="${r.civilStatus}"></td>-->
-                                        <!--<td th:text="${r.mobileNumber}"></td>-->
-                                        <!--<td th:text="${r.email}"></td>-->
-                                        <!--<td><a th:href="@{register/delegate/findOne(id=${r.id})}" class="btn btn-primary edit-btn">Edit</a></td>-->
-                                    <!--</tr>-->
-                                    <!--</tbody>-->
                                 </table>
                                 <!--fields-->
                                 <!--modal-->
@@ -243,12 +236,11 @@
                                     </div>
                                 </div>
                                 <div class="form-wizard-buttons">
-                                    <button type="button" class="btn btn-previous">Previous</button>
                                     <button type="button" class="btn btn-next btn-success">Next</button>
                                 </div>
+                                <!--Registrant details-->
                             </fieldset>
-                            <!-- Form Step 2 -->
-
+                            <!-- Form Step 1 -->
                             <!-- Form Step 3 -->
                             <fieldset>
                                 <!-- Progress Bar -->
@@ -319,14 +311,14 @@
 <script type="text/javascript" th:src="@{/assets/js/popper.min.js}"></script>
 <!--<script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>-->
 <script type="text/javascript" th:src="@{/assets/js/bootstrap-material-design.min.js}"></script>
-<script type="text/javascript" th:src="@{/assets/js/bootstrap-selectpicker.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/material-kit.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/momentjs/2.22.2/moment.js}"></script>
-<script type="text/javascript" th:src="@{/webjars/select2/4.0.5/js/select2.full.js}"></script>
+<!--<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>-->
 <script type="text/javascript" th:src="@{/assets/js/main.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/form-wizard.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/jquery-confirm.js}"></script>
-<script type="text/javascript" th:src="@{/assets/js/pnotify.custom.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/dataTables.responsive.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/autocomplete.min.js}"></script>
 </body>
 </html>
