@@ -84,11 +84,10 @@ public class RegistrantController {
     @PostMapping("")
     @ResponseBody
     public String saveChurch(@RequestBody ChurchDTO churchDTO, Errors errors){
+
         if(errors.hasErrors()){
             return "redirect:";
         }
-
-
 
         String id = churchDTO.getChurchId();
         Church  church = churchService.findByChurchId(id);
@@ -110,6 +109,7 @@ public class RegistrantController {
 
                 return church.getChurchId();
             }else{
+
                 Church c = new Church();
                 service.setEventId(eventId);
                 service.setEventName(eventName);
@@ -124,13 +124,16 @@ public class RegistrantController {
                 c.setDateUpdated(LocalDateTime.now());
                 churchService.save(c);
 
+                for (RegistrantDTO r : churchDTO.getRegistrants()){
+                    Registrant ar = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(r);
+                    ar.setChurch(c);
+                    registrantService.save(ar);
+                }
                 return c.getChurchId();
             }
-
         } catch (Exception e){
             e.printStackTrace();
         }
-
         return null;
     }
 

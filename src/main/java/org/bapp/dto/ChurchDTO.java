@@ -4,6 +4,8 @@ package org.bapp.dto;
 import org.bapp.model.Address;
 import org.bapp.model.Email;
 
+import java.util.List;
+
 public class ChurchDTO {
 
     private String churchId;
@@ -19,6 +21,19 @@ public class ChurchDTO {
     private String contactPersonMobileNumber;
 
     private Address address;
+
+    private List<RegistrantDTO> registrants;
+
+    public ChurchDTO() {
+    }
+
+    public List<RegistrantDTO> getRegistrants() {
+        return registrants;
+    }
+
+    public void setRegistrants(List<RegistrantDTO> registrants) {
+        this.registrants = registrants;
+    }
 
     public String getChurchId() {
         return churchId;

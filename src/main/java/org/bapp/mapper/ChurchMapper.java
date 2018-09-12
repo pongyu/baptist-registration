@@ -6,11 +6,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses=EmailMapper.class)
+@Mapper(uses={EmailMapper.class, RegistrantMapper.class})
 public interface ChurchMapper {
 
     ChurchMapper INSTANCE = Mappers.getMapper(ChurchMapper.class);
 
-    ChurchDTO ChurchToChurchDto(Church church);
+    ChurchDTO toChurchDto(Church church);
+
+    Church toChurch(ChurchDTO churchDTO);
 
 }
