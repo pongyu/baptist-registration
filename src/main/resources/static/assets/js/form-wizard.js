@@ -414,7 +414,7 @@ if (typeof(Storage) !== "undefined") {
                         "responsivePriority":1,
                         "targets": -2,
                         "data": null,
-                        "defaultContent": '<button type="button" id="editBtn"><i class="fa fa-edit"></i></button>'
+                        "defaultContent": '<button class="btn btn-default btn-link btn-sm" type="button" id="editBtn"><i class="fa fa-edit"></i></button>'
                     },
                     {
                         targets:2, render:function(data){
@@ -697,9 +697,10 @@ if (typeof(Storage) !== "undefined") {
 
             church.registrants = delegates;
 
+            var br = '<br>';
             $.confirm({
                 title: 'Submit form?',
-                content: 'Church: '+$('#church').val()+"with :"+delegates.length+" delegate(s)",
+                content: $('#church').val()+br+'with :'+delegates.length+' delegate(s)',
                 theme: 'modern',
                 type: 'green',
                 animation: 'top',
@@ -721,16 +722,28 @@ if (typeof(Storage) !== "undefined") {
                                 console.log(e);
                             }
                         });
+
+                        //fade
+                        var parent_fieldset = $('#btn-submit-form').parents('fieldset');
+                        // navigation steps / progress steps
+                        var current_active_step = $('#btn-submit-form').parents('.form-wizard').find('.form-wizard-step.active');
+                        var progress_line = $('#btn-submit-form').parents('.form-wizard').find('.form-wizard-progress-line');
+                        parent_fieldset.fadeOut(400, function() {
+                            // change icons
+                            current_active_step.removeClass('active').addClass('activated').next().addClass('active');
+                            // progress bar
+                            bar_progress(progress_line, 'right');
+                            // show next step
+                            $(this).next().fadeIn();
+                            // scroll window to beginning of the form
+                            scroll_to_class( $('.form-wizard'), 20 );
+                        });
                     },
                     cancel: function () {
 
                     }
                 }
             });
-        });
-
-        $('#btn-submit-form').on('click', function () {
-            
         });
         //
 	});

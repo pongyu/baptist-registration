@@ -265,7 +265,7 @@
                                 </div>
                                 <div class="form-wizard-buttons">
                                     <button type="button" class="btn btn-previous float-left">Previous</button>
-                                    <button type="button" class="btn btn-next btn-success float-right" id="btn-submit-form">Next</button>
+                                    <button type="button" class="btn btn-success float-right" id="btn-submit-form">Next</button>
                                 </div>
                             </fieldset>
                             <!-- Form Step 3 -->
@@ -284,9 +284,9 @@
                                     <h3>Signing Up Success</h3>
                                     <div class="success-icon"><i class="fa fa-check" aria-hidden="true"></i></div>
                                 </div>
-                                <div class="form-wizard-buttons">
+                                <form class="form-wizard-buttons" th:action="@{/}" method="get">
                                     <button type="submit" class="btn btn-submit btn-success">Done</button>
-                                </div>
+                                </form>
                             </fieldset>
                             <!-- Form Step 4 -->
 
