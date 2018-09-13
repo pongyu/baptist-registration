@@ -18,8 +18,6 @@
     text-align: center;
 }
 
-
-
 /** Form Body Classic **/
 
 .form-body-classic .form-control {
@@ -580,7 +578,7 @@
   visibility: hidden;
 }
 .drop_target::before {
-	content: 'Drop Hear';
+	content: 'Drop Here';
 	font-family: FontAwesome;
 	position: absolute;
 	display: block;
