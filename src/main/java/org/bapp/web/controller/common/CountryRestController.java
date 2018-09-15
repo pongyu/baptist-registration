@@ -1,7 +1,6 @@
-package org.bapp.controller.common;
+package org.bapp.web.controller.common;
 
-import org.bapp.dto.CountryDTO;
-import org.bapp.model.Country;
+import org.bapp.web.dto.CountryDTO;
 import org.bapp.services.common.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

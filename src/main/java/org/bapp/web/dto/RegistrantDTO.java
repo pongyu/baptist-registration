@@ -1,4 +1,4 @@
-package org.bapp.dto;
+package org.bapp.web.dto;
 
 import java.util.Date;
 

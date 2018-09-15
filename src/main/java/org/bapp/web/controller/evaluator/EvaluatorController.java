@@ -1,15 +1,15 @@
-package org.bapp.controller;
+package org.bapp.web.controller.evaluator;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class EvaluatorController {
 
-
-    @GetMapping("")
+    @GetMapping("/assess")
     public String index(){
-        return "index";
+        return "assessment/index";
     }
+
 
 }

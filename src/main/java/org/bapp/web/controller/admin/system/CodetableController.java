@@ -1,17 +1,13 @@
-package org.bapp.controller.admin.system;
+package org.bapp.web.controller.admin.system;
 
 import org.bapp.model.Codetable;
 import org.bapp.model.CodetableId;
-import org.bapp.repository.CodetableRepository;
 import org.bapp.services.codetable.CodetableService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller

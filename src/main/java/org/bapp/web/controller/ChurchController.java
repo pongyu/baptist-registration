@@ -1,4 +1,4 @@
-package org.bapp.controller;
+package org.bapp.web.controller;
 
 import org.bapp.model.Church;
 import org.bapp.repository.ChurchRepository;
@@ -6,10 +6,7 @@ import org.bapp.services.sequence.SequenceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("church")

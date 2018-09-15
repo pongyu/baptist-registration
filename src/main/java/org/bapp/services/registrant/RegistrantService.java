@@ -1,6 +1,6 @@
 package org.bapp.services.registrant;
 
-import org.bapp.dto.RegistrantDTO;
+import org.bapp.web.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.Church;
 import org.bapp.model.Registrant;

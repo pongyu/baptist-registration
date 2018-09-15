@@ -1,6 +1,6 @@
 package org.bapp.services.common;
 
-import org.bapp.dto.CountryDTO;
+import org.bapp.web.dto.CountryDTO;
 import org.bapp.model.Country;
 import org.bapp.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;

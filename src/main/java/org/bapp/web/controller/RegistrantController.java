@@ -1,8 +1,8 @@
-package org.bapp.controller;
+package org.bapp.web.controller;
 
-import org.bapp.dto.ChurchDTO;
-import org.bapp.dto.CountryDTO;
-import org.bapp.dto.RegistrantDTO;
+import org.bapp.web.dto.ChurchDTO;
+import org.bapp.web.dto.CountryDTO;
+import org.bapp.web.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.*;
 import org.bapp.services.church.ChurchService;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

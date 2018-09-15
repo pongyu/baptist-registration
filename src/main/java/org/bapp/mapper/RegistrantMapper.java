@@ -1,6 +1,6 @@
 package org.bapp.mapper;
 
-import org.bapp.dto.RegistrantDTO;
+import org.bapp.web.dto.RegistrantDTO;
 import org.bapp.model.Registrant;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -45,7 +45,7 @@ if (typeof(Storage) !== "undefined") {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/admin/system/cdtbl/findOne?codename="+codename+"&codevalue="+codevalue,
+            url: "common/util/cdtbl/findOne?codename="+codename+"&codevalue="+codevalue,
             success: function (d) {
                 if (codename === "designation"){
                     desc = d.desc2+" "+d.desc1;

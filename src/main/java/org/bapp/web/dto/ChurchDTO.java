@@ -1,8 +1,7 @@
-package org.bapp.dto;
+package org.bapp.web.dto;
 
 
 import org.bapp.model.Address;
-import org.bapp.model.Email;
 
 import java.util.List;
 

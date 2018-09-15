@@ -1,4 +1,4 @@
-package org.bapp.controller.common;
+package org.bapp.web.controller.common;
 
 import org.bapp.model.Codetable;
 import org.bapp.services.codetable.CodetableService;
