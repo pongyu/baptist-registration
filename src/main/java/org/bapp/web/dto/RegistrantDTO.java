@@ -28,6 +28,29 @@ public class RegistrantDTO {
 
     private Integer yearsOfTeaching;
 
+    private String classification;
+
+    private Integer yearsOfMembership;
+
+    public RegistrantDTO() {
+    }
+
+    public Integer getYearsOfMembership() {
+        return yearsOfMembership;
+    }
+
+    public void setYearsOfMembership(Integer yearsOfMembership) {
+        this.yearsOfMembership = yearsOfMembership;
+    }
+
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
+
     public Long getId() {
         return id;
     }

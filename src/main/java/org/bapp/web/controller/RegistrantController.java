@@ -1,11 +1,14 @@
 package org.bapp.web.controller;
 
+import org.bapp.services.assessment.CampFee;
+import org.bapp.services.assessment.CampFeeImpl;
+import org.bapp.util.DateTimeUtil;
 import org.bapp.web.dto.ChurchDTO;
 import org.bapp.web.dto.CountryDTO;
 import org.bapp.web.dto.RegistrantDTO;
 import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.*;
-import org.bapp.services.church.ChurchService;
+import org.bapp.services.church.ChurchServiceImpl;
 import org.bapp.services.codetable.CodetableService;
 import org.bapp.services.common.CountryService;
 import org.bapp.services.registrant.RegistrantService;
@@ -26,6 +29,7 @@ import java.util.List;
 @RequestMapping("register")
 public class RegistrantController {
 
+
     @Value("${bapp.eventid}")
     private Integer eventId;
 
@@ -37,7 +41,7 @@ public class RegistrantController {
     private RegistrantService registrantService;
 
     @Autowired
-    private ChurchService churchService;
+    private ChurchServiceImpl churchService;
 
     @Autowired
     private SequenceServiceImpl service;
@@ -47,6 +51,14 @@ public class RegistrantController {
 
     @Autowired
     private CountryService countryService;
+
+    @Autowired
+    private CampFee campFee;
+
+    @ModelAttribute("event")
+    public Integer eventType(){
+        return this.eventId;
+    }
 
     @ModelAttribute("countries")
     public List<CountryDTO> countries(){
@@ -61,6 +73,11 @@ public class RegistrantController {
     @ModelAttribute("designation")
     public List<Codetable> designation() {
         return codetableService.findAllById("designation");
+    }
+
+    @ModelAttribute("classification")
+    public List<Codetable> classification() {
+        return codetableService.findAllById("classification");
     }
 
     @ModelAttribute("gender")
@@ -114,6 +131,7 @@ public class RegistrantController {
                 service.setEventName(eventName);
                 c.setChurchId(service.generateSequenceId());
                 c.setChurchName(churchDTO.getChurchName());
+                c.setPastorFullName(churchDTO.getPastorFullName());
 
                 c.setAddress(churchDTO.getAddress());
                 c.setChurchContactNumber(churchDTO.getChurchContactNumber());
@@ -121,10 +139,38 @@ public class RegistrantController {
                 c.setContactPerson(churchDTO.getContactPerson());
                 c.setContactPersonMobileNumber(churchDTO.getContactPersonMobileNumber());
                 c.setDateUpdated(LocalDateTime.now());
+
+                //set status to 0 "for payment"
+
+                c.setAppStatus("0");
+                c.setAppStatusDate(LocalDateTime.now());
+
                 churchService.save(c);
 
                 for (RegistrantDTO r : churchDTO.getRegistrants()){
                     Registrant ar = RegistrantMapper.INSTANCE.registrantDtoToRegistrant(r);
+
+                    // initial saving of fee
+                    int age = DateTimeUtil.getAge(ar.getBirthDate());
+                    if(age <= 2){
+
+                        ar.setSubsidy("LESS THAN 2 YRS OLD");
+                        ar.setRemarks("2 Yrs. Old Below");
+
+                    } else if(age > 2 && age <= 6){
+
+                        ar.setSubsidy("KIDS");
+                        ar.setRemarks("3 - 6 Yrs. Old");
+
+                    } else {
+
+                        ar.setSubsidy("FULL");
+                        ar.setRemarks("Regular");
+
+                    }
+
+                    ar.setFee(campFee.calculateCampFee(ar.getSubsidy(), null));
+
                     ar.setChurch(c);
                     registrantService.save(ar);
                 }

@@ -1,21 +1,11 @@
 package org.bapp.services.church;
 
 import org.bapp.model.Church;
-import org.bapp.repository.ChurchRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ChurchService {
+import java.util.List;
 
-    @Autowired
-    private ChurchRepository churchRepository;
+public interface ChurchService {
 
-    public Church findByChurchId(String churchId){
-        return this.churchRepository.findByChurchId(churchId);
-    }
+    List<Church> findAllByChurchNameLike(String churchName);
 
-    public void save(final Church church){
-        this.churchRepository.save(church);
-    }
 }

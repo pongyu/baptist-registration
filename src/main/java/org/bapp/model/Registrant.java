@@ -2,6 +2,7 @@ package org.bapp.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -26,6 +27,18 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     private Integer yearsOfTeaching;
 
+    private String classification;
+
+    private Integer yearsOfMembership;
+
+    private double fee;
+
+    private String remarks;
+
+    private String subsidy;
+
+    private String roomType;
+
     @Column(unique = true)
     private Email email;
 
@@ -35,6 +48,54 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     public Registrant(){
 
+    }
+
+    public double getFee() {
+        return fee;
+    }
+
+    public void setFee(double fee) {
+        this.fee = fee;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getSubsidy() {
+        return subsidy;
+    }
+
+    public void setSubsidy(String subsidy) {
+        this.subsidy = subsidy;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public Integer getYearsOfMembership() {
+        return yearsOfMembership;
+    }
+
+    public void setYearsOfMembership(Integer yearsOfMembership) {
+        this.yearsOfMembership = yearsOfMembership;
+    }
+
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
     }
 
     public String getDesignation() {

@@ -11,6 +11,8 @@ public class ChurchDTO {
 
     private String churchName;
 
+    private String pastorFullName;
+
     private String churchEmail;
 
     private String churchContactNumber;
@@ -24,6 +26,14 @@ public class ChurchDTO {
     private List<RegistrantDTO> registrants;
 
     public ChurchDTO() {
+    }
+
+    public String getPastorFullName() {
+        return pastorFullName;
+    }
+
+    public void setPastorFullName(String pastorFullName) {
+        this.pastorFullName = pastorFullName;
     }
 
     public List<RegistrantDTO> getRegistrants() {

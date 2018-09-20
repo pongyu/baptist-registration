@@ -18,6 +18,7 @@
 <body oncontextmenu="return false;">
 
 <div class="image-container" style="background-image: url('assets/img/wizard-profile.jpg')">
+    <input type="text" hidden="hidden" id="event" name="event" th:value="${event}">
     <!-- main content -->
     <section class="form-box">
         <div class="container">
@@ -103,6 +104,10 @@
                                                 <!--</button>-->
                                             </div>
                                             <div class="modal-body">
+                                                <div th:if="${event} == 2" class="form-group">
+                                                    <label>Pastor's Full Name:</label>
+                                                    <input class="form-control" type="text" id="ptr_name" value="">
+                                                </div>
                                                 <div class="form-group">
                                                     <label>Church Address:</label>
                                                     <input id="church_address" class="form-control required"/>
@@ -148,7 +153,10 @@
                                     <thead>
                                     <tr>
                                         <th data-priority="2">Name</th>
-                                        <th data-priority="3">Designation</th>
+                                        <th th:if="${event} == 1" data-priority="3">Designation</th>
+                                        <th th:if="${event} == 2" data-priority="3">Classification</th>
+                                        <th th:if="${event} == 1" data-priority="10">Years of Membership</th>
+                                        <th th:if="${event} == 2" data-priority="10">Years of Teaching</th>
                                         <th data-priority="4">Birthday</th>
                                         <th data-priority="5">Gender</th>
                                         <th data-priority="6">Civil Status</th>
@@ -177,13 +185,29 @@
                                                     <label>Id</label>
                                                     <input class="form-control" type="text" id="id" name="id" value="">
                                                 </div>
-                                                <div class="form-group">
+                                                <div th:if="${event} == 1" class="form-group">
                                                     <label>Designation:</label>
                                                     <select class="form-control" id="designation" name="designation" value="">
                                                         <option th:each="c : ${designation}"
                                                                 th:value="${c.id.codeValue}"
                                                                 th:text="${c.desc2}+ ' ' + ${c.desc1}">WireFrame</option>
                                                     </select>
+                                                </div>
+                                                <div th:if="${event} == 2" class="form-group">
+                                                    <label>Classification:</label>
+                                                    <select class="form-control" id="classification" name="classification" value="">
+                                                        <option th:each="c : ${classification}"
+                                                                th:value="${c.id.codeValue}"
+                                                                th:text="${c.id.codeValue}+ ' ' + ${c.desc1}">WireFrame</option>
+                                                    </select>
+                                                </div>
+                                                <div th:if="${event} == 1" class="form-group">
+                                                    <label>Years of Membership:</label>
+                                                    <input class="form-control" type="text" id="years_of_membership" value="">
+                                                </div>
+                                                <div th:if="${event} == 2" class="form-group">
+                                                    <label>Years of Teaching:</label>
+                                                    <input class="form-control" type="text" id="years_of_teaching" value="">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>First Name:</label>

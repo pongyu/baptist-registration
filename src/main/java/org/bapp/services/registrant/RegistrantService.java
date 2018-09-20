@@ -5,7 +5,7 @@ import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.Church;
 import org.bapp.model.Registrant;
 import org.bapp.repository.RegistrantRepository;
-import org.bapp.services.church.ChurchService;
+import org.bapp.services.church.ChurchServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class RegistrantService {
 
     @Autowired
-    private ChurchService churchService;
+    private ChurchServiceImpl churchService;
 
     @Autowired
     private RegistrantRepository registrantRepository;

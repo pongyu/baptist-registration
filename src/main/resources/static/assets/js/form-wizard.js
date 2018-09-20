@@ -49,6 +49,8 @@ if (typeof(Storage) !== "undefined") {
             success: function (d) {
                 if (codename === "designation"){
                     desc = d.desc2+" "+d.desc1;
+                } else if(codename === "classification"){
+                    desc = d.id.codeValue;
                 } else {
                     desc = d.desc1
                 }
@@ -83,8 +85,11 @@ if (typeof(Storage) !== "undefined") {
 
 	jQuery(document).ready(function() {
 
+        var event = $('#event').val();
+
         var church = {
             churchName: '',
+            pastorFullName: '',
             churchEmail: '',
             churchContactNumber: '',
             contactPerson: '',
@@ -118,6 +123,7 @@ if (typeof(Storage) !== "undefined") {
         });
 
         $('#church').val('');
+        $('#ptr_name').val('');
         $('#church_address').val('');
         $('#city').val('');
         $('#state').val('');
@@ -212,7 +218,10 @@ if (typeof(Storage) !== "undefined") {
 			// navigation steps / progress steps
 			var current_active_step = $(this).parents('.form-wizard').find('.form-wizard-step.active');
 			var progress_line = $(this).parents('.form-wizard').find('.form-wizard-progress-line');
-			
+
+			//recalculate table size to be responsive when clicking previous step
+            table.columns.adjust().responsive.recalc();
+
 			$(this).parents('fieldset').fadeOut(400, function() {
 				// change icons
 				current_active_step.removeClass('active').prev().removeClass('activated').addClass('active');
@@ -400,7 +409,20 @@ if (typeof(Storage) !== "undefined") {
                         // Combine the first and last names into a single table field
                         return data.firstName+' '+data.lastName;
                     } },
-                    { "mData": "designation" },
+                    { "mData": null, render: function ( data, type, row ) {
+                        if(event == 1){
+                            return descFormat('designation', data.designation);
+                        } else {
+                            return descFormat('classification', data.classification);
+                        }
+                    } },
+                    { "mData": null, render: function ( data, type, row ) {
+                        if(event == 1){
+                            return data.yearsOfMembership;
+                        } else {
+                            return data.yearsOfTeaching;
+                        }
+                    } },
                     { "mData": "birthDate" },
                     { "mData": "gender" },
                     { "mData": "civilStatus" },
@@ -417,7 +439,7 @@ if (typeof(Storage) !== "undefined") {
                         "defaultContent": '<button class="btn btn-default btn-link btn-sm" type="button" id="editBtn"><i class="fa fa-edit"></i></button>'
                     },
                     {
-                        targets:2, render:function(data){
+                        targets:3, render:function(data){
                         return moment(data).format('MM DD YYYY');
                         }
                     },
@@ -426,17 +448,12 @@ if (typeof(Storage) !== "undefined") {
                         "visible": false
                     },
                     {
-                        targets:1, render:function(data){
-                        return descFormat('designation', data);
-                    }
-                    },
-                    {
-                        targets:3, render:function(data){
+                        targets:4, render:function(data){
                         return descFormat('gender', data);
                     }
                     },
                     {
-                        targets:4, render:function(data){
+                        targets:5, render:function(data){
                         return descFormat('civilstatus', data);
                     }
                     }
@@ -448,7 +465,13 @@ if (typeof(Storage) !== "undefined") {
             // add required fields
             $('.registrantForm #firstname').addClass('required');
             $('.registrantForm #lastname').addClass('required');
-            $('.registrantForm #designation').addClass('required');
+            if(event == 1 ){
+                $('.registrantForm #designation').addClass('required');
+                $('.registrantForm #years_of_membership').addClass('required');
+            }else{
+                $('.registrantForm #classification').addClass('required');
+                $('.registrantForm #years_of_teaching').addClass('required');
+            }
             $('.registrantForm #birthday').addClass('required');
             $('.registrantForm #gender').addClass('required');
             $('.registrantForm #civilstatus').addClass('required');
@@ -458,7 +481,13 @@ if (typeof(Storage) !== "undefined") {
             // remove required fields before closing modal
             $('.registrantForm #firstname').removeClass('required');
             $('.registrantForm #lastname').removeClass('required');
-            $('.registrantForm #designation').removeClass('required');
+            if(event == 1 ){
+                $('.registrantForm #designation').removeClass('required');
+                $('.registrantForm #years_of_membership').removeClass('required');
+            }else{
+                $('.registrantForm #classification').removeClass('required');
+                $('.registrantForm #years_of_teaching').removeClass('required');
+            }
             $('.registrantForm #birthday').removeClass('required');
             $('.registrantForm #gender').removeClass('required');
             $('.registrantForm #civilstatus').removeClass('required');
@@ -487,6 +516,9 @@ if (typeof(Storage) !== "undefined") {
                 $('.registrantForm #middlename').val('');
                 $('.registrantForm #lastname').val('');
                 $('.registrantForm #designation').val('');
+                $('.registrantForm #classification').val('');
+                $('.registrantForm #years_of_teaching').val('');
+                $('.registrantForm #years_of_membership').val('');
                 $('.registrantForm #birthday').val('');
                 $('.registrantForm #mobilenumber').val('');
                 $('.registrantForm #gender').val('');
@@ -531,7 +563,13 @@ if (typeof(Storage) !== "undefined") {
                     data['firstName'] = $('#firstname').val();
                     data['middleName'] = $('#middlename').val();
                     data['lastName'] = $('#lastname').val();
-                    data['designation'] = $('#designation').val();
+                    if(event == 1 ){
+                        data['designation'] = $('#designation').val();
+                        data['yearsOfMembership'] = $('#years_of_membership').val();
+                    } else {
+                        data['classification'] = $('#classification').val();
+                        data['yearsOfTeaching'] = $('#years_of_teaching').val();
+                    }
                     data['birthDate'] = $('#birthday').val();
                     data['mobileNumber'] = $('#mobilenumber').val();
                     data['gender'] = $('#gender').val();
@@ -568,7 +606,13 @@ if (typeof(Storage) !== "undefined") {
                     d.firstName = $('#firstname').val();
                     d.middleName = $('#middlename').val();
                     d.lastName = $('#lastname').val();
-                    d.designation = $('#designation').val();
+                    if(event == 1 ){
+                        d.designation = $('#designation').val();
+                        d.yearsOfMembership = $('#years_of_membership').val();
+                    } else {
+                        d.classification = $('#classification').val();
+                        d.yearsOfTeaching = $('#years_of_teaching').val();
+                    }
                     d.birthDate = $('#birthday').val();
                     d.mobileNumber = $('#mobilenumber').val();
                     d.gender = $('#gender').val();
@@ -619,7 +663,14 @@ if (typeof(Storage) !== "undefined") {
             $('.registrantForm #firstname').val(r.firstName);
             $('.registrantForm #middlename').val(r.middleName);
             $('.registrantForm #lastname').val(r.lastName);
-            $('.registrantForm #designation').val(r.designation);
+            if(event == 1 ){
+                $('.registrantForm #designation').val(r.designation);
+                $('.registrantForm #years_of_membership').val(r.yearsOfMembership);
+            }else {
+                $('.registrantForm #classification').val(r.classification);
+                $('.registrantForm #years_of_teaching').val(r.yearsOfTeaching);
+            }
+
             // $('.registrantForm #birthday').val(r.birthDate);
             document.getElementById("birthday").valueAsDate = new Date(r.birthDate);
             $('.registrantForm #mobilenumber').val(r.mobileNumber);
@@ -680,6 +731,7 @@ if (typeof(Storage) !== "undefined") {
         $('#btn-submit-form').on('click', function () {
 
             church.churchName = $('#church').val();
+            church.pastorFullName = $('#ptr_name').val();
             church.address = {
                 'street' : $('#church_address').val(),
                 'city' : $('#city').val(),

@@ -17,6 +17,8 @@ public class Church {
 
     private String churchName;
 
+    private String pastorFullName;
+
     @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL)
     @JoinColumn(name="church_address_id")
@@ -58,6 +60,13 @@ public class Church {
     public Church(){
     }
 
+    public String getPastorFullName() {
+        return pastorFullName;
+    }
+
+    public void setPastorFullName(String pastorFullName) {
+        this.pastorFullName = pastorFullName;
+    }
 
     public String getChurchId() {
         return churchId;

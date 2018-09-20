@@ -16,7 +16,7 @@ public class SessionTimerInterceptor extends HandlerInterceptorAdapter{
 
     private static Logger log = LoggerFactory.getLogger(SessionTimerInterceptor.class);
 
-    private static final long MAX_INACTIVE_SESSION_TIME = 5 * 10000;
+    private static final long MAX_INACTIVE_SESSION_TIME = 5 * 100000;
 
     @Autowired
     private HttpSession session;

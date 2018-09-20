@@ -71,7 +71,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         } else if (isAdmin) {
             return "/admin";
         } else if (isEvaluator) {
-            return "/assess";
+            return "/assessment";
         } else {
             throw new IllegalStateException();
         }
