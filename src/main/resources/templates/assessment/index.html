@@ -1,9 +1,88 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header-css"/>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Assessment</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/webjars/font-awesome/5.1.0/css/all.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/assets/css/style.default.admin.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/assets/css/jquery-confirm.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/5.1.0/css/all.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/assets/css/responsive.dataTables.min.css}" type="text/css" rel="stylesheet"/>
+</head>
 <body>
-    <div th:replace="fragments/header :: header"/>
-    <footer th:replace="fragments/footer :: footer"/>
-    <div th:replace="fragments/footer :: script"/>
+
+    <div style="background-color: #e1e1e1">
+        <!-- Main Navbar-->
+        <header class="header">
+            <nav class="navbar">
+                <!-- Search Box-->
+                <div class="search-box">
+                    <button class="dismiss"><i class="icon-close"></i></button>
+                    <form id="searchForm" action="#" role="search">
+                        <input type="search" placeholder="What are you looking for..." class="form-control">
+                    </form>
+                </div>
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <!-- Navbar Header-->
+                        <div class="navbar-header">
+                            <!-- Navbar Brand --><a th:href="@{/assessment}" class="navbar-brand d-none d-sm-inline-block">
+                            <div class="brand-text d-none d-lg-inline-block"><span th:text="${event}"> </span>&nbsp;&nbsp;&nbsp;<strong th:text="${year}"></strong></div>
+                            <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BMP</strong></div></a>
+                        </div>
+                        <!-- Navbar Menu -->
+                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                            <!-- Search-->
+                            <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                            <!-- Logout    -->
+                            <li class="nav-item"><a th:href="@{/logout}" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fas fa-sign-out-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="content-inner" style="padding-bottom: 0px; width: 100%">
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Assessment</h2>
+                </div>
+            </header>
+            <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 mx-auto">
+                <section class="assessment">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Church Name:</label>
+                                <input class="form-control" type="text" id="church_name" value="">
+                            </div>
+                            <button onclick="search()" type="button" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/momentjs/2.22.2/moment.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/main.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/jquery-confirm.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/dataTables.responsive.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/front.js}"></script>
+
+    <script>
+        function search() {
+            var c = document.getElementById("church_name").value;
+            window.location.href = "/assessment/church?church="+c;
+        }
+    </script>
 </body>
 </html>

@@ -12,5 +12,5 @@ public interface ChurchRepository extends JpaRepository<Church, String> {
 
     Church findByChurchId(String churchId);
 
-    List<Church> findByChurchNameIsLike(String churchName);
+    List<Church> findByAppStatusAndEventNameAndChurchNameContaining(String appStatus, String eventName, String churchName);
 }

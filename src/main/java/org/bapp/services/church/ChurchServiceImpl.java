@@ -17,12 +17,16 @@ public class ChurchServiceImpl implements ChurchService{
         return this.churchRepository.findByChurchId(churchId);
     }
 
+    public List<Church> findAll(){
+        return this.churchRepository.findAll();
+    }
+
     public void save(final Church church){
         this.churchRepository.save(church);
     }
 
     @Override
-    public List<Church> findAllByChurchNameLike(String churchName) {
-        return churchRepository.findByChurchNameIsLike(churchName);
+    public List<Church> findByAppStatusAndEventNameAndChurchNameContaining(String appStatus, String eventName, String churchName) {
+        return churchRepository.findByAppStatusAndEventNameAndChurchNameContaining(appStatus,eventName, churchName);
     }
 }

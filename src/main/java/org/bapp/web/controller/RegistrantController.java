@@ -132,6 +132,7 @@ public class RegistrantController {
                 c.setChurchId(service.generateSequenceId());
                 c.setChurchName(churchDTO.getChurchName());
                 c.setPastorFullName(churchDTO.getPastorFullName());
+                c.setEventName(eventName);
 
                 c.setAddress(churchDTO.getAddress());
                 c.setChurchContactNumber(churchDTO.getChurchContactNumber());

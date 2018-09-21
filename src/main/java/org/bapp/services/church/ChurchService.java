@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ChurchService {
 
-    List<Church> findAllByChurchNameLike(String churchName);
+    List<Church> findByAppStatusAndEventNameAndChurchNameContaining(String appStatus, String eventName, String churchName);
 
 }
