@@ -1,8 +1,11 @@
 package org.bapp.web.controller.evaluator;
 
+import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.Church;
 import org.bapp.services.assessment.AssessmentServiceImpl;
 import org.bapp.services.church.ChurchServiceImpl;
+import org.bapp.services.registrant.RegistrantService;
+import org.bapp.web.dto.RegistrantDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Calendar;
+import java.util.List;
 
 @Controller
 public class EvaluatorController {
@@ -54,6 +58,8 @@ public class EvaluatorController {
     @Autowired
     private ChurchServiceImpl churchService;
 
+    @Autowired
+    private RegistrantService registrantService;
 
     @GetMapping("/assessment")
     public String index(){
@@ -77,7 +83,7 @@ public class EvaluatorController {
 
     @GetMapping(value = "/assessment/church/delegates")
     @ResponseBody
-    public Church churchDelegates(@RequestParam(name = "churchId") String churchId){
+    public List<RegistrantDTO> churchDelegates(@RequestParam(name = "churchId") String churchId){
 
         Church c = churchService.findByChurchId(churchId);
 
@@ -85,7 +91,9 @@ public class EvaluatorController {
             return null;
         }
 
-        return c;
+        List<RegistrantDTO> r = RegistrantMapper.INSTANCE.registrantToRegistrantDtoList(c.getRegistrants());
+
+        return r;
 
     }
 

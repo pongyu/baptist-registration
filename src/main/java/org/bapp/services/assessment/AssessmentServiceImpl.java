@@ -34,7 +34,7 @@ public class AssessmentServiceImpl implements AssessmentService, ChurchService{
     private RegistrantService registrantService;
 
     @Autowired
-    private CampFee campFee;
+    private CampFeeImpl campFee;
 
     @Override
     public void updateDelegateFee(List<Registrant> registrants, String roomType, String subsidy, String remarks) {
@@ -46,7 +46,11 @@ public class AssessmentServiceImpl implements AssessmentService, ChurchService{
                 r.setSubsidy(subsidy);
                 r.setRemarks(remarks);
                 r.setRoomType(roomType);
-                r.setFee(campFee.calculateCampFee(subsidy, roomType));
+                if(r.getSubsidy().equals("") || r.getSubsidy() == null){
+                    r.setFee(campFee.getCampFee());
+                } else {
+                    r.setFee(campFee.calculateCampFee(r.getSubsidy(), roomType));
+                }
                 registrantService.save(r);
             }
         }

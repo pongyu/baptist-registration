@@ -24,7 +24,7 @@ public class CampFeeImpl implements CampFee{
     @Autowired
     private CodetableService service;
 
-
+    @Override
     public double getCampFee() {
         String event;
         if(eventName.equals("BMPSYMP")){
@@ -38,6 +38,7 @@ public class CampFeeImpl implements CampFee{
         return Double.parseDouble(fee);
     }
 
+    @Override
     public double getDiscount() {
 
         if(subsidy == null || subsidy.equals("")){
@@ -53,6 +54,7 @@ public class CampFeeImpl implements CampFee{
         return Double.parseDouble(discount);
     }
 
+    @Override
     public double otherFee(){
         if(otherFee == null || otherFee.equals("")){
             return 0;

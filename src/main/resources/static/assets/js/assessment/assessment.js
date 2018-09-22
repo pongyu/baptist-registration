@@ -8,7 +8,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "common/util/cdtbl/findOne?codename="+codename+"&codevalue="+codevalue,
+            url: "/common/util/cdtbl/findOne?codename="+codename+"&codevalue="+codevalue,
             success: function (d) {
                 if (codename === "designation"){
                     desc = d.desc2+" "+d.desc1;
@@ -19,21 +19,22 @@ $(document).ready(function () {
                 }
             },
             error: function (e) {
-                //...
+                //..
             }
         });
         return desc;
     }
 
+
     // ******************* initialise data tables using ajax call *******************
     var table = $('#registrantTable').DataTable({
-        "info":     false,
-        "paging":   false,
+        "info":     true,
+        "paging":   true,
         "processing": true,
         "bLengthChange": false,
         "ordering": false,
         "bAutoWidth": true,
-        "searching": false,
+        "searching": true,
         "responsive": true,
         "sAjaxSource": "/assessment/church/delegates?churchId="+churchId,
         "sAjaxDataProp": "",
@@ -51,18 +52,11 @@ $(document).ready(function () {
                     return descFormat('classification', data.classification);
                 }
             } },
-            { "mData": null, render: function ( data, type, row ) {
-                if(event == 1){
-                    return data.yearsOfMembership;
-                } else {
-                    return data.yearsOfTeaching;
-                }
-            } },
             { "mData": "birthDate" },
-            { "mData": "gender" },
-            { "mData": "civilStatus" },
-            { "mData": "mobileNumber" },
-            { "mData": "email" },
+            { "mData": "subsidy" },
+            { "mData": "roomType" },
+            { "mData": "fee" },
+            { "mData": "remarks" },
             { "mData": null}
         ],
         "columnDefs": [
@@ -70,23 +64,85 @@ $(document).ready(function () {
                 "responsivePriority":1,
                 "targets": -1,
                 "data": null,
-                "defaultContent": '<button class="btn btn-default btn-link btn-sm" type="button" id="editBtn"><i class="fa fa-edit"></i></button>'
+                "defaultContent": '',
+                "className": 'select-checkbox'
             },
             {
-                targets:4, render:function(data){
+                targets:3, render:function(data){
                 return moment(data).format('MM DD YYYY');
             }
             },
             {
-                targets:5, render:function(data){
-                return descFormat('gender', data);
+                "targets": [ 0 ],
+                "visible": false
             }
-            },
-            {
-                targets:6, render:function(data){
-                return descFormat('civilstatus', data);
-            }
-            }
-        ]
+        ],
+
+        select: {
+            style:    'os',
+            selector: 'td:last-child'
+        },
+
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 6 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Total over this page
+            pageTotal = api
+                .column( 6, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Update footer
+            $( api.column( 6 ).footer() ).html(
+                'P '+pageTotal
+            );
+            $( api.column( 7 ).footer() ).html(
+                'Total fees: P '+total
+            );
+        }
+
     });
+
+
+    var rSelected = [];
+
+    $('#editFee').on('click', function () {
+
+        rSelected = table.rows({selected: true}).data().toArray();
+
+        if(rSelected.length <= 0){
+            $.confirm({
+                title: 'No delegate(s) selected!',
+                content: 'Please select delegate(s)',
+                type: 'red',
+                typeAnimated: false,
+                buttons: {
+                    close: function () {
+                    }
+                }
+            });
+        }else{
+            $('#feeModal').modal();
+        }
+
+    });
+
 });

@@ -115,10 +115,10 @@
     var table = $('#churchTable').DataTable();
 
     $('#churchTable tbody').on( 'click', 'a#proceedLink', function (e) {
-//        e.preventDefault();
+        e.preventDefault();
         var r = table.row($(this).parents('tr') ).data();
-//        sessionStorage.setItem("churchId", r[0].toString());
-//        window.location.href = "/assessment/delegates";
+        sessionStorage.setItem("churchId", r[0].toString());
+        window.location.href = "/assessment/delegates";
     });
 </script>
 

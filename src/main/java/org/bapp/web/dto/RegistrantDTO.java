@@ -32,7 +32,47 @@ public class RegistrantDTO {
 
     private Integer yearsOfMembership;
 
+    private double fee;
+
+    private String remarks;
+
+    private String subsidy;
+
+    private String roomType;
+
     public RegistrantDTO() {
+    }
+
+    public double getFee() {
+        return fee;
+    }
+
+    public void setFee(double fee) {
+        this.fee = fee;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getSubsidy() {
+        return subsidy;
+    }
+
+    public void setSubsidy(String subsidy) {
+        this.subsidy = subsidy;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
     public Integer getYearsOfMembership() {

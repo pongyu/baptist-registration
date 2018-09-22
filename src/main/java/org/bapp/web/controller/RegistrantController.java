@@ -1,7 +1,6 @@
 package org.bapp.web.controller;
 
 import org.bapp.services.assessment.CampFee;
-import org.bapp.services.assessment.CampFeeImpl;
 import org.bapp.util.DateTimeUtil;
 import org.bapp.web.dto.ChurchDTO;
 import org.bapp.web.dto.CountryDTO;
@@ -165,12 +164,15 @@ public class RegistrantController {
 
                     } else {
 
-                        ar.setSubsidy("FULL");
                         ar.setRemarks("Regular");
 
                     }
 
-                    ar.setFee(campFee.calculateCampFee(ar.getSubsidy(), null));
+                    if(ar.getSubsidy().equals("") || ar.getSubsidy() == null){
+                        ar.setFee(campFee.getCampFee());
+                    } else {
+                        ar.setFee(campFee.calculateCampFee(ar.getSubsidy(), null));
+                    }
 
                     ar.setChurch(c);
                     registrantService.save(ar);

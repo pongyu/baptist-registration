@@ -1,6 +1,5 @@
 package org.bapp.model;
 
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "church")
-public class Church {
+public class Church{
 
     @Id
     @Column(name = "church_id", nullable = false, length = 20)
@@ -19,7 +18,7 @@ public class Church {
 
     private String pastorFullName;
 
-    @OneToOne(fetch = FetchType.LAZY,
+    @OneToOne(fetch = FetchType.EAGER,
             cascade =  CascadeType.ALL)
     @JoinColumn(name="church_address_id")
     private Address address;
@@ -54,7 +53,7 @@ public class Church {
     private LocalDateTime datePaid;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "church")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "church")
     private List<Registrant> registrants = new ArrayList<>();
 
     public Church(){
