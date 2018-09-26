@@ -168,7 +168,7 @@ public class RegistrantController {
 
                     }
 
-                    if(ar.getSubsidy().equals("") || ar.getSubsidy() == null){
+                    if(ar.getSubsidy() == null){
                         ar.setFee(campFee.getCampFee());
                     } else {
                         ar.setFee(campFee.calculateCampFee(ar.getSubsidy(), null));

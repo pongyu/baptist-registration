@@ -40,7 +40,17 @@ public class RegistrantDTO {
 
     private String roomType;
 
+    private String roomDesignation;
+
     public RegistrantDTO() {
+    }
+
+    public String getRoomDesignation() {
+        return roomDesignation;
+    }
+
+    public void setRoomDesignation(String roomDesignation) {
+        this.roomDesignation = roomDesignation;
     }
 
     public double getFee() {

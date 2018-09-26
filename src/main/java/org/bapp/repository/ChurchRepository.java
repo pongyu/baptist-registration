@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface ChurchRepository extends JpaRepository<Church, String> {
 
+    Church findByAppStatusAndChurchId(String status, String churchId);
 
     Church findByChurchId(String churchId);
 

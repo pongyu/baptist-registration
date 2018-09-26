@@ -29,4 +29,10 @@ public class ChurchServiceImpl implements ChurchService{
     public List<Church> findByAppStatusAndEventNameAndChurchNameContaining(String appStatus, String eventName, String churchName) {
         return churchRepository.findByAppStatusAndEventNameAndChurchNameContaining(appStatus,eventName, churchName);
     }
+
+    @Override
+    public Church findByAppStatusAndChurchId(String status, String churchId) {
+        return churchRepository.findByAppStatusAndChurchId(status, churchId);
+    }
+
 }

@@ -38,6 +38,8 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     private String roomType;
 
+    private String roomDesignation;
+
     @Column(unique = true)
     private Email email;
 
@@ -47,6 +49,14 @@ public class Registrant extends AbstractEntity implements Serializable{
 
     public Registrant(){
 
+    }
+
+    public String getRoomDesignation() {
+        return roomDesignation;
+    }
+
+    public void setRoomDesignation(String roomDesignation) {
+        this.roomDesignation = roomDesignation;
     }
 
     public double getFee() {

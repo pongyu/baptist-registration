@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/church/**").permitAll()
                 .antMatchers("/common/**").permitAll()
                 .antMatchers("/assess/**").hasRole("EVALUATOR")
-                .antMatchers("/payment/**").hasRole("CASHIER")
+                .antMatchers("/billing/**").hasRole("CASHIER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
 

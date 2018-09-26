@@ -1,25 +1,32 @@
 package org.bapp.web.controller.evaluator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.bapp.mapper.ChurchMapper;
 import org.bapp.mapper.RegistrantMapper;
 import org.bapp.model.Church;
+import org.bapp.model.Codetable;
+import org.bapp.model.Registrant;
 import org.bapp.services.assessment.AssessmentServiceImpl;
 import org.bapp.services.church.ChurchServiceImpl;
+import org.bapp.services.codetable.CodetableService;
 import org.bapp.services.registrant.RegistrantService;
+import org.bapp.web.dto.ChurchDTO;
 import org.bapp.web.dto.RegistrantDTO;
+import org.bapp.web.dto.RegistrantFee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 import java.util.List;
 
 @Controller
 public class EvaluatorController {
+
+    protected final Log logger = LogFactory.getLog(this.getClass());
 
     @Value("${bapp.eventname}")
     private String eventName;
@@ -41,6 +48,8 @@ public class EvaluatorController {
 
         return event;
     }
+    @Autowired
+    private CodetableService codetableService;
 
     @ModelAttribute("eventId")
     public Integer eventType(){
@@ -50,6 +59,16 @@ public class EvaluatorController {
     @ModelAttribute("year")
     public String year(){
         return String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+    }
+
+    @ModelAttribute("subsidy")
+    public List<Codetable> subsidy() {
+        return codetableService.findAllById("subsidy");
+    }
+
+    @ModelAttribute("room")
+    public List<Codetable> room() {
+        return codetableService.findAllById("additionalfee");
     }
 
     @Autowired
@@ -76,9 +95,7 @@ public class EvaluatorController {
 
     @GetMapping("/assessment/delegates")
     public String listDelegates(){
-
         return "assessment/listDelegates";
-
     }
 
     @GetMapping(value = "/assessment/church/delegates")
@@ -87,7 +104,12 @@ public class EvaluatorController {
 
         Church c = churchService.findByChurchId(churchId);
 
-        if(!c.getAppStatus().equals("0")){
+        if(c == null){
+            logger.error("Failed retrieving church in assessment.");
+        }
+
+        if(!c.getAppStatus().equals("0") && !c.getEventName().equals(eventName)){
+            logger.error("Church is not for assessment");
             return null;
         }
 
@@ -95,6 +117,27 @@ public class EvaluatorController {
 
         return r;
 
+    }
+
+    @PostMapping("/assessment/update_fee")
+    @ResponseBody
+    public List<RegistrantDTO> updateFee(@RequestBody RegistrantFee fee){
+      return service.updateDelegateFee(fee);
+    }
+
+    @PostMapping("/assessment/submit")
+    @ResponseBody
+    public String submit(@RequestBody String churchId){
+
+        return service.submitForPayment(churchId);
+
+    }
+
+    @GetMapping("/assessment/find_one_church")
+    @ResponseBody
+    public ChurchDTO getChurch(@RequestParam(name = "churchId") String churchId){
+        Church c = churchService.findByChurchId(churchId);
+        return ChurchMapper.INSTANCE.toChurchDto(c);
     }
 
 }

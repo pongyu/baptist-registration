@@ -9,10 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CampFeeImpl implements CampFee{
 
-    private String otherFee;
-
-    private String subsidy;
-
     @Value("${bapp.eventname}")
     private String eventName;
 
@@ -39,7 +35,7 @@ public class CampFeeImpl implements CampFee{
     }
 
     @Override
-    public double getDiscount() {
+    public double getDiscount(String subsidy) {
 
         if(subsidy == null || subsidy.equals("")){
             return 0;
@@ -55,7 +51,7 @@ public class CampFeeImpl implements CampFee{
     }
 
     @Override
-    public double otherFee(){
+    public double otherFee(String otherFee){
         if(otherFee == null || otherFee.equals("")){
             return 0;
         }
@@ -72,16 +68,12 @@ public class CampFeeImpl implements CampFee{
     @Override
     public double calculateCampFee(String subsidy, String otherFee) {
 
-        this.subsidy = subsidy;
-
-        this.otherFee = otherFee;
-
         double totalFee = 0.00;
 
         try{
 
             double fee = getCampFee();
-            double discount = getDiscount();
+            double discount = getDiscount(subsidy);
 
             double dTotal = discount * fee / 100;
 
@@ -90,7 +82,7 @@ public class CampFeeImpl implements CampFee{
         } catch (Exception e){
             e.printStackTrace();
         }
-        return totalFee + otherFee();
+        return totalFee + otherFee(otherFee);
     }
 
 }

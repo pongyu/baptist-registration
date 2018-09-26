@@ -51,6 +51,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         boolean isUser = false;
         boolean isAdmin = false;
         boolean isEvaluator = false;
+        boolean isCashier = false;
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
@@ -62,6 +63,9 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
             } else if (grantedAuthority.getAuthority().equals("ROLE_EVALUATOR")) {
                 isEvaluator = true;
                 break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_CASHIER")) {
+                isCashier = true;
+                break;
             }
 
         }
@@ -72,6 +76,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
             return "/admin";
         } else if (isEvaluator) {
             return "/assessment";
+        } else if (isCashier) {
+            return "/billing";
         } else {
             throw new IllegalStateException();
         }

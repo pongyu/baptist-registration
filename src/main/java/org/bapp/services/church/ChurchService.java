@@ -8,4 +8,5 @@ public interface ChurchService {
 
     List<Church> findByAppStatusAndEventNameAndChurchNameContaining(String appStatus, String eventName, String churchName);
 
+    Church findByAppStatusAndChurchId(String status, String churchId);
 }

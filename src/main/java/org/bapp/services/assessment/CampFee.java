@@ -4,9 +4,9 @@ public interface CampFee {
 
     double getCampFee();
 
-    double getDiscount();
+    double getDiscount(String subsidy);
 
-    double otherFee();
+    double otherFee(String otherFee);
 
     double calculateCampFee(String subsidy, String otherFee);
 

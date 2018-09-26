@@ -49,4 +49,12 @@ public class RegistrantService {
         return null;
     }
 
+    public Registrant getRegistrant(Long id){
+        Optional<Registrant> c = registrantRepository.findById(id);
+        if(c.isPresent()){
+            return c.get();
+        }
+        return null;
+    }
+
 }
