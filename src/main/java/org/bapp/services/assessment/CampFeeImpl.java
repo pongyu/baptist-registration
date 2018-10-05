@@ -22,14 +22,8 @@ public class CampFeeImpl implements CampFee{
 
     @Override
     public double getCampFee() {
-        String event;
-        if(eventName.equals("BMPSYMP")){
-            event = "BMP-SYMPOSIUM";
-        }else {
-            event = "BMP-SSTA";
-        }
 
-        String fee = service.findOne(new CodetableId("CAMPFEE", event)).getDesc1();
+        String fee = service.findOne(new CodetableId("CAMPFEE", eventName)).getDesc1();
 
         return Double.parseDouble(fee);
     }

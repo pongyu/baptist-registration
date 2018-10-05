@@ -69,6 +69,10 @@ public class BillingController {
 
         Church c = churchService.findByAppStatusAndChurchId("1", churchId);
 
+        if(c == null){
+            return new BillingInfo();
+        }
+
         if(!c.getEventName().equals(eventName)){
             return null;
         }
@@ -86,13 +90,17 @@ public class BillingController {
             double total;
 
             for(Registrant r : c.getRegistrants()){
+
                 if(r.getSubsidy() != null){
-                    discount += campFee.getDiscount(r.getSubsidy());
+                    double campfee = campFee.calculateCampFee(r.getSubsidy(), null);
+                    double d = campFee.getCampFee() - campfee;
+                    discount += d;
                 }
                 if(r.getRoomType() != null){
                     roomFee += campFee.otherFee(r.getRoomType());
                 }
-                registrantTotalFee += r.getFee();
+                //sum all fee without discount
+                registrantTotalFee += campFee.getCampFee();
             }
             subtotal = registrantTotalFee + roomFee;
             total = subtotal - discount;
@@ -120,7 +128,9 @@ public class BillingController {
             List<Registrant> ar = c.getRegistrants();
             for(Registrant r : ar){
                 if(r.getSubsidy() != null){
-                    r.setSubsidy(Double.toString(campFee.getDiscount(r.getSubsidy())));
+                    double campfee = campFee.calculateCampFee(r.getSubsidy(), null);
+                    double discount = campFee.getCampFee() - campfee;
+                    r.setSubsidy(Double.toString(discount));
                 }
                 if(r.getRoomType() != null){
                     r.setRoomType(Double.toString(campFee.otherFee(r.getRoomType())));

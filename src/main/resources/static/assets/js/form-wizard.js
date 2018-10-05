@@ -769,27 +769,39 @@ if (typeof(Storage) !== "undefined") {
                             success: function (data) {
                                 churchId = data;
                                 console.log(data);
+
+                                //fade
+                                var parent_fieldset = $('#btn-submit-form').parents('fieldset');
+                                // navigation steps / progress steps
+                                var current_active_step = $('#btn-submit-form').parents('.form-wizard').find('.form-wizard-step.active');
+                                var progress_line = $('#btn-submit-form').parents('.form-wizard').find('.form-wizard-progress-line');
+                                parent_fieldset.fadeOut(400, function() {
+                                    // change icons
+                                    current_active_step.removeClass('active').addClass('activated').next().addClass('active');
+                                    // progress bar
+                                    bar_progress(progress_line, 'right');
+                                    // show next step
+                                    $(this).next().fadeIn();
+                                    // scroll window to beginning of the form
+                                    scroll_to_class( $('.form-wizard'), 20 );
+                                });
+
                             },
                             error: function (e) {
                                 console.log(e);
+                                $.confirm({
+                                    title: 'Oops! :(',
+                                    content: 'There was a problem submitting your entry. please contact system admin.',
+                                    type: 'red',
+                                    typeAnimated: false,
+                                    buttons: {
+                                        close: function () {
+                                        }
+                                    }
+                                });
                             }
                         });
 
-                        //fade
-                        var parent_fieldset = $('#btn-submit-form').parents('fieldset');
-                        // navigation steps / progress steps
-                        var current_active_step = $('#btn-submit-form').parents('.form-wizard').find('.form-wizard-step.active');
-                        var progress_line = $('#btn-submit-form').parents('.form-wizard').find('.form-wizard-progress-line');
-                        parent_fieldset.fadeOut(400, function() {
-                            // change icons
-                            current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-                            // progress bar
-                            bar_progress(progress_line, 'right');
-                            // show next step
-                            $(this).next().fadeIn();
-                            // scroll window to beginning of the form
-                            scroll_to_class( $('.form-wizard'), 20 );
-                        });
                     },
                     cancel: function () {
 

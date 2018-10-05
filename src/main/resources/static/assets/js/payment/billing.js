@@ -2,6 +2,13 @@ $(document).ready(function () {
 
     var event = $('#event').val();
 
+    function numberFormat(num)
+    {
+        var num_parts = num.toString().split(".");
+        num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return num_parts.join(".");
+    }
+
     $('.search').on('click', function () {
 
         $.ajax({
@@ -11,14 +18,14 @@ $(document).ready(function () {
             data: $('#churchId').val(),
             dataType: 'json',
             success: function (d) {
-                $('.subtotal').val('₱ '+d.subtotal);
-                $('.otherFee').val('₱ '+d.roomFee);
-                $('.discount').val("₱ ( "+d.discount+" )");
-                $('.total').val('₱ '+d.total);
+                $('.subtotal').val('₱ '+numberFormat(d.subtotal));
+                $('.otherFee').val('₱ '+numberFormat(d.roomFee));
+                $('.discount').val("₱ ( "+numberFormat(d.discount)+" )");
+                $('.total').val('₱ '+numberFormat(d.total));
                 table.ajax.url( "/billing/delegates?churchId="+$('#churchId').val() ).load();
             },
             error: function (e) {
-                //..
+                console.log(e);
             }
         });
 
@@ -84,45 +91,65 @@ $(document).ready(function () {
                 render: $.fn.dataTable.render.number(',', '.', 2, '₱ '),
                 className: 'text-right'
             }
-        ]
-        // Assessment does'nt need to view total amount of fees. should be in billing.
-        // Unless you want to view, just uncomment it.
+        ],
 
-        // "footerCallback": function ( row, data, start, end, display ) {
-        //     var api = this.api(), data;
-        //
-        //     // Remove the formatting to get integer data for summation
-        //     var intVal = function ( i ) {
-        //         return typeof i === 'string' ?
-        //             i.replace(/[\$,]/g, '')*1 :
-        //             typeof i === 'number' ?
-        //                 i : 0;
-        //     };
-        //
-        //     // Total over all pages
-        //     total = api
-        //         .column( 6 )
-        //         .data()
-        //         .reduce( function (a, b) {
-        //             return intVal(a) + intVal(b);
-        //         }, 0 );
-        //
-        //     // Total over this page
-        //     pageTotal = api
-        //         .column( 6, { page: 'current'} )
-        //         .data()
-        //         .reduce( function (a, b) {
-        //             return intVal(a) + intVal(b);
-        //         }, 0 );
-        //
-        //     // Update footer
-        //     $( api.column( 6 ).footer() ).html(
-        //         '₱ '+pageTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        //     );
-        //     $( api.column( 7 ).footer() ).html(
-        //         'Total fees: ₱ '+total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        //     );
-        // }
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            fee = api
+                .column( 3 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            roomFee = api
+                .column( 2 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            subtotal = fee + roomFee;
+
+            discount = api
+                .column( 1 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+
+            // Total over this page
+            // pageTotal = api
+            //     .column( 6, { page: 'current'} )
+            //     .data()
+            //     .reduce( function (a, b) {
+            //         return intVal(a) + intVal(b);
+            //     }, 0 );
+
+            // Update footer
+            // $( api.column( 6 ).footer() ).html(
+            //     '₱ '+pageTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            // );
+            // $( api.column( 7 ).footer() ).html(
+            //     'Total fees: ₱ '+subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            // );
+
+            // $('.subtotal').val('₱ '+fee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            // $('.otherFee').val('₱ '+roomFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            // $('.discount').val('₱ '+discount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            // $('.total').val('₱ '+fee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        }
 
     });
 
@@ -137,29 +164,41 @@ $(document).ready(function () {
             animateFromElement: false,
             buttons: {
                 confirm: function () {
+                    // $.ajax({
+                    //     type: "POST",
+                    //     contentType: "application/json",
+                    //     url: "/assessment/submit",
+                    //     data: churchId,
+                    //     dataType: 'json',
+                    //     success: function (data) {
+                    //         $.confirm({
+                    //             title: 'Submitted!',
+                    //             content: data+' is submitted for Payment',
+                    //             type: 'green',
+                    //             typeAnimated: false,
+                    //             escapeKey: true,
+                    //             backgroundDismiss: false,
+                    //             buttons: {
+                    //                 ok: function () {
+                    //                     window.location.href = "/assessment";
+                    //                 }
+                    //             }
+                    //         });
+                    //     },
+                    //     error: function (e) {
+                    //         console.log(e);
+                    //     }
+                    // });
+
+                    //test report
                     $.ajax({
-                        type: "POST",
-                        contentType: "application/json",
-                        url: "/assessment/submit",
-                        data: churchId,
-                        dataType: 'json',
-                        success: function (data) {
-                            $.confirm({
-                                title: 'Submitted!',
-                                content: data+' is submitted for Payment',
-                                type: 'green',
-                                typeAnimated: false,
-                                escapeKey: true,
-                                backgroundDismiss: false,
-                                buttons: {
-                                    ok: function () {
-                                        window.location.href = "/assessment";
-                                    }
-                                }
-                            });
+                        type: "GET",
+                        url: "/report/invoice?churchid="+$('#churchId').val(),
+                        success: function (d) {
+                            // console.log(d);
                         },
                         error: function (e) {
-                            console.log(e);
+                            //..
                         }
                     });
                 },

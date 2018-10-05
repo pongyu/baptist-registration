@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Error" uuid="d4828e4f-27b9-478b-a22e-40ee6227401d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Registrar"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="church_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM registrar.church where registrar.church.church_id = $P{church_id}]]>
+	</queryString>
+	<field name="church_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="church_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="app_status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="app_status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="app_status_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="app_status_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="assessed_by" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="assessed_by"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="cashier" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cashier"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="church_contact_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="church_contact_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="church_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="church_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="contact_person" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contact_person"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="contact_person_mobile_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contact_person_mobile_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="date_paid" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="date_paid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="date_updated" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="date_updated"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="encoded_by" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="encoded_by"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="encoded_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="encoded_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="event_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="event_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="event_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="event_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="church_address_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="church_address_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<field name="pastor_full_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="pastor_full_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="church"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<textField>
+				<reportElement x="230" y="50" width="100" height="30" uuid="96baba36-82b0-4f39-9a9b-d0b66d41d34a"/>
+				<textFieldExpression><![CDATA[$F{church_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
