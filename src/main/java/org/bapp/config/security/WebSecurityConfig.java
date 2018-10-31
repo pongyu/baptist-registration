@@ -69,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/assess/**").hasRole("EVALUATOR")
                 .antMatchers("/billing/**").hasRole("CASHIER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/printtemp/**").hasAnyRole("ADMIN","CASHIER","EVALUATOR")
                 .anyRequest().authenticated()
 
 //                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)

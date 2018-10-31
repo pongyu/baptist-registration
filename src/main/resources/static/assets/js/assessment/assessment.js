@@ -207,6 +207,10 @@ $(document).ready(function () {
                         data: churchId,
                         dataType: 'json',
                         success: function (data) {
+                            // generate invoice
+
+                            saveAs("/report/invoice?churchid="+churchId);
+
                             $.confirm({
                                 title: 'Submitted!',
                                 content: data+' is submitted for Payment',
@@ -232,5 +236,23 @@ $(document).ready(function () {
             }
         });
     });
+
+    function saveAs(uri) {
+        var link = document.createElement('a');
+        if (typeof link.download === 'string') {
+            link.href = uri;
+
+            //Firefox requires the link to be in the body
+            document.body.appendChild(link);
+
+            //simulate click
+            link.click();
+
+            //remove the link when done
+            document.body.removeChild(link);
+        } else {
+            window.open(uri);
+        }
+    }
 
 });

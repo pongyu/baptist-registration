@@ -20,7 +20,7 @@
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand" th:href="@{/}" th:text="${event}">
-                BMP</a>&nbsp;&nbsp;&nbsp;<strong th:text="${year}">
+                BMP</a>&nbsp;&nbsp;&nbsp;<strong th:text="${year}"></strong>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
@@ -61,7 +61,7 @@
 </div>
 
 
-<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/popper.min.js}"></script>
 <!--<script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>-->
 <script type="text/javascript" th:src="@{/assets/js/bootstrap-material-design.min.js}"></script>

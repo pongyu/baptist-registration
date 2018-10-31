@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1146dbb-a443-4728-9577-aee22330e4ef">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1146dbb-a443-4728-9577-aee22330e4ef">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="199"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="794"/>
@@ -21,6 +21,9 @@
   c.contact_person,
   c.contact_person_mobile_number,
   r.designation,
+  r.classification,
+   r.room_type,
+   r.subsidy,
   r.first_name, 
   r.middle_name, 
   r.last_name,
@@ -48,7 +51,7 @@
 
 LEFT JOIN  registrar.registrant r ON c.church_id = r.church_id 
 
-WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
+WHERE  r.church_id = $P{church_id} ]]>
 	</queryString>
 	<field name="church_name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="church_name"/>
@@ -78,6 +81,18 @@ WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
 		<property name="com.jaspersoft.studio.field.label" value="designation"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="registrant"/>
 	</field>
+	<field name="classification" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="classification"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registrant"/>
+	</field>
+	<field name="room_type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="room_type"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registrant"/>
+	</field>
+	<field name="subsidy" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="subsidy"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registrant"/>
+	</field>
 	<field name="first_name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="first_name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="registrant"/>
@@ -93,9 +108,8 @@ WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
 	<field name="campfee" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="campfee"/>
 	</field>
-	<field name="subsidy" class="java.lang.Double">
+	<field name="COLUMN_15" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="subsidy"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="registrant"/>
 	</field>
 	<field name="otherfee" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="otherfee"/>
@@ -125,11 +139,13 @@ WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
 	<variable name="regFeeTotal" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{campfee}]]></variableExpression>
 	</variable>
-	<variable name="roomFeeTotal" class="java.lang.Double">
-		<variableExpression><![CDATA[$F{otherfee}]]></variableExpression>
+	<variable name="roomFeeTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{room_type}==null || $F{room_type}.equals("")? 0:$F{otherfee}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<variable name="discountTotal" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{rsubsidy}]]></variableExpression>
+		<variableExpression><![CDATA[$F{subsidy}==null || $F{subsidy}.equals("")? 0 : $F{rsubsidy}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -171,8 +187,8 @@ WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
 			</textField>
 			<textField>
 				<reportElement x="72" y="30" width="308" height="20" uuid="1dfc96ca-c809-405c-823b-7c6decab4a32"/>
-				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{eventName}+" - "+String.valueOf(Calendar.getInstance().get(Calendar.YEAR))]]></textFieldExpression>
 			</textField>
@@ -262,8 +278,8 @@ WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
 				</textElement>
 				<text><![CDATA[Name]]></text>
 			</staticText>
-			<staticText>
-				<reportElement key="" mode="Opaque" x="72" y="0" width="70" height="20" backcolor="#F2F2F2" uuid="254960c1-c255-4129-9255-75e89176f76d">
+			<textField>
+				<reportElement key="" mode="Opaque" x="72" y="0" width="70" height="20" backcolor="#F2F2F2" uuid="66160488-9e81-4dd1-93ce-b34453530f25">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b89c42d5-4de1-4922-ac06-207bcca5f3df"/>
 				</reportElement>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
@@ -277,8 +293,8 @@ WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
 					<font size="8" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<text><![CDATA[Designation]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{event} .equals("BMPSYMP")? "Designation":"Classification"]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement key="" mode="Opaque" x="440" y="0" width="60" height="20" backcolor="#F2F2F2" uuid="248befd0-2230-4e28-8e66-fbb36a93865f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b89c42d5-4de1-4922-ac06-207bcca5f3df"/>
@@ -337,7 +353,7 @@ WHERE  r.church_id = $P{church_id} order by r.designation desc]]>
 					<font size="8"/>
 					<paragraph firstLineIndent="0" leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{event} .equals("BMPSYMP")? $F{designation}:$F{classification}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
 				<reportElement x="320" y="0" width="60" height="15" uuid="ea740bdb-a8c0-4780-8974-8ca559c5ecd9">

@@ -33,7 +33,7 @@ public class ReportServiceImpl implements ReportService{
 
         Connection jdbcConnection = null;
 
-        url ="jdbc:mysql://localhost/registrar?useSSL=false";
+        url ="jdbc:mysql://localhost/registrar?allowPublicKeyRetrieval=true&useSSL=false";
 
         try{
 
@@ -90,12 +90,18 @@ public class ReportServiceImpl implements ReportService{
             e.printStackTrace();
         }
 
-        File rptDir = new File("src\\main\\resources\\static\\");
+        File temp = new File("src\\main\\resources\\static\\printtemp\\");
 
         File tempFile = null;
 
+        File rptDir = new File("C:\\printtemp");
+
+        if(!rptDir.exists()){
+            rptDir.mkdir();
+        }
+
         try{
-            tempFile = File.createTempFile(filename, "."+reportType, rptDir);
+            tempFile = File.createTempFile(filename, "."+reportType, temp);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,7 +118,7 @@ public class ReportServiceImpl implements ReportService{
                 exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
 
                 if (tempFile.delete()){
-                    exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(rptDir.getPath() + "/printtemp/" +prefix+tempFileName));
+                    exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\printtemp\\" +prefix+tempFileName));
                 }
 
                 SimplePdfReportConfiguration reportConfig
@@ -130,6 +136,7 @@ public class ReportServiceImpl implements ReportService{
 
                 try {
                     exporter.exportReport();
+
                 } catch (JRException e) {
                     logger.debug("error exporting report pdf " + e);
                 }
@@ -141,7 +148,7 @@ public class ReportServiceImpl implements ReportService{
                 JRCsvExporter exporter = new JRCsvExporter();
                 exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
                 exporter.setExporterOutput(
-                        new SimpleWriterExporterOutput(rptDir.getPath() + "/printtemp/" + tempFileName));
+                        new SimpleWriterExporterOutput("C:\\printtemp\\" +prefix+tempFileName));
 
                 try {
                     exporter.exportReport();
@@ -154,7 +161,7 @@ public class ReportServiceImpl implements ReportService{
             case "xlsx": {
                 JRXlsxExporter exporter = new JRXlsxExporter();
                 exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(rptDir.getPath() + "/printtemp/" + tempFileName));
+                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\printtemp\\" +prefix+tempFileName));
 
                 // Set input and output ...
                 SimpleXlsxReportConfiguration reportConfig
@@ -172,7 +179,9 @@ public class ReportServiceImpl implements ReportService{
                 break;
             }
         }
+
         return tempFileName;
+
     }
 
 }

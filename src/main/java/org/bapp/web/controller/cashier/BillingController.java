@@ -153,7 +153,7 @@ public class BillingController {
         String status = churchService.findByChurchId(churchId).getAppStatus();
 
         if(status.equals("2")){
-            return "success";
+            return churchService.findByChurchId(churchId).getChurchName();
         }
 
         return "failed";

@@ -77,25 +77,24 @@ $( document ).ready(function() {
             $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/admin/system/cdtbl/save",
+            url: "/codetable/save",
             data: JSON.stringify(data),
             dataType: 'json',
             success: function () {
-                console.log("happens");
+                $('#codetableModal').modal('toggle');
+                window.location.href = "/codetable";
             },
             error: function (e) {
                 //...
             }
         });
-        $('#codetableModal').modal('toggle');
-
     });
 
     //delete
     $('#modal-delete-btn').on('click', function () {
         $.ajax({
             type: "GET",
-            url: "/admin/system/cdtbl/delete?codename="+$('#codename').val()+"&codevalue="+$('#codevalue').val(),
+            url: "/codetable/delete?codename="+$('#codename').val()+"&codevalue="+$('#codevalue').val(),
             success: function () {
 
             },

@@ -155,8 +155,8 @@ $(document).ready(function () {
 
     $('.payout').on('click', function () {
         $.confirm({
-            title: 'Pay out?',
-            content: '',
+            title: 'Payout '+$('.total').val(),
+            content: ' ',
             theme: 'modern',
             type: 'green',
             animation: 'top',
@@ -164,41 +164,28 @@ $(document).ready(function () {
             animateFromElement: false,
             buttons: {
                 confirm: function () {
-                    // $.ajax({
-                    //     type: "POST",
-                    //     contentType: "application/json",
-                    //     url: "/assessment/submit",
-                    //     data: churchId,
-                    //     dataType: 'json',
-                    //     success: function (data) {
-                    //         $.confirm({
-                    //             title: 'Submitted!',
-                    //             content: data+' is submitted for Payment',
-                    //             type: 'green',
-                    //             typeAnimated: false,
-                    //             escapeKey: true,
-                    //             backgroundDismiss: false,
-                    //             buttons: {
-                    //                 ok: function () {
-                    //                     window.location.href = "/assessment";
-                    //                 }
-                    //             }
-                    //         });
-                    //     },
-                    //     error: function (e) {
-                    //         console.log(e);
-                    //     }
-                    // });
-
-                    //test report
                     $.ajax({
-                        type: "GET",
-                        url: "/report/invoice?churchid="+$('#churchId').val(),
-                        success: function (d) {
-                            // console.log(d);
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "/billing/payout",
+                        data: $('#churchId').val(),
+                        success: function (data) {
+                            $.confirm({
+                                title: 'Paid!',
+                                content: $('#churchId').val()+' '+data,
+                                type: 'green',
+                                typeAnimated: false,
+                                escapeKey: true,
+                                backgroundDismiss: false,
+                                buttons: {
+                                    ok: function () {
+                                        window.location.href = "/billing";
+                                    }
+                                }
+                            });
                         },
                         error: function (e) {
-                            //..
+                            console.log(e);
                         }
                     });
                 },

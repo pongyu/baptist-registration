@@ -106,7 +106,7 @@ if (typeof(Storage) !== "undefined") {
 	    var churches = [];
         $.ajax({
             type: "GET",
-            url: "/church/list",
+            url: "church/list",
             success: function (result) {
                 for (var i = 0; i < result.length; i++) {
                     churches.push(result[i]);
@@ -139,7 +139,7 @@ if (typeof(Storage) !== "undefined") {
         var states = [];
         $.ajax({
             type: "GET",
-            url: "/common/util/country/states?code=PH",
+            url: "common/util/country/states?code=PH",
             success: function (result) {
                 states.push('<option></option>');
                 for (var i = 0; i < result.length; i++) {
@@ -330,7 +330,7 @@ if (typeof(Storage) !== "undefined") {
             var options = [];
             $.ajax({
                 type: "GET",
-                url: "/common/util/country/cities?code="+$('#country').val()+"&state="+valueSelected,
+                url: "common/util/country/cities?code="+$('#country').val()+"&state="+valueSelected,
                 success: function (result) {
                     options.push('<option></option>');
                     for (var i = 0; i < result.length; i++) {
